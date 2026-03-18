@@ -1,0 +1,99 @@
+---
+import CatalogLayout from '../layouts/CatalogoLayout.astro';
+import ProductCard from '../components/ui/ProductCard.astro';
+import productosData from '../data/productos.json'; 
+import type { Product } from '../types/product';
+
+const products = (productosData as Product[]);
+const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCase()))];
+---
+
+<CatalogLayout title="Catalog | MidNight Studio">
+  <main class="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-24 relative">
+    
+    <header class="mb-8 md:mb-16 border-l-2 border-neon-green pl-4 md:pl-6 opacity-0 animate-slide-in">
+      <h1 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-none">
+        Catalogo<br/>
+      </h1>
+    </header>
+
+<div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 md:mb-16 opacity-0 animate-slide-in" style="animation-delay: 0.15s">
+      {categories.map((cat) => (
+        <button 
+          class="filter-btn group relative px-4 md:px-8 py-2 md:py-3 border  border-white/5 bg-white/0.02 hover:border-neon-green/40 transition-all duration-300"
+          data-category={cat}
+        >
+          <div class="absolute inset-0 bg-neon-green/0 group-hover:bg-neon-green/5 transition-colors"></div>
+          
+          <span class="relative z-10 font-mono text-[9px] md:text-[11px] text-white/40 group-hover:text-neon-green transition-colors uppercase italic tracking-[0.2em] font-bold">
+            {cat}
+          </span>
+        </button>
+      ))}
+    </div>
+
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-x-6 md:gap-y-12">
+      {products.map((item, index) => (
+        <div 
+          class="product-item opacity-0 animate-fade-up" 
+          data-category={item.categoria.toUpperCase()}
+          style={`animation-delay: ${0.2 + (index * 0.05)}s`}
+        >
+          <ProductCard {...item} />
+        </div>
+      ))}
+    </div>
+  </main>
+</CatalogLayout>
+
+<style is:global>
+  /* Animaciones */
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-slide-in { animation: slide-in 0.8s ease-out forwards; }
+  .animate-fade-up { animation: fade-up 0.6s ease-out forwards; }
+
+  .product-item.hidden-instant {
+    display: none !important;
+  }
+</style>
+
+<script>
+  // Tu script de filtrado se mantiene igual, ya que solo cambia el diseño del grid
+  const buttons = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.product-item');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+      
+      buttons.forEach(b => b.classList.remove('border-neon-green', 'bg-neon-green/5', 'text-neon-green'));
+      btn.classList.add('border-neon-green', 'bg-neon-green/5');
+
+      items.forEach((item) => {
+        const itemCat = item.getAttribute('data-category');
+        const shouldShow = category === 'TODOS' || itemCat === category;
+        
+        (item as HTMLElement).style.animation = 'none';
+        (item as HTMLElement).style.opacity = '1';
+
+        if (shouldShow) {
+          item.classList.remove('hidden-instant');
+        } else {
+          item.classList.add('hidden-instant');
+        }
+      });
+    });
+  });
+
+  const firstBtn = buttons[0] as HTMLElement;
+  if (firstBtn) firstBtn.click();
+</script>

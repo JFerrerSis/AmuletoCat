@@ -1,0 +1,47 @@
+---
+// src/components/ui/Header.astro
+interface Props {
+  title?: string;
+  subtitle?: string;
+  status?: string;
+}
+
+const { 
+  title = "MidNight", 
+  subtitle = "Studio", 
+  status = "Diseño digital hecho realidad" 
+} = Astro.props;
+---
+
+<header class="text-center mb-16 relative">
+  <div class="relative inline-block">
+    <div class="absolute -inset-4 bg-neon-green/10 rounded-full blur-3xl animate-pulse"></div>
+    
+    <div class="absolute -inset-2 border-2 border-neon-green/20 rounded-full"></div>
+    <div class="absolute -inset-2 border-2 border-transparent border-t-neon-green rounded-full animate-spin"></div>
+    
+    <div class="relative w-32 h-32 rounded-full border-2 border-neon-green bg-black z-10 shadow-[0_0_25px_rgba(0,245,212,0.3)] hover:shadow-[0_0_40px_rgba(0,245,212,0.5)] transition-all duration-500 overflow-hidden flex items-center justify-center">
+      
+      <img 
+        src="/images/logodark.png" 
+        alt="Logo" 
+        class="w-full h-full object-contain p-4 rounded-full grayscale hover:grayscale-0 transition-all duration-700"
+      />
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,245,212,0.05)_50%),linear-gradient(90deg,rgba(255,0,0,0.01),rgba(0,255,0,0.005),rgba(0,0,255,0.01))] bg-size[100%_2px,3px_100%] pointer-events-none opacity-40"></div>
+    </div>
+  </div>
+
+  <div class="mt-8 space-y-2">
+    <h1 class="text-4xl font-black tracking-tighter text-white uppercase italic leading-none inline-block relative">
+      {title} <span class="text-neon-green drop-shadow-[0_0_6px_rgba(0,245,212,0.6)]">{subtitle}</span>
+    </h1>
+    
+    <div class="flex items-center justify-center gap-3">
+        <div class="h-px w-4 bg-neon-green/30"></div>
+        <p class="font-mono text-[10px] tracking-[0.4em] text-neon-green/80 uppercase">
+          <span class="opacity-40"></span> {status} <span class="opacity-40"></span>
+        </p>
+        <div class="h-px w-8 bg-neon-green/30"></div>
+    </div>
+  </div>
+</header>

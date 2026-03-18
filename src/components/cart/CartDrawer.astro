@@ -1,0 +1,208 @@
+---
+// src/components/cart/CartDrawer.astro
+---
+
+<div id="cart-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-60 hidden opacity-0 transition-opacity duration-500"></div>
+
+<div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-sm bg-[#08090d] border-l border-neon-green/20 z-70 translate-x-full transition-transform duration-500 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.9)]">
+  
+  <div class="p-6 border-b border-white/5 flex justify-between items-center bg-black/40">
+    <div class="flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <h2 class="font-mono text-neon-green text-[11px] uppercase tracking-[0.2em] font-bold">Resumen de mi Pedido</h2>
+    </div>
+    <button id="close-cart" class="group flex items-center gap-2 text-white/30 hover:text-white transition-colors">
+      <span class="font-mono text-[10px] tracking-widest uppercase">Cerrar</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-90 transition-transform"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+
+  <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar"></div>
+
+  <div id="order-form" class="px-6 py-5 border-t border-white/5 bg-white/2 space-y-4 hidden text-white">
+    <div class="space-y-3">
+      <div class="flex items-center gap-2 mb-1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <h3 class="font-mono text-[10px] text-white/60 tracking-widest uppercase font-bold">Datos de Entrega</h3>
+      </div>
+      <input type="text" id="cust-name" placeholder="Tu nombre completo" class="w-full bg-black/40 border border-white/10 p-3 text-xs focus:border-neon-green outline-none text-white transition-all" />
+      <div class="grid grid-cols-2 gap-3">
+        <input type="text" id="cust-id" placeholder="Cédula / ID" class="bg-black/40 border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white transition-all" />
+        <input type="tel" id="cust-phone" placeholder="Teléfono" class="bg-black/40 border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white transition-all" />
+      </div>
+      <select id="cust-delivery" class="w-full bg-black border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white/80">
+        <option value="PICKUP">Retiro en tienda (Pickup)</option>
+        <option value="DELIVERY">Envío a domicilio (Delivery)</option>
+      </select>
+      <textarea id="cust-address" placeholder="Dirección detallada..." class="w-full bg-black/40 border border-white/10 p-3 text-xs outline-none h-16 focus:border-neon-green text-white transition-all resize-none hidden"></textarea>
+    </div>
+    <select id="cust-payment" class="w-full bg-black border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white/80">
+        <option value="PAGO MÓVIL">💸 Pago Móvil</option>
+        <option value="ZELLE">💎 Zelle</option>
+        <option value="EFECTIVO">💵 Efectivo (USD/BS)</option>
+    </select>
+  </div>
+
+  <div class="p-6 border-t border-white/5 bg-black/60">
+    <div class="flex justify-between items-end mb-6">
+      <span id="total-amount" class="text-neon-green font-black text-3xl tracking-tighter">$0.00</span>
+    </div>
+    <button id="send-whatsapp" class="w-full bg-neon-green text-black py-5 font-black uppercase italic text-[11px] tracking-[0.2em] hover:bg-white transition-all">
+      Confirmar Pedido por WhatsApp
+    </button>
+  </div>
+</div>
+
+<script>
+  import { 
+    cartItems, isCartOpen, cartTotal, 
+    increaseQuantity, decreaseQuantity, removeFromCart, 
+    customerData, sendOrderToWhatsApp 
+  } from '../../store/cartStore';
+
+  // Tipado para evitar errores de TS en el componente
+  declare global {
+    interface Window {
+      midnightToast: (message: string, type?: 'success' | 'error' | 'warning') => void;
+    }
+  }
+
+  const drawer = document.getElementById('cart-drawer');
+  const overlay = document.getElementById('cart-overlay');
+  const itemsContainer = document.getElementById('cart-items');
+  const totalDisplay = document.getElementById('total-amount');
+  const orderForm = document.getElementById('order-form');
+  const deliverySelect = document.getElementById('cust-delivery') as HTMLSelectElement;
+  const addressInput = document.getElementById('cust-address') as HTMLTextAreaElement;
+
+  // --- LÓGICA DE ALERTAS (Vanilla Toastify) ---
+  let lastItemsCount = 0;
+
+  cartItems.subscribe(items => {
+    if (!itemsContainer) return;
+
+    if (items.length > lastItemsCount && lastItemsCount !== 0) {
+      const addedItem = items[items.length - 1];
+      window.midnightToast(`${addedItem.nombre} añadido al carrito`, 'success');
+    }
+    lastItemsCount = items.length;
+
+    if (items.length === 0) {
+      itemsContainer.innerHTML = `<div class="py-20 text-center opacity-20 font-mono text-[10px] uppercase tracking-widest">Carrito vacío</div>`;
+      orderForm?.classList.add('hidden');
+      return;
+    }
+
+    orderForm?.classList.remove('hidden');
+    itemsContainer.innerHTML = items.map((item) => `
+      <div class="flex gap-4 bg-white/[0.03] p-4 border border-white/5 relative group">
+        <img src="${item.imagen}" class="w-16 h-16 object-cover" />
+        <div class="flex-1">
+          <div class="flex justify-between">
+            <h4 class="text-[11px] text-white font-bold uppercase">${item.nombre}</h4>
+            <button onclick="window.removeItem('${item.id}', '${item.nombre}')" class="text-white/10 hover:text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+            </button>
+          </div>
+          <div class="flex items-center justify-between mt-2">
+            <div class="flex items-center bg-black/60 border border-white/10">
+              <button onclick="window.changeQty('${item.id}', -1)" class="px-3 py-1 text-white/40">-</button>
+              <span class="px-2 text-[11px] font-mono text-neon-green">${item.cantidad}</span>
+              <button onclick="window.changeQty('${item.id}', 1)" class="px-3 py-1 text-white/40">+</button>
+            </div>
+            <span class="text-white font-mono text-xs font-bold">$${(item.precio * item.cantidad).toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  });
+
+  (window as any).changeQty = (id: string, delta: number) => delta > 0 ? increaseQuantity(id) : decreaseQuantity(id);
+  
+  (window as any).removeItem = (id: string, nombre: string) => {
+    removeFromCart(id);
+    window.midnightToast(`${nombre} eliminado`, 'error');
+  };
+
+  // Validaciones y Envío
+// Validaciones y Envío
+  document.getElementById('send-whatsapp')?.addEventListener('click', () => {
+    // 1. Validar si el carrito tiene items
+    const currentItems = cartItems.get();
+    if (currentItems.length === 0) {
+      window.midnightToast("El carrito está vacío", "error");
+      return;
+    }
+
+    // 2. Obtener valores de los inputs
+    const name = (document.getElementById('cust-name') as HTMLInputElement).value.trim();
+    const cid = (document.getElementById('cust-id') as HTMLInputElement).value.trim();
+    const phone = (document.getElementById('cust-phone') as HTMLInputElement).value.trim();
+    const delivery = (document.getElementById('cust-delivery') as HTMLSelectElement).value;
+    const address = (document.getElementById('cust-address') as HTMLTextAreaElement).value.trim();
+
+    // 3. Validar datos de contacto obligatorios
+    if (!name || !cid || !phone) {
+      window.midnightToast("Faltan datos de contacto", "warning");
+      
+      // Feedback visual opcional: marcar bordes en rojo
+      if(!name) document.getElementById('cust-name')?.classList.add('border-red-500/50');
+      if(!cid) document.getElementById('cust-id')?.classList.add('border-red-500/50');
+      if(!phone) document.getElementById('cust-phone')?.classList.add('border-red-500/50');
+      
+      return;
+    }
+
+    // 4. Validar dirección si es Delivery
+    if (delivery === 'DELIVERY' && !address) {
+      window.midnightToast("La dirección es obligatoria para Delivery", "warning");
+      document.getElementById('cust-address')?.classList.add('border-red-500/50');
+      return;
+    }
+
+    // Si todo está OK
+    window.midnightToast("Abriendo canal de WhatsApp", "success");
+
+    customerData.set({
+      nombre: name,
+      cedula: cid,
+      telefono: phone,
+      metodoEntrega: delivery as any,
+      direccion: address,
+      metodoPago: (document.getElementById('cust-payment') as HTMLSelectElement).value
+    });
+
+    setTimeout(() => sendOrderToWhatsApp(), 1000);
+  });
+
+  // Limpiar bordes rojos cuando el usuario empiece a escribir
+  document.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', () => el.classList.remove('border-red-500/50'));
+  });
+  // Suscripciones de UI
+  isCartOpen.subscribe(open => {
+    if (open) {
+      drawer?.classList.remove('translate-x-full');
+      overlay?.classList.remove('hidden');
+      setTimeout(() => overlay?.classList.add('opacity-100'), 10);
+      document.body.style.overflow = 'hidden';
+    } else {
+      drawer?.classList.add('translate-x-full');
+      overlay?.classList.remove('opacity-100');
+      setTimeout(() => overlay?.classList.add('hidden'), 500);
+      document.body.style.overflow = '';
+    }
+  });
+
+  cartTotal.subscribe(total => {
+    if (totalDisplay) totalDisplay.innerText = `$${total.toFixed(2)}`;
+  });
+
+  deliverySelect?.addEventListener('change', (e) => {
+    const val = (e.target as HTMLSelectElement).value;
+    val === 'DELIVERY' ? addressInput?.classList.remove('hidden') : addressInput?.classList.add('hidden');
+  });
+
+  document.getElementById('close-cart')?.addEventListener('click', () => isCartOpen.set(false));
+  overlay?.addEventListener('click', () => isCartOpen.set(false));
+</script>

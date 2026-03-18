@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon-green: #00f5d4;
+  --color-neon-pink: #ff007f;
+  --color-neon-purple: #9d00ff;
+  --color-cyber-blue: #00d4ff;
+  /* Nuevo color de fondo menos profundo */
+  --color-midnight-base: #0a0b10; 
+}
+
+:root {
+  /* Un gris azulado extremadamente oscuro para que respire el diseño */
+  --bg-dark: #08090d;
+}
+
+body {
+  /* Fondo con degradado sutil para que no sea plano */
+  background: radial-gradient(
+    circle at center, 
+    #0f111a 0%, 
+    #07080c 100%
+  );
+  background-attachment: fixed;
+  color: white;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Efecto de "Velo" de medianoche para dar textura */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+  opacity: 0.03; /* Muy sutil, casi imperceptible */
+  pointer-events: none;
+  z-index: 0;
+}
+
+#particles-canvas, #tsparticles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  /* Brillo suave detrás de las partículas */
+  background: radial-gradient(
+    circle at 50% -20%, 
+    rgba(0, 245, 212, 0.05) 0%, 
+    transparent 50%
+  );
+}
+
+/* Bloquea el rebote elástico en móviles y asegura el fondo negro */
+:global(html), :global(body) {
+  background-color: #08090d !important;
+  overscroll-behavior-y: none; /* Evita el efecto de "tiron" blanco arriba/abajo */
+}
+
+#cart-drawer {
+  /* Usar dvh (dynamic viewport height) para evitar el espacio blanco de la barra de direcciones */
+  height: 100dvh; 
+}

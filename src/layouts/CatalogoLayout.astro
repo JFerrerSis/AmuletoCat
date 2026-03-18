@@ -1,0 +1,97 @@
+---
+interface Props { title: string; }
+const { title } = Astro.props;
+
+import '../styles/global.css'; 
+import "toastify-js/src/toastify.css";
+
+import CartDrawer from '../components/cart/CartDrawer.astro';
+import CatalogHeader from '../components/ui/CatalogHeader.astro';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+</head>
+<body class="bg-[#08090d] text-white selection:bg-neon-green selection:text-black min-h-dvh relative">
+    
+    <div class="fixed inset-0 pointer-events-none z-0">
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(0,245,212,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,245,212,0.02)_1px,transparent_1px)] bg-size-[40px_40px]"></div>
+      <div class="absolute inset-0 bg-radial-at-t from-neon-green/5 to-transparent"></div>
+    </div>
+    
+    <CatalogHeader />
+    <CartDrawer />
+    
+    <main class="relative z-10">
+      <slot />
+    </main>
+<script>
+      import Toastify from 'toastify-js';
+
+      declare global {
+        interface Window {
+          midnightToast: (message: string, type?: 'success' | 'error' | 'warning') => void;
+        }
+      }
+
+      window.midnightToast = (message: string, type: 'success' | 'error' | 'warning' = 'success') => {
+        // --- LÓGICA DE CONTROL DE SOBRECARGA ---
+        const maxAlerts = 3;
+        const currentAlerts = document.querySelectorAll('.midnight-alert');
+        
+        // Si ya hay 3 alertas, eliminamos la más vieja antes de poner la nueva
+        if (currentAlerts.length >= maxAlerts) {
+            currentAlerts[0].remove();
+        }
+
+        const colors: Record<string, string> = {
+          success: '#00f5d4',
+          error: '#ff4b2b',
+          warning: '#facc15'
+        };
+
+        const activeColor = colors[type] || colors.success;
+
+        Toastify({
+          text: `// ${message.toUpperCase()}`,
+          duration: 2500, // Bajamos un poco la duración para que fluyan rápido
+          gravity: "bottom", 
+          position: "right", 
+          stopOnFocus: true,
+          className: "midnight-alert",
+          style: {
+            background: "#08090d",
+            color: activeColor,
+            border: `1px solid ${activeColor}33`,
+            boxShadow: "0 10px 40px rgba(0,0,0,0.8)",
+          }
+        }).showToast();
+      };
+
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          window.midnightToast("BIENVENIDO AL SISTEMA", "success");
+        }, 500);
+      });
+    </script>
+
+    <style is:global>
+      .midnight-alert {
+        font-family: 'JetBrains Mono', monospace !important;
+        font-size: 10px !important;
+        font-weight: 800 !important;
+        border-radius: 0px !important;
+        padding: 12px 20px !important;
+        letter-spacing: 0.1em !important;
+        backdrop-filter: blur(10px);
+        opacity: 1 !important;
+        z-index: 99999 !important;
+      }
+    </style>
+</body>
+</html>

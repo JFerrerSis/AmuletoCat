@@ -27,7 +27,7 @@
       </div>
       <input type="text" id="cust-name" placeholder="Tu nombre completo" class="w-full bg-black/40 border border-white/10 p-3 text-xs focus:border-neon-green outline-none text-white transition-all" />
       <div class="grid grid-cols-2 gap-3">
-        <input type="text" id="cust-id" placeholder="Cédula / ID" class="bg-black/40 border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white transition-all" />
+        <input type="tel" id="cust-id" placeholder="Cédula / ID" class="bg-black/40 border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white transition-all" />
         <input type="tel" id="cust-phone" placeholder="Teléfono" class="bg-black/40 border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white transition-all" />
       </div>
       <select id="cust-delivery" class="w-full bg-black border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white/80">
@@ -60,149 +60,141 @@
     customerData, sendOrderToWhatsApp 
   } from '../../store/cartStore';
 
-  // Tipado para evitar errores de TS en el componente
   declare global {
     interface Window {
       midnightToast: (message: string, type?: 'success' | 'error' | 'warning') => void;
+      changeQty: (id: string, delta: number) => void;
+      removeItem: (id: string, nombre: string) => void;
     }
   }
 
-  const drawer = document.getElementById('cart-drawer');
-  const overlay = document.getElementById('cart-overlay');
-  const itemsContainer = document.getElementById('cart-items');
-  const totalDisplay = document.getElementById('total-amount');
-  const orderForm = document.getElementById('order-form');
-  const deliverySelect = document.getElementById('cust-delivery') as HTMLSelectElement;
-  const addressInput = document.getElementById('cust-address') as HTMLTextAreaElement;
+  const initCart = () => {
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-overlay');
+    const itemsContainer = document.getElementById('cart-items');
+    const totalDisplay = document.getElementById('total-amount');
+    const orderForm = document.getElementById('order-form');
+    const deliverySelect = document.getElementById('cust-delivery') as HTMLSelectElement;
+    const addressInput = document.getElementById('cust-address') as HTMLTextAreaElement;
+    const closeBtn = document.getElementById('close-cart');
+    const sendBtn = document.getElementById('send-whatsapp');
 
-  // --- LÓGICA DE ALERTAS (Vanilla Toastify) ---
-  let lastItemsCount = 0;
+    if (!drawer || !overlay) return;
 
-  cartItems.subscribe(items => {
-    if (!itemsContainer) return;
+    // --- RENDERIZADO E ITEMS ---
+    let lastItemsCount = cartItems.get().length;
 
-    if (items.length > lastItemsCount && lastItemsCount !== 0) {
-      const addedItem = items[items.length - 1];
-      window.midnightToast(`${addedItem.nombre} añadido al carrito`, 'success');
-    }
-    lastItemsCount = items.length;
+    cartItems.subscribe(items => {
+      if (!itemsContainer) return;
 
-    if (items.length === 0) {
-      itemsContainer.innerHTML = `<div class="py-20 text-center opacity-20 font-mono text-[10px] uppercase tracking-widest">Carrito vacío</div>`;
-      orderForm?.classList.add('hidden');
-      return;
-    }
+      if (items.length > lastItemsCount && lastItemsCount !== 0) {
+        const addedItem = items[items.length - 1];
+        window.midnightToast?.(`${addedItem.nombre} añadido al carrito`, 'success');
+      }
+      lastItemsCount = items.length;
 
-    orderForm?.classList.remove('hidden');
-    itemsContainer.innerHTML = items.map((item) => `
-      <div class="flex gap-4 bg-white/[0.03] p-4 border border-white/5 relative group">
-        <img src="${item.imagen}" class="w-16 h-16 object-cover" />
-        <div class="flex-1">
-          <div class="flex justify-between">
-            <h4 class="text-[11px] text-white font-bold uppercase">${item.nombre}</h4>
-            <button onclick="window.removeItem('${item.id}', '${item.nombre}')" class="text-white/10 hover:text-red-500">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
-            </button>
-          </div>
-          <div class="flex items-center justify-between mt-2">
-            <div class="flex items-center bg-black/60 border border-white/10">
-              <button onclick="window.changeQty('${item.id}', -1)" class="px-3 py-1 text-white/40">-</button>
-              <span class="px-2 text-[11px] font-mono text-neon-green">${item.cantidad}</span>
-              <button onclick="window.changeQty('${item.id}', 1)" class="px-3 py-1 text-white/40">+</button>
+      if (items.length === 0) {
+        itemsContainer.innerHTML = `<div class="py-20 text-center opacity-20 font-mono text-[10px] uppercase tracking-widest">Carrito vacío</div>`;
+        orderForm?.classList.add('hidden');
+        return;
+      }
+
+      orderForm?.classList.remove('hidden');
+      itemsContainer.innerHTML = items.map((item) => `
+        <div class="flex gap-4 bg-white/[0.03] p-4 border border-white/5 relative group">
+          <img src="${item.imagen}" class="w-16 h-16 object-cover" />
+          <div class="flex-1">
+            <div class="flex justify-between">
+              <h4 class="text-[11px] text-white font-bold uppercase">${item.nombre}</h4>
+              <button onclick="window.removeItem('${item.id}', '${item.nombre}')" class="text-white/10 hover:text-red-500 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+              </button>
             </div>
-            <span class="text-white font-mono text-xs font-bold">$${(item.precio * item.cantidad).toFixed(2)}</span>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center bg-black/60 border border-white/10">
+                <button onclick="window.changeQty('${item.id}', -1)" class="px-3 py-1 text-white/40 hover:text-white">-</button>
+                <span class="px-2 text-[11px] font-mono text-neon-green">${item.cantidad}</span>
+                <button onclick="window.changeQty('${item.id}', 1)" class="px-3 py-1 text-white/40 hover:text-white">+</button>
+              </div>
+              <span class="text-white font-mono text-xs font-bold">$${(item.precio * item.cantidad).toFixed(2)}</span>
+            </div>
           </div>
         </div>
-      </div>
-    `).join('');
-  });
-
-  (window as any).changeQty = (id: string, delta: number) => delta > 0 ? increaseQuantity(id) : decreaseQuantity(id);
-  
-  (window as any).removeItem = (id: string, nombre: string) => {
-    removeFromCart(id);
-    window.midnightToast(`${nombre} eliminado`, 'error');
-  };
-
-  // Validaciones y Envío
-// Validaciones y Envío
-  document.getElementById('send-whatsapp')?.addEventListener('click', () => {
-    // 1. Validar si el carrito tiene items
-    const currentItems = cartItems.get();
-    if (currentItems.length === 0) {
-      window.midnightToast("El carrito está vacío", "error");
-      return;
-    }
-
-    // 2. Obtener valores de los inputs
-    const name = (document.getElementById('cust-name') as HTMLInputElement).value.trim();
-    const cid = (document.getElementById('cust-id') as HTMLInputElement).value.trim();
-    const phone = (document.getElementById('cust-phone') as HTMLInputElement).value.trim();
-    const delivery = (document.getElementById('cust-delivery') as HTMLSelectElement).value;
-    const address = (document.getElementById('cust-address') as HTMLTextAreaElement).value.trim();
-
-    // 3. Validar datos de contacto obligatorios
-    if (!name || !cid || !phone) {
-      window.midnightToast("Faltan datos de contacto", "warning");
-      
-      // Feedback visual opcional: marcar bordes en rojo
-      if(!name) document.getElementById('cust-name')?.classList.add('border-red-500/50');
-      if(!cid) document.getElementById('cust-id')?.classList.add('border-red-500/50');
-      if(!phone) document.getElementById('cust-phone')?.classList.add('border-red-500/50');
-      
-      return;
-    }
-
-    // 4. Validar dirección si es Delivery
-    if (delivery === 'DELIVERY' && !address) {
-      window.midnightToast("La dirección es obligatoria para Delivery", "warning");
-      document.getElementById('cust-address')?.classList.add('border-red-500/50');
-      return;
-    }
-
-    // Si todo está OK
-    window.midnightToast("Abriendo canal de WhatsApp", "success");
-
-    customerData.set({
-      nombre: name,
-      cedula: cid,
-      telefono: phone,
-      metodoEntrega: delivery as any,
-      direccion: address,
-      metodoPago: (document.getElementById('cust-payment') as HTMLSelectElement).value
+      `).join('');
     });
 
-    setTimeout(() => sendOrderToWhatsApp(), 1000);
-  });
+    // --- FUNCIONES GLOBALES ---
+    window.changeQty = (id, delta) => delta > 0 ? increaseQuantity(id) : decreaseQuantity(id);
+    window.removeItem = (id, nombre) => {
+      removeFromCart(id);
+      window.midnightToast?.(`${nombre} eliminado`, 'error');
+    };
 
-  // Limpiar bordes rojos cuando el usuario empiece a escribir
-  document.querySelectorAll('input, textarea').forEach(el => {
-    el.addEventListener('input', () => el.classList.remove('border-red-500/50'));
-  });
-  // Suscripciones de UI
-  isCartOpen.subscribe(open => {
-    if (open) {
-      drawer?.classList.remove('translate-x-full');
-      overlay?.classList.remove('hidden');
-      setTimeout(() => overlay?.classList.add('opacity-100'), 10);
-      document.body.style.overflow = 'hidden';
-    } else {
-      drawer?.classList.add('translate-x-full');
-      overlay?.classList.remove('opacity-100');
-      setTimeout(() => overlay?.classList.add('hidden'), 500);
-      document.body.style.overflow = '';
-    }
-  });
+    // --- SUSCRIPCIONES UI ---
+    isCartOpen.subscribe(open => {
+      if (open) {
+        drawer.classList.remove('translate-x-full');
+        overlay.classList.remove('hidden');
+        setTimeout(() => overlay.classList.add('opacity-100'), 10);
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.add('translate-x-full');
+        overlay.classList.remove('opacity-100');
+        setTimeout(() => overlay.classList.add('hidden'), 500);
+        document.body.style.overflow = '';
+      }
+    });
 
-  cartTotal.subscribe(total => {
-    if (totalDisplay) totalDisplay.innerText = `$${total.toFixed(2)}`;
-  });
+    cartTotal.subscribe(total => {
+      if (totalDisplay) totalDisplay.innerText = `$${total.toFixed(2)}`;
+    });
 
-  deliverySelect?.addEventListener('change', (e) => {
-    const val = (e.target as HTMLSelectElement).value;
-    val === 'DELIVERY' ? addressInput?.classList.remove('hidden') : addressInput?.classList.add('hidden');
-  });
+    // --- EVENT LISTENERS ---
+    deliverySelect?.addEventListener('change', (e) => {
+      const val = (e.target as HTMLSelectElement).value;
+      val === 'DELIVERY' ? addressInput?.classList.remove('hidden') : addressInput?.classList.add('hidden');
+    });
 
-  document.getElementById('close-cart')?.addEventListener('click', () => isCartOpen.set(false));
-  overlay?.addEventListener('click', () => isCartOpen.set(false));
+    closeBtn?.addEventListener('click', () => isCartOpen.set(false));
+    overlay?.addEventListener('click', () => isCartOpen.set(false));
+
+    sendBtn?.addEventListener('click', () => {
+      const currentItems = cartItems.get();
+      if (currentItems.length === 0) return window.midnightToast?.("El carrito está vacío", "error");
+
+      const name = (document.getElementById('cust-name') as HTMLInputElement).value.trim();
+      const cid = (document.getElementById('cust-id') as HTMLInputElement).value.trim();
+      const phone = (document.getElementById('cust-phone') as HTMLInputElement).value.trim();
+      const delivery = (document.getElementById('cust-delivery') as HTMLSelectElement).value;
+      const address = (document.getElementById('cust-address') as HTMLTextAreaElement).value.trim();
+
+      if (!name || !cid || !phone || (delivery === 'DELIVERY' && !address)) {
+        window.midnightToast?.("Faltan datos de contacto", "warning");
+        if(!name) document.getElementById('cust-name')?.classList.add('border-red-500/50');
+        if(!cid) document.getElementById('cust-id')?.classList.add('border-red-500/50');
+        if(!phone) document.getElementById('cust-phone')?.classList.add('border-red-500/50');
+        if(delivery === 'DELIVERY' && !address) addressInput?.classList.add('border-red-500/50');
+        return;
+      }
+
+      window.midnightToast?.("Abriendo canal de WhatsApp", "success");
+      customerData.set({
+        nombre: name,
+        cedula: cid,
+        telefono: phone,
+        metodoEntrega: delivery as any,
+        direccion: address,
+        metodoPago: (document.getElementById('cust-payment') as HTMLSelectElement).value
+      });
+      setTimeout(() => sendOrderToWhatsApp(), 1000);
+    });
+
+    document.querySelectorAll('input, textarea').forEach(el => {
+      el.addEventListener('input', () => el.classList.remove('border-red-500/50'));
+    });
+  };
+
+  // Inicialización para Astro
+  document.addEventListener('astro:page-load', initCart);
+  initCart();
 </script>

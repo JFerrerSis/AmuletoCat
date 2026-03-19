@@ -78,8 +78,7 @@ export function sendOrderToWhatsApp() {
 const phone = import.meta.env.PUBLIC_WHATSAPP_NUMBER;
   if (items.length === 0) return;
 
-  let message = `*📦 NUEVA ORDEN - MIDNIGHT STUDIO*\n`;
-  message += `_Protocolo de Suministro Activado_\n`;
+  let message = `*📦 PEDIDO - MIDNIGHT STUDIO*\n`;
   message += `--------------------------------\n`;
   message += `👤 *CLIENTE:* ${data.nombre.toUpperCase()}\n`;
   message += `🆔 *CÉDULA:* ${data.cedula}\n`;

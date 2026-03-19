@@ -14,22 +14,39 @@
     </button>
   </div>
 </nav>
-
 <script>
   import { cartItems, isCartOpen } from '../../store/cartStore';
 
-  const counter = document.getElementById('cart-counter');
-  const trigger = document.getElementById('cart-trigger');
+  const initHeader = () => {
+    const counter = document.getElementById('cart-counter');
+    const trigger = document.getElementById('cart-trigger');
 
-  // Actualizar contador
-  cartItems.subscribe(items => {
-    const total = items.reduce((acc, item) => acc + item.cantidad, 0);
-    if (counter) {
-      counter.textContent = total.toString();
-      total > 0 ? counter.classList.add('scale-100') : counter.classList.remove('scale-100');
+    // 1. Suscribirse al Store (Nano Stores maneja bien la persistencia)
+    cartItems.subscribe(items => {
+      const total = items.reduce((acc, item) => acc + (item.cantidad || 0), 0);
+      if (counter) {
+        counter.textContent = total.toString();
+        if (total > 0) {
+          counter.classList.add('scale-100');
+        } else {
+          counter.classList.remove('scale-100');
+        }
+      }
+    });
+
+    // 2. Event Listener con protección de duplicados
+    if (trigger) {
+      // Limpiamos cualquier listener viejo para evitar dobles aperturas
+      trigger.onclick = (e) => {
+        e.preventDefault();
+        isCartOpen.set(true);
+      };
     }
-  });
+  };
 
-  // Abrir carrito solo al click
-  trigger?.addEventListener('click', () => isCartOpen.set(true));
+  // 3. LA CLAVE: Re-inicializar en cada cambio de página de Astro
+  document.addEventListener('astro:page-load', initHeader);
+  
+  // Ejecución inicial
+  initHeader();
 </script>

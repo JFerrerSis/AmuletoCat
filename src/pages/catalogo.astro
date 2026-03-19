@@ -1,6 +1,7 @@
 ---
 import CatalogLayout from '../layouts/CatalogoLayout.astro';
 import ProductCard from '../components/ui/ProductCard.astro';
+import ProductSkeleton from '../components/ui/ProductSkeleton.astro'; 
 import productosData from '../data/productos.json'; 
 import type { Product } from '../types/product';
 
@@ -8,23 +9,23 @@ const products = (productosData as Product[]);
 const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCase()))];
 ---
 
-<CatalogLayout title="Catalog | MidNight Studio">
+<CatalogLayout title="Catálogo | MidNight Studio">
   <main class="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-24 relative">
     
     <header class="mb-8 md:mb-16 border-l-2 border-neon-green pl-4 md:pl-6 opacity-0 animate-slide-in">
       <h1 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-none">
-        Catalogo<br/>
+        Catálogo<br/>
       </h1>
+      <p class="text-[10px] font-mono text-white/20 tracking-[0.5em] uppercase italic mt-2">Inventory System v1.0</p>
     </header>
 
-<div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 md:mb-16 opacity-0 animate-slide-in" style="animation-delay: 0.15s">
+    <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 md:mb-16 opacity-0 animate-slide-in" style="animation-delay: 0.15s">
       {categories.map((cat) => (
         <button 
-          class="filter-btn group relative px-4 md:px-8 py-2 md:py-3 border  border-white/5 bg-white/0.02 hover:border-neon-green/40 transition-all duration-300"
+          class="filter-btn group relative px-4 md:px-8 py-2 md:py-3 border border-white/5 bg-white/0.02 hover:border-neon-green/40 transition-all duration-300"
           data-category={cat}
         >
           <div class="absolute inset-0 bg-neon-green/0 group-hover:bg-neon-green/5 transition-colors"></div>
-          
           <span class="relative z-10 font-mono text-[9px] md:text-[11px] text-white/40 group-hover:text-neon-green transition-colors uppercase italic tracking-[0.2em] font-bold">
             {cat}
           </span>
@@ -33,11 +34,20 @@ const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCas
     </div>
 
     <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-x-6 md:gap-y-12">
+      
+      {/* Skeletons para Feedback de Carga */}
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div class="skeleton-wrapper hidden-instant">
+          <ProductSkeleton />
+        </div>
+      ))}
+
+      {/* Items Reales */}
       {products.map((item, index) => (
         <div 
           class="product-item opacity-0 animate-fade-up" 
           data-category={item.categoria.toUpperCase()}
-          style={`animation-delay: ${0.2 + (index * 0.05)}s`}
+          style={`animation-delay: ${0.2 + (index * 0.05)}s;`} 
         >
           <ProductCard {...item} />
         </div>
@@ -46,54 +56,89 @@ const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCas
   </main>
 </CatalogLayout>
 
-<style is:global>
-  /* Animaciones */
-  @keyframes slide-in {
-    from { opacity: 0; transform: translateX(-15px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-slide-in { animation: slide-in 0.8s ease-out forwards; }
-  .animate-fade-up { animation: fade-up 0.6s ease-out forwards; }
-
-  .product-item.hidden-instant {
-    display: none !important;
-  }
-</style>
-
 <script>
-  // Tu script de filtrado se mantiene igual, ya que solo cambia el diseño del grid
-  const buttons = document.querySelectorAll('.filter-btn');
-  const items = document.querySelectorAll('.product-item');
+  const initFilters = () => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.product-item');
+    const skeletons = document.querySelectorAll('.skeleton-wrapper');
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const category = btn.getAttribute('data-category');
-      
-      buttons.forEach(b => b.classList.remove('border-neon-green', 'bg-neon-green/5', 'text-neon-green'));
-      btn.classList.add('border-neon-green', 'bg-neon-green/5');
+    if (buttons.length === 0) return;
 
+    const applyFilter = (category: string) => {
       items.forEach((item) => {
         const itemCat = item.getAttribute('data-category');
         const shouldShow = category === 'TODOS' || itemCat === category;
         
-        (item as HTMLElement).style.animation = 'none';
-        (item as HTMLElement).style.opacity = '1';
+        const el = item as HTMLElement;
+        // Quitamos animaciones para que el cambio de filtro sea instantáneo y no choque con View Transitions
+        el.style.animation = 'none';
+        el.style.opacity = '1';
 
         if (shouldShow) {
-          item.classList.remove('hidden-instant');
+          el.classList.remove('hidden-instant');
         } else {
-          item.classList.add('hidden-instant');
+          el.classList.add('hidden-instant');
         }
       });
-    });
-  });
+      
+      skeletons.forEach(s => s.classList.add('hidden-instant'));
+      
+      // Sincronización con el Layout para re-activar botones si fuera necesario
+      document.dispatchEvent(new CustomEvent('midnight:filter-applied'));
+    };
 
-  const firstBtn = buttons[0] as HTMLElement;
-  if (firstBtn) firstBtn.click();
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category') || 'TODOS';
+        
+        // Estética de botones (Activo/Inactivo)
+        buttons.forEach(b => b.classList.remove('border-neon-green', 'bg-neon-green/5'));
+        btn.classList.add('border-neon-green', 'bg-neon-green/5');
+
+        // Fase 1: Mostrar Skeletons (Feedback)
+        items.forEach(i => i.classList.add('hidden-instant'));
+        skeletons.forEach(s => s.classList.remove('hidden-instant'));
+
+        // Fase 2: Aplicar Filtro con View Transition
+        setTimeout(() => {
+          // @ts-ignore
+          if (!document.startViewTransition) {
+            applyFilter(category);
+          } else {
+            // @ts-ignore
+            document.startViewTransition(() => applyFilter(category));
+          }
+        }, 150);
+      });
+    });
+
+    // Estado Inicial: Forzar visibilidad de productos y ocultar skeletons al cargar
+    buttons[0]?.classList.add('border-neon-green', 'bg-neon-green/5');
+    skeletons.forEach(s => s.classList.add('hidden-instant'));
+    items.forEach(i => i.classList.remove('hidden-instant'));
+  };
+
+  // Inicialización compatible con navegación Astro
+  document.addEventListener('astro:page-load', initFilters);
 </script>
+
+<style is:global>
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-slide-in { animation: slide-in 0.8s ease-out forwards; }
+  .animate-fade-up { animation: fade-up 0.6s ease-out forwards; }
+
+  /* Utilidad crítica para el filtrado */
+  .hidden-instant { display: none !important; }
+
+  /* Suavizado de la transición entre categorías */
+  ::view-transition-group(root) {
+    animation-duration: 0.25s;
+  }
+</style>

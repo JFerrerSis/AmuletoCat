@@ -2,19 +2,18 @@
 import Layout from '../layouts/Layout.astro';
 import LinkCard from '../components/ui/LinkCard.astro';
 import Header from '../components/ui/Header.astro';
-import Particles from '../components/ui/ParticlesBackground.astro'; // <--- Importamos el componente
+import Particles from '../components/ui/ParticlesBackground.astro';
 
-// CONFIGURACIÓN DE WHATSAPP
 const phone = import.meta.env.PUBLIC_WHATSAPP_NUMBER;
 const message = "¡Hola MidNight! 🌙 Me gustaría obtener información sobre sus servicios.";
 const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 ---
 
-<Layout title="MidNight Studio | CyberMenu">
+<Layout title="MidNight Studio">
   <Particles />
 
   <div 
-    class="flex flex-col items-center justify-center h-screen max-w-112.5 mx-auto px-6 relative z-10 overflow-hidden"
+    class="flex flex-col items-center justify-center min-h-[80vh] max-w-112.5 mx-auto px-6 relative z-10 py-12"
     transition:animate="fade"
   >
     
@@ -46,16 +45,9 @@ const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
       </LinkCard>
     </div>
 
-    <footer class="mt-12 text-center font-mono text-[8px] tracking-[0.5em] text-white/30 italic">
-      <p>> INITIALIZING MIDNIGHT_PROTOCOLS...</p>
-      <p>EST 2026 // MARACAIBO // VENEZUELA</p>
-    </footer>
   </div>
 </Layout>
 
 <style>
-  :global(body) {
-    overflow: hidden;
-    height: 100vh;
-  }
+  /* ELIMINADO: Ya no bloqueamos el scroll del body aquí */
 </style>

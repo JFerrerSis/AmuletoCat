@@ -1,77 +1,70 @@
 ---
 interface Props { title: string; }
 const { title } = Astro.props;
+import { ClientRouter } from 'astro:transitions';
 
 import '../styles/global.css'; 
+import "toastify-js/src/toastify.css"; 
+import Footer from '../components/ui/Footer.astro';
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="bg-[#08090d]"> 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/logodark.png" />
     <title>{title}</title>
+    <ClientRouter />
 </head>
-<body class="bg-[#08090d] text-white selection:bg-neon-green selection:text-black min-h-screen">
+<body class="bg-[#08090d] text-white selection:bg-neon-green selection:text-black min-h-dvh flex flex-col relative overflow-x-hidden">
     
-
-
-    <div class="fixed inset-0 pointer-events-none -z-10">
-      <div class="absolute inset-0 bg-[linear-gradient(rgba(0,245,212,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,245,212,0.02)_1px,transparent_1px)] bg-size[40px_40px]"></div>
+    <div class="fixed inset-0 pointer-events-none z-0">
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(0,245,212,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,245,212,0.02)_1px,transparent_1px)] bg-size-[40px_40px]"></div>
       <div class="absolute inset-0 bg-radial-at-t from-neon-green/5 to-transparent"></div>
     </div>
         
-    <div class="relative z-10">
+    <main class="relative z-10 flex-1">
       <slot />
-    </div>
+    </main>
 
-    <script>
-      import { toast } from 'sonner';
+    <Footer />
 
-      // Alerta de Bienvenida al cargar
-      window.addEventListener('DOMContentLoaded', () => {
-        // Usamos un pequeño delay para que no choque con la carga del DOM
-        setTimeout(() => {
-          toast('MIDNIGHT_SYSTEM: ONLINE', {
-            description: 'Catálogo de productos cargado correctamente.',
-            duration: 5000,
-            style: {
-              background: '#08090d',
-              color: '#00f5d4',
-              border: '1px solid rgba(0,245,212,0.3)',
-              fontFamily: 'monospace',
-              textTransform: 'uppercase',
-              fontSize: '10px'
-            }
-          });
-        }, 1000);
-      });
-    </script>
+
 
     <style is:global>
-      /* Estilos para forzar el look MidNight en Sonner */
-      [data-sonner-toast] {
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.3s;
         background: #08090d !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        border-radius: 0px !important;
+      }
+
+      .midnight-alert {
         font-family: 'JetBrains Mono', monospace !important;
-      }
-
-      [data-sonner-toast] [data-description] {
-        color: rgba(255, 255, 255, 0.5) !important;
         font-size: 10px !important;
+        font-weight: 800 !important;
+        border-radius: 0px !important;
+        padding: 12px 20px !important;
+        letter-spacing: 0.1em !important;
+        backdrop-filter: blur(10px);
+        z-index: 99999 !important;
+        margin-bottom: 20px !important;
       }
 
-      /* Scrollbar Midnight */
-      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar { width: 6px; }
       ::-webkit-scrollbar-track { background: #08090d; }
       ::-webkit-scrollbar-thumb { 
         background: #1a1b23; 
-        border-radius: 0px;
-        border: 2px solid #08090d;
+        border: 1px solid #08090d;
       }
       ::-webkit-scrollbar-thumb:hover { background: #00f5d4; }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #08090d;
+      }
     </style>
 </body>
 </html>

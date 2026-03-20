@@ -1,7 +1,9 @@
-import { atom, computed } from 'nanostores';
+import { atom, computed, onMount } from 'nanostores';
 import type { CartItem, Product } from '../types/product';
 
-// Definición de la estructura de datos del cliente
+// Clave para el almacenamiento
+const STORAGE_KEY = 'midnight_cart_v1';
+
 export interface CustomerData {
   nombre: string;
   cedula: string;
@@ -11,11 +13,19 @@ export interface CustomerData {
   metodoPago: string;
 }
 
-// Átomos de estado
-export const cartItems = atom<CartItem[]>([]);
+// Helper para obtener datos iniciales de forma segura (evita errores de SSR en Astro)
+const getInitialCart = (): CartItem[] => {
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  }
+  return [];
+};
+
+// --- Átomos de estado ---
+export const cartItems = atom<CartItem[]>(getInitialCart());
 export const isCartOpen = atom<boolean>(false);
 
-// Átomo para almacenar la información del formulario
 export const customerData = atom<CustomerData>({
   nombre: '',
   cedula: '',
@@ -25,12 +35,18 @@ export const customerData = atom<CustomerData>({
   metodoPago: 'PAGO MOVIL'
 });
 
-// Computado para el total
+// --- Persistencia Automática ---
+// Escucha cambios en cartItems y guarda en localStorage automáticamente
+cartItems.listen((items) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+});
+
+// --- Computado ---
 export const cartTotal = computed(cartItems, (items) => {
   return items.reduce((total, item) => total + (item.precio * item.cantidad), 0);
 });
 
-// Acciones del carrito
+// --- Acciones ---
 export function addProductToCart(product: Product) {
   const currentItems = cartItems.get();
   const existingItem = currentItems.find(item => item.id === product.id);
@@ -40,7 +56,6 @@ export function addProductToCart(product: Product) {
   } else {
     cartItems.set([...currentItems, { ...product, cantidad: 1 }]);
   }
-  // UX: No abrimos el carrito automáticamente para permitir seguir comprando
 }
 
 export function increaseQuantity(id: string) {
@@ -68,14 +83,18 @@ export function removeFromCart(id: string) {
   cartItems.set(cartItems.get().filter(item => item.id !== id));
 }
 
-/**
- * Genera el mensaje de WhatsApp y abre la aplicación
- */
+export function clearCart() {
+  cartItems.set([]);
+  localStorage.removeItem(STORAGE_KEY);
+}
+
 export function sendOrderToWhatsApp() {
+  // ... tu lógica de WhatsApp se mantiene igual
   const items = cartItems.get();
   const data = customerData.get();
   const total = cartTotal.get();
-const phone = import.meta.env.PUBLIC_WHATSAPP_NUMBER;
+  const phone = import.meta.env.PUBLIC_WHATSAPP_NUMBER;
+  
   if (items.length === 0) return;
 
   let message = `*📦 PEDIDO - MIDNIGHT STUDIO*\n`;

@@ -1,6 +1,10 @@
+---
+import { ShoppingCart } from 'lucide-astro'; // ShoppingBag suele verse más elegante para joyería
+---
+
 <nav 
   id="main-nav"
-  class="fixed top-0 w-full z-50 transition-all duration-700 border-b border-transparent bg-brand-pink/10 backdrop-blur-md"
+  class="fixed top-0 w-full z-50 transition-all duration-700 border-b border-transparent bg-brand-pink/0.5 backdrop-blur-md"
 >
   <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center transition-all duration-500" id="nav-content">
     
@@ -9,7 +13,7 @@
         <div class="absolute inset-0 bg-brand-gold/15 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
         
         <img 
-          src="./images/LogoCatalogo.png" 
+          src="/images/LogoCatalogo.png" 
           alt="Amuleto" 
           class="relative z-10 w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.4)] transition-all duration-500"
         />
@@ -20,22 +24,11 @@
       id="cart-trigger" 
       class="relative p-3 bg-white/30 hover:bg-brand-gold/10 border border-brand-purple/10 transition-all rounded-2xl group backdrop-blur-sm"
     >
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="22" 
-        height="22" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round" 
+      <ShoppingCart 
+        size={22}
+        strokeWidth={1.5}
         class="text-brand-purple group-hover:text-brand-gold transition-colors duration-300"
-      >
-        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
-        <path d="M3 6h18"></path>
-        <path d="M16 10a4 4 0 0 1-8 0"></path>
-      </svg>
+      />
       
       <span 
         id="cart-counter" 
@@ -58,22 +51,18 @@
     const logoContainer = document.getElementById('logo-container');
 
     const handleScroll = () => {
-      if (window.scrollY > 30) {
-        // Reducimos altura del contenedor y del logo
+      const isScrolled = window.scrollY > 30;
+      
+      if (isScrolled) {
         navContent?.classList.replace('h-24', 'h-16');
         logoContainer?.classList.replace('w-20', 'w-14');
         logoContainer?.classList.replace('h-20', 'h-14');
-        
-        // Mantenemos el rosado pero con un borde sutil y sombra para separar del contenido
         nav?.classList.add('border-brand-purple/5', 'shadow-sm');
-        // Aumentamos un poco la opacidad al bajar para mejor legibilidad
         nav?.classList.replace('bg-brand-pink/70', 'bg-brand-pink/85');
       } else {
-        // Estado original al estar arriba
         navContent?.classList.replace('h-16', 'h-24');
         logoContainer?.classList.replace('w-14', 'w-20');
         logoContainer?.classList.replace('h-14', 'h-20');
-        
         nav?.classList.remove('border-brand-purple/5', 'shadow-sm');
         nav?.classList.replace('bg-brand-pink/85', 'bg-brand-pink/70');
       }
@@ -103,25 +92,12 @@
 </script>
 
 <style>
-  /* Color de marca con opacidad para el efecto glassmorphism */
-  .bg-brand-pink\/70 {
-    background-color: rgba(214, 158, 158, 0.7);
-  }
-  
-  .bg-brand-pink\/85 {
-    background-color: rgba(214, 158, 158, 0.85);
-  }
+  .bg-brand-pink\/70 { background-color: rgba(214, 158, 158, 0.7); }
+  .bg-brand-pink\/85 { background-color: rgba(214, 158, 158, 0.85); }
 
-  #main-nav {
-    will-change: background-color, backdrop-filter;
-  }
-
-  /* Transiciones fluidas */
   #main-nav, #nav-content, #logo-container {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  img {
-    image-rendering: -webkit-optimize-contrast;
-  }
+  img { image-rendering: -webkit-optimize-contrast; }
 </style>

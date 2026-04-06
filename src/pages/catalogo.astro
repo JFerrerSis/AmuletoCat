@@ -7,47 +7,58 @@ import type { Product } from '../types/product';
 
 const products = (productosData as Product[]);
 const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCase()))];
+
+// Helper para formatear a Peso Argentino (ARS)
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
 ---
 
-<CatalogLayout title="Catálogo | MidNight Studio">
-  <main class="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-24 relative">
+<CatalogLayout title="Catálogo | Amuleto">
+  <main class="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-24 relative bg-brand-pink-0.5">
     
-    <header class="mb-8 md:mb-16 border-l-2 border-neon-green pl-4 md:pl-6 opacity-0 animate-slide-in">
-      <h1 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-none">
-        Catálogo<br/>
+    <header class="mt-15 mb-12 md:mb-20 text-center animate-reveal">
+      <h1 class="text-3xl md:text-5xl font-bold tracking-[0.25em] uppercase text-brand-purple mb-4">
+        Amuletos<br/>
       </h1>
+      <div class="w-12 h-0.5 bg-brand-gold mx-auto opacity-50"></div>
     </header>
 
-    <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 md:mb-16 opacity-0 animate-slide-in" style="animation-delay: 0.15s">
+    <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12 md:mb-20 animate-reveal" style="animation-delay: 0.1s">
       {categories.map((cat) => (
         <button 
-          class="filter-btn group relative px-4 md:px-8 py-2 md:py-3 border border-white/5 bg-white/0.02 hover:border-neon-green/40 transition-all duration-300"
+          class="filter-btn group relative px-4 md:px-8 py-3 transition-all duration-500"
           data-category={cat}
         >
-          <div class="absolute inset-0 bg-neon-green/0 group-hover:bg-neon-green/5 transition-colors"></div>
-          <span class="relative z-10 font-mono text-[9px] md:text-[11px] text-white/40 group-hover:text-neon-green transition-colors uppercase italic tracking-[0.2em] font-bold">
+          <span class="relative z-10 font-bold text-[10px] md:text-[11px] text-brand-purple/40 group-hover:text-brand-purple transition-colors uppercase tracking-[0.2em]">
             {cat}
           </span>
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-gold transition-all duration-500 group-[.active]:w-8 opacity-80"></div>
         </button>
       ))}
     </div>
 
-    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-x-6 md:gap-y-12">
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-x-8 md:gap-y-16">
       
-      {/* Skeletons para Feedback de Carga */}
       {Array.from({ length: 8 }).map((_, i) => (
         <div class="skeleton-wrapper hidden-instant">
           <ProductSkeleton />
         </div>
       ))}
 
-      {/* Items Reales */}
       {products.map((item, index) => (
         <div 
-          class="product-item opacity-0 animate-fade-up" 
+          class="product-item opacity-0 animate-reveal" 
           data-category={item.categoria.toUpperCase()}
           style={`animation-delay: ${0.2 + (index * 0.05)}s;`} 
         >
+          {/* Nota: Asegúrate de que tu componente ProductCard 
+              también use Intl.NumberFormat para ARS internamente 
+          */}
           <ProductCard {...item} />
         </div>
       ))}
@@ -69,7 +80,6 @@ const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCas
         const shouldShow = category === 'TODOS' || itemCat === category;
         
         const el = item as HTMLElement;
-        // Quitamos animaciones para que el cambio de filtro sea instantáneo y no choque con View Transitions
         el.style.animation = 'none';
         el.style.opacity = '1';
 
@@ -81,24 +91,19 @@ const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCas
       });
       
       skeletons.forEach(s => s.classList.add('hidden-instant'));
-      
-      // Sincronización con el Layout para re-activar botones si fuera necesario
-      document.dispatchEvent(new CustomEvent('midnight:filter-applied'));
     };
 
     buttons.forEach(btn => {
       btn.addEventListener('click', () => {
         const category = btn.getAttribute('data-category') || 'TODOS';
         
-        // Estética de botones (Activo/Inactivo)
-        buttons.forEach(b => b.classList.remove('border-neon-green', 'bg-neon-green/5'));
-        btn.classList.add('border-neon-green', 'bg-neon-green/5');
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-        // Fase 1: Mostrar Skeletons (Feedback)
+        // Efecto de carga rápido
         items.forEach(i => i.classList.add('hidden-instant'));
         skeletons.forEach(s => s.classList.remove('hidden-instant'));
 
-        // Fase 2: Aplicar Filtro con View Transition
         setTimeout(() => {
           // @ts-ignore
           if (!document.startViewTransition) {
@@ -107,37 +112,41 @@ const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCas
             // @ts-ignore
             document.startViewTransition(() => applyFilter(category));
           }
-        }, 150);
+        }, 150 )
       });
     });
 
-    // Estado Inicial: Forzar visibilidad de productos y ocultar skeletons al cargar
-    buttons[0]?.classList.add('border-neon-green', 'bg-neon-green/5');
+    buttons[0]?.classList.add('active');
     skeletons.forEach(s => s.classList.add('hidden-instant'));
     items.forEach(i => i.classList.remove('hidden-instant'));
   };
 
-  // Inicialización compatible con navegación Astro
   document.addEventListener('astro:page-load', initFilters);
 </script>
 
 <style is:global>
-  @keyframes slide-in {
-    from { opacity: 0; transform: translateX(-15px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes fade-up {
+  @keyframes reveal {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .animate-slide-in { animation: slide-in 0.8s ease-out forwards; }
-  .animate-fade-up { animation: fade-up 0.6s ease-out forwards; }
+  
+  .animate-reveal { 
+    animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+  }
 
-  /* Utilidad crítica para el filtrado */
   .hidden-instant { display: none !important; }
 
-  /* Suavizado de la transición entre categorías */
-  ::view-transition-group(root) {
-    animation-duration: 0.25s;
+  .filter-btn.active span {
+    color: #3b1b54 !important; /* brand-purple */
+    letter-spacing: 0.3em;
+  }
+
+  .filter-btn.active div {
+    width: 2rem !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.4s;
   }
 </style>

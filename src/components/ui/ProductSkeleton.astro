@@ -2,40 +2,48 @@
 // src/components/ui/ProductSkeleton.astro
 ---
 
-<div class="relative bg-[#0d0e12]/80 border border-white/5 p-3 md:p-4 rounded-md overflow-hidden flex flex-col h-full animate-skeleton-pulse shadow-2xl">
+<div class="relative bg-white/40 backdrop-blur-sm border border-brand-purple/5 p-4 md:p-6 rounded-4xl overflow-hidden flex flex-col h-full animate-amuleto-pulse shadow-sm">
   
-  <div class="relative aspect-square mb-4 overflow-hidden bg-white/5 border border-white/5 rounded shrink-0">
-    <div class="absolute inset-0 bg-linear-to-r from-transparent via-neon-green/10 to-transparent -translate-x-full animate-skeleton-scan"></div>
+  <div class="relative aspect-square mb-4 md:mb-6 overflow-hidden bg-brand-pink/10 rounded-3xl shrink-0">
+    <div class="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-skeleton-scan"></div>
   </div>
 
-  <div class="space-y-2 flex-1 flex flex-col justify-between">
+  <div class="space-y-4 flex-1 flex flex-col">
     <div class="min-h-10 space-y-2">
-        <div class="h-4 bg-white/5 rounded-sm w-3/4 relative overflow-hidden">
-            <div class="absolute inset-0 bg-linear-to-r from-transparent via-neon-green/10 to-transparent -translate-x-full animate-skeleton-scan delay-75"></div>
+        <div class="h-4 bg-brand-purple/5 rounded-full w-3/4 relative overflow-hidden">
+            <div class="absolute inset-0 bg-linear-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-skeleton-scan"></div>
         </div>
-        <div class="h-4 bg-white/5 rounded-sm w-1/2 relative overflow-hidden">
-            <div class="absolute inset-0 bg-linear-to-r from-transparent via-neon-green/10 to-transparent -translate-x-full animate-skeleton-scan delay-150"></div>
+        <div class="h-3 bg-brand-purple/5 rounded-full w-1/2 relative overflow-hidden">
+            <div class="absolute inset-0 bg-linear-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-skeleton-scan delay-75"></div>
         </div>
     </div>
     
-    <div class="flex items-center justify-between pt-2 border-t border-white/5 mt-auto gap-4">
-      <div class="flex flex-col w-20">
-        <div class="h-6 bg-white/5 rounded-sm relative overflow-hidden">
-            <div class="absolute inset-0 bg-linear-to-r from-transparent via-neon-green/10 to-transparent -translate-x-full animate-skeleton-scan delay-200"></div>
+    <div class="w-8 h-[1.5px] bg-brand-gold/10 my-1"></div>
+
+    <div class="flex items-center justify-between mt-auto gap-4">
+      <div class="flex flex-col w-16">
+        <div class="h-6 bg-brand-purple/5 rounded-full relative overflow-hidden">
+            <div class="absolute inset-0 bg-linear-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-skeleton-scan delay-150"></div>
         </div>
       </div>
       
-      <div class="h-10 bg-white/5 rounded-sm w-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-linear-to-r from-transparent via-neon-green/10 to-transparent -translate-x-full animate-skeleton-scan delay-300"></div>
+      <div class="h-10 w-10 md:h-12 md:w-12 bg-brand-purple/5 rounded-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-linear-to-r from-transparent via-white/60 to-transparent -translate-x-full animate-skeleton-scan delay-200"></div>
       </div>
     </div>
   </div>
 </div>
 
 <style is:global>
-  @keyframes skeleton-pulse {
-    0%, 100% { opacity: 0.8; border-color: rgba(255, 255, 255, 0.05); shadow: 0 0 0px rgba(0, 245, 212, 0); }
-    50% { opacity: 1; border-color: rgba(0, 245, 212, 0.15); shadow: 0 0 15px rgba(0, 245, 212, 0.05); }
+  @keyframes amuleto-pulse {
+    0%, 100% { 
+      background-color: rgba(255, 255, 255, 0.4);
+      border-color: rgba(59, 27, 84, 0.05); 
+    }
+    50% { 
+      background-color: rgba(253, 242, 242, 0.7); /* Tono rosado suave al pulsar */
+      border-color: rgba(214, 158, 158, 0.2); 
+    }
   }
 
   @keyframes skeleton-scan {
@@ -43,11 +51,16 @@
     100% { transform: translateX(100%); }
   }
 
-  .animate-skeleton-pulse {
-    animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .animate-amuleto-pulse {
+    animation: amuleto-pulse 2.5s ease-in-out infinite;
   }
 
   .animate-skeleton-scan {
-    animation: skeleton-scan 1.5s linear infinite;
+    animation: skeleton-scan 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
+
+  /* Delays para un efecto de carga más orgánico */
+  .delay-75 { animation-delay: 0.2s; }
+  .delay-150 { animation-delay: 0.4s; }
+  .delay-200 { animation-delay: 0.6s; }
 </style>

@@ -1,8 +1,7 @@
-import { atom, computed, onMount } from 'nanostores';
+import { atom, computed } from 'nanostores';
 import type { CartItem, Product } from '../types/product';
 
-// Clave para el almacenamiento
-const STORAGE_KEY = 'midnight_cart_v1';
+const STORAGE_KEY = 'amuleto_cart_v1';
 
 export interface CustomerData {
   nombre: string;
@@ -10,10 +9,9 @@ export interface CustomerData {
   telefono: string;
   direccion: string;
   metodoEntrega: 'DELIVERY' | 'PICKUP';
-  metodoPago: string;
+  metodoPago: 'MERCADO PAGO' | 'EFECTIVO' | 'TRANSFERENCIA'; // Tipado específico
 }
 
-// Helper para obtener datos iniciales de forma segura (evita errores de SSR en Astro)
 const getInitialCart = (): CartItem[] => {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -32,14 +30,15 @@ export const customerData = atom<CustomerData>({
   telefono: '',
   direccion: '',
   metodoEntrega: 'PICKUP',
-  metodoPago: 'PAGO MOVIL'
+  metodoPago: 'MERCADO PAGO' // Ajustado como predeterminado
 });
 
 // --- Persistencia Automática ---
-// Escucha cambios en cartItems y guarda en localStorage automáticamente
-cartItems.listen((items) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-});
+if (typeof window !== 'undefined') {
+  cartItems.listen((items) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  });
+}
 
 // --- Computado ---
 export const cartTotal = computed(cartItems, (items) => {
@@ -47,7 +46,7 @@ export const cartTotal = computed(cartItems, (items) => {
 });
 
 // --- Acciones ---
-export function addProductToCart(product: Product) {
+export function addToCart(product: Product) {
   const currentItems = cartItems.get();
   const existingItem = currentItems.find(item => item.id === product.id);
 
@@ -58,14 +57,14 @@ export function addProductToCart(product: Product) {
   }
 }
 
-export function increaseQuantity(id: string) {
+export function increaseQuantity(id: string | number) {
   const newItems = cartItems.get().map(item =>
     item.id === id ? { ...item, cantidad: item.cantidad + 1 } : item
   );
   cartItems.set(newItems);
 }
 
-export function decreaseQuantity(id: string) {
+export function decreaseQuantity(id: string | number) {
   const currentItems = cartItems.get();
   const item = currentItems.find(i => i.id === id);
   
@@ -79,7 +78,7 @@ export function decreaseQuantity(id: string) {
   }
 }
 
-export function removeFromCart(id: string) {
+export function removeFromCart(id: string | number) {
   cartItems.set(cartItems.get().filter(item => item.id !== id));
 }
 
@@ -88,8 +87,8 @@ export function clearCart() {
   localStorage.removeItem(STORAGE_KEY);
 }
 
+// --- WhatsApp Adaptado a Argentina ---
 export function sendOrderToWhatsApp() {
-  // ... tu lógica de WhatsApp se mantiene igual
   const items = cartItems.get();
   const data = customerData.get();
   const total = cartTotal.get();
@@ -97,27 +96,31 @@ export function sendOrderToWhatsApp() {
   
   if (items.length === 0) return;
 
-  let message = `*📦 PEDIDO - MIDNIGHT STUDIO*\n`;
-  message += `--------------------------------\n`;
-  message += `👤 *CLIENTE:* ${data.nombre.toUpperCase()}\n`;
-  message += `🆔 *CÉDULA:* ${data.cedula}\n`;
-  message += `📞 *TELÉFONO:* ${data.telefono}\n`;
-  message += `📍 *ENTREGA:* ${data.metodoEntrega}\n`;
+  // Formateador para pesos argentinos en el mensaje
+  const formatARS = (val: number) => 
+    new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 }).format(val);
+
+  let message = `*✨ NUEVA ORDEN - AMULETO* \n`;
+  message += `_Accesorios hechos a mano._\n\n`;
+  message += `*DATOS DEL CLIENTE:*\n`;
+  message += `👤 *Nombre:* ${data.nombre.toUpperCase()}\n`;
+  message += `🆔 *DNI:* ${data.cedula}\n`; // Cambiado de Cédula a DNI
+  message += `📞 *Teléfono:* ${data.telefono}\n`;
+  message += `📍 *Entrega:* ${data.metodoEntrega === 'PICKUP' ? 'Retiro por el local' : 'Envío a domicilio'}\n`;
   
   if (data.metodoEntrega === 'DELIVERY') {
-    message += `🏠 *DIRECCIÓN:* ${data.direccion}\n`;
+    message += `🏠 *Dirección:* ${data.direccion}\n`;
   }
   
-  message += `💳 *PAGO:* ${data.metodoPago}\n`;
-  message += `--------------------------------\n`;
-  message += `*DETALLE DEL PEDIDO:*\n`;
+  message += `💳 *Forma de Pago:* ${data.metodoPago}\n`;
+  message += `\n*DETALLE DE LA COMPRA:*\n`;
 
   items.forEach(item => {
-    message += `- ${item.cantidad}x ${item.nombre} ($${(item.precio * item.cantidad).toFixed(2)})\n`;
+    message += `💎 ${item.cantidad}x ${item.nombre} - _${formatARS(item.precio * item.cantidad)}_\n`;
   });
 
-  message += `--------------------------------\n`;
-  message += `*TOTAL FINAL: $${total.toFixed(2)}*`;
+  message += `\n*TOTAL FINAL: ${formatARS(total)}*\n`;
+  message += `\n_Quedo a la espera de los datos de pago para confirmar mi pedido. Muchas gracias._`;
 
   const encodedMessage = encodeURIComponent(message);
   window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');

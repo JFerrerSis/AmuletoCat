@@ -2,53 +2,57 @@
 // src/components/cart/CartDrawer.astro
 ---
 
-<div id="cart-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-60 hidden opacity-0 transition-opacity duration-500"></div>
+<div id="cart-overlay" class="fixed inset-0 bg-brand-purple/40 backdrop-blur-sm z-60 hidden opacity-0 transition-all duration-500"></div>
 
-<div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-sm bg-[#08090d] border-l border-neon-green/20 z-70 translate-x-full transition-transform duration-500 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.9)]">
+<div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-white z-70 translate-x-full transition-transform duration-700 ease-in-out flex flex-col shadow-[-20px_0_60px_rgba(59,27,84,0.15)]">
   
-  <div class="p-6 border-b border-white/5 flex justify-between items-center bg-black/40">
-    <div class="flex items-center gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      <h2 class="font-mono text-neon-green text-[11px] uppercase tracking-[0.2em] font-bold">Resumen de mi Pedido</h2>
+  <div class="p-6 border-b border-brand-purple/5 flex justify-between items-center bg-linear-to-r from-white to-[#fdf2f2]">
+    <div class="flex items-center gap-3">
+      <div class="w-2 h-2 bg-brand-gold rounded-full animate-pulse"></div>
+      <h2 class="font-bold text-brand-purple text-[10px] uppercase tracking-[0.3em]">Tu Bolsa de Compra</h2>
     </div>
-    <button id="close-cart" class="group flex items-center gap-2 text-white/30 hover:text-white transition-colors">
-      <span class="font-mono text-[10px] tracking-widest uppercase">Cerrar</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-90 transition-transform"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    <button id="close-cart" class="group p-2 hover:bg-brand-purple/5 rounded-full transition-all">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-brand-purple group-hover:rotate-90 transition-transform"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
     </button>
   </div>
 
-  <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar"></div>
-
-  <div id="order-form" class="px-6 py-5 border-t border-white/5 bg-white/2 space-y-4 hidden text-white">
-    <div class="space-y-3">
-      <div class="flex items-center gap-2 mb-1">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <h3 class="font-mono text-[10px] text-white/60 tracking-widest uppercase font-bold">Datos de Entrega</h3>
-      </div>
-      <input type="text" id="cust-name" placeholder="Tu nombre completo" class="w-full bg-black/40 border border-white/10 p-3 text-xs focus:border-neon-green outline-none text-white transition-all" />
-      <div class="grid grid-cols-2 gap-3">
-        <input type="tel" id="cust-id" placeholder="Cédula / ID" class="bg-black/40 border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white transition-all" />
-        <input type="tel" id="cust-phone" placeholder="Teléfono" class="bg-black/40 border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white transition-all" />
-      </div>
-      <select id="cust-delivery" class="w-full bg-black border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white/80">
-        <option value="PICKUP">Retiro en tienda (Pickup)</option>
-        <option value="DELIVERY">Envío a domicilio (Delivery)</option>
-      </select>
-      <textarea id="cust-address" placeholder="Dirección detallada..." class="w-full bg-black/40 border border-white/10 p-3 text-xs outline-none h-16 focus:border-neon-green text-white transition-all resize-none hidden"></textarea>
+  <div id="cart-items" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-3 custom-scrollbar bg-white">
     </div>
-    <select id="cust-payment" class="w-full bg-black border border-white/10 p-3 text-xs outline-none focus:border-neon-green text-white/80">
-        <option value="PAGO MÓVIL">💸 Pago Móvil</option>
-        <option value="ZELLE">💎 Zelle</option>
-        <option value="EFECTIVO">💵 Efectivo (USD/BS)</option>
-    </select>
+
+  <div id="order-form" class="px-6 py-5 border-t border-brand-purple/5 bg-[#fdf2f2]/60 space-y-4 hidden">
+    <h3 class="font-bold text-[9px] text-brand-purple/50 tracking-[0.2em] uppercase">Datos para el Pedido</h3>
+    
+    <div class="space-y-3">
+      <input type="text" id="cust-name" placeholder="Nombre y Apellido" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-xs focus:border-brand-gold outline-none transition-all" />
+      
+      <div class="grid grid-cols-2 gap-3">
+        <input type="tel" id="cust-id" placeholder="DNI" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-xs outline-none focus:border-brand-gold" />
+        <input type="tel" id="cust-phone" placeholder="WhatsApp (ej: 11...)" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-xs outline-none focus:border-brand-gold" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <select id="cust-delivery" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-[11px] text-brand-purple outline-none focus:border-brand-gold cursor-pointer">
+          <option value="PICKUP">Retiro por local</option>
+          <option value="DELIVERY">Envío a domicilio</option>
+        </select>
+        <select id="cust-payment" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-[11px] text-brand-purple outline-none focus:border-brand-gold cursor-pointer">
+            <option value="MERCADO PAGO">Mercado Pago</option>
+            <option value="EFECTIVO">Efectivo</option>
+            <option value="TRANSFERENCIA">Transferencia</option>
+        </select>
+      </div>
+
+      <textarea id="cust-address" placeholder="Dirección, Localidad y Código Postal..." class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-xs outline-none h-16 resize-none hidden"></textarea>
+    </div>
   </div>
 
-  <div class="p-6 border-t border-white/5 bg-black/60">
-    <div class="flex justify-between items-end mb-6">
-      <span id="total-amount" class="text-neon-green font-black text-3xl tracking-tighter">$0.00</span>
+  <div class="p-6 border-t border-brand-purple/5 bg-white">
+    <div class="flex justify-between items-center mb-6">
+      <span class="text-brand-purple/40 font-bold text-[9px] uppercase tracking-widest">Total Estimado</span>
+      <span id="total-amount" class="text-brand-purple font-bold text-2xl tracking-tighter">$ 0</span>
     </div>
-    <button id="send-whatsapp" class="w-full bg-neon-green text-black py-5 font-black uppercase italic text-[11px] tracking-[0.2em] hover:bg-white transition-all">
-      Confirmar Pedido por WhatsApp
+    <button id="send-whatsapp" class="w-full bg-brand-purple text-white py-4 rounded-xl font-bold uppercase text-[10px] tracking-[0.2em] hover:bg-brand-gold transition-all duration-500 shadow-lg shadow-brand-purple/10">
+      Enviar Pedido por WhatsApp
     </button>
   </div>
 </div>
@@ -60,13 +64,8 @@
     customerData, sendOrderToWhatsApp 
   } from '../../store/cartStore';
 
-  declare global {
-    interface Window {
-      midnightToast: (message: string, type?: 'success' | 'error' | 'warning') => void;
-      changeQty: (id: string, delta: number) => void;
-      removeItem: (id: string, nombre: string) => void;
-    }
-  }
+  const formatARS = (val: number) => 
+    new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 }).format(val);
 
   const initCart = () => {
     const drawer = document.getElementById('cart-drawer');
@@ -76,125 +75,110 @@
     const orderForm = document.getElementById('order-form');
     const deliverySelect = document.getElementById('cust-delivery') as HTMLSelectElement;
     const addressInput = document.getElementById('cust-address') as HTMLTextAreaElement;
-    const closeBtn = document.getElementById('close-cart');
-    const sendBtn = document.getElementById('send-whatsapp');
 
-    if (!drawer || !overlay) return;
+    // --- FUNCIONES GLOBALES PARA EL DOM ---
+    // @ts-ignore
+    window.changeQty = (id, delta) => {
+      if (delta > 0) increaseQuantity(id);
+      else decreaseQuantity(id);
+    };
+    // @ts-ignore
+    window.removeItem = (id) => removeFromCart(id);
 
-    // --- RENDERIZADO E ITEMS ---
-    let lastItemsCount = cartItems.get().length;
-
+    // --- SUSCRIPCIÓN AL ESTADO ---
     cartItems.subscribe(items => {
       if (!itemsContainer) return;
 
-      if (items.length > lastItemsCount && lastItemsCount !== 0) {
-        const addedItem = items[items.length - 1];
-        window.midnightToast?.(`${addedItem.nombre} añadido al carrito`, 'success');
-      }
-      lastItemsCount = items.length;
-
       if (items.length === 0) {
-        itemsContainer.innerHTML = `<div class="py-20 text-center opacity-20 font-mono text-[10px] uppercase tracking-widest">Carrito vacío</div>`;
+        itemsContainer.innerHTML = `
+          <div class="py-20 text-center flex flex-col items-center gap-4">
+            <span class="opacity-20 text-4xl">💎</span>
+            <p class="opacity-40 text-[10px] uppercase tracking-[0.3em] text-brand-purple">Tu bolsa está vacía</p>
+          </div>`;
         orderForm?.classList.add('hidden');
         return;
       }
 
       orderForm?.classList.remove('hidden');
+      
       itemsContainer.innerHTML = items.map((item) => `
-        <div class="flex gap-4 bg-white/[0.03] p-4 border border-white/5 relative group">
-          <img src="${item.imagen}" class="w-16 h-16 object-cover" />
-          <div class="flex-1">
-            <div class="flex justify-between">
-              <h4 class="text-[11px] text-white font-bold uppercase">${item.nombre}</h4>
-              <button onclick="window.removeItem('${item.id}', '${item.nombre}')" class="text-white/10 hover:text-red-500 transition-colors">
+        <div class="flex gap-4 bg-brand-pink/5 p-3 rounded-2xl border border-brand-purple/5 animate-reveal">
+          <img src="${item.imagen}" class="w-16 h-16 object-cover rounded-xl shadow-xs" />
+          <div class="flex-1 flex flex-col justify-between py-0.5">
+            <div class="flex justify-between items-start">
+              <h4 class="text-[10px] text-brand-purple font-bold uppercase tracking-tight line-clamp-1">${item.nombre}</h4>
+              <button onclick="window.removeItem('${item.id}')" class="text-brand-purple/20 hover:text-red-400 p-1 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
               </button>
             </div>
-            <div class="flex items-center justify-between mt-2">
-              <div class="flex items-center bg-black/60 border border-white/10">
-                <button onclick="window.changeQty('${item.id}', -1)" class="px-3 py-1 text-white/40 hover:text-white">-</button>
-                <span class="px-2 text-[11px] font-mono text-neon-green">${item.cantidad}</span>
-                <button onclick="window.changeQty('${item.id}', 1)" class="px-3 py-1 text-white/40 hover:text-white">+</button>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center bg-white border border-brand-purple/10 rounded-lg scale-90 -ml-2 overflow-hidden">
+                <button onclick="window.changeQty('${item.id}', -1)" class="px-2.5 py-1 text-brand-purple hover:bg-brand-purple/5 text-xs">-</button>
+                <span class="px-1 text-[10px] font-bold text-brand-purple min-w-[20px] text-center">${item.cantidad}</span>
+                <button onclick="window.changeQty('${item.id}', 1)" class="px-2.5 py-1 text-brand-purple hover:bg-brand-purple/5 text-xs">+</button>
               </div>
-              <span class="text-white font-mono text-xs font-bold">$${(item.precio * item.cantidad).toFixed(2)}</span>
+              <span class="text-brand-purple font-bold text-[11px]">${formatARS(item.precio * item.cantidad)}</span>
             </div>
           </div>
         </div>
       `).join('');
     });
 
-    // --- FUNCIONES GLOBALES ---
-    window.changeQty = (id, delta) => delta > 0 ? increaseQuantity(id) : decreaseQuantity(id);
-    window.removeItem = (id, nombre) => {
-      removeFromCart(id);
-      window.midnightToast?.(`${nombre} eliminado`, 'error');
-    };
-
-    // --- SUSCRIPCIONES UI ---
     isCartOpen.subscribe(open => {
       if (open) {
-        drawer.classList.remove('translate-x-full');
-        overlay.classList.remove('hidden');
-        setTimeout(() => overlay.classList.add('opacity-100'), 10);
+        drawer?.classList.remove('translate-x-full');
+        overlay?.classList.remove('hidden');
+        setTimeout(() => overlay?.classList.add('opacity-100'), 10);
         document.body.style.overflow = 'hidden';
       } else {
-        drawer.classList.add('translate-x-full');
-        overlay.classList.remove('opacity-100');
-        setTimeout(() => overlay.classList.add('hidden'), 500);
+        drawer?.classList.add('translate-x-full');
+        overlay?.classList.remove('opacity-100');
+        setTimeout(() => overlay?.classList.add('hidden'), 500);
         document.body.style.overflow = '';
       }
     });
 
-    cartTotal.subscribe(total => {
-      if (totalDisplay) totalDisplay.innerText = `$${total.toFixed(2)}`;
-    });
+    cartTotal.subscribe(total => { if (totalDisplay) totalDisplay.innerText = formatARS(total); });
 
-    // --- EVENT LISTENERS ---
     deliverySelect?.addEventListener('change', (e) => {
       const val = (e.target as HTMLSelectElement).value;
       val === 'DELIVERY' ? addressInput?.classList.remove('hidden') : addressInput?.classList.add('hidden');
     });
 
-    closeBtn?.addEventListener('click', () => isCartOpen.set(false));
+    document.getElementById('close-cart')?.addEventListener('click', () => isCartOpen.set(false));
     overlay?.addEventListener('click', () => isCartOpen.set(false));
 
-    sendBtn?.addEventListener('click', () => {
-      const currentItems = cartItems.get();
-      if (currentItems.length === 0) return window.midnightToast?.("El carrito está vacío", "error");
+    document.getElementById('send-whatsapp')?.addEventListener('click', () => {
+      const name = (document.getElementById('cust-name') as HTMLInputElement).value;
+      const phone = (document.getElementById('cust-phone') as HTMLInputElement).value;
+      
+      if (!name || !phone) return alert("Por favor completá tu nombre y celular.");
 
-      const name = (document.getElementById('cust-name') as HTMLInputElement).value.trim();
-      const cid = (document.getElementById('cust-id') as HTMLInputElement).value.trim();
-      const phone = (document.getElementById('cust-phone') as HTMLInputElement).value.trim();
-      const delivery = (document.getElementById('cust-delivery') as HTMLSelectElement).value;
-      const address = (document.getElementById('cust-address') as HTMLTextAreaElement).value.trim();
-
-      if (!name || !cid || !phone || (delivery === 'DELIVERY' && !address)) {
-        window.midnightToast?.("Faltan datos de contacto", "warning");
-        if(!name) document.getElementById('cust-name')?.classList.add('border-red-500/50');
-        if(!cid) document.getElementById('cust-id')?.classList.add('border-red-500/50');
-        if(!phone) document.getElementById('cust-phone')?.classList.add('border-red-500/50');
-        if(delivery === 'DELIVERY' && !address) addressInput?.classList.add('border-red-500/50');
-        return;
-      }
-
-      window.midnightToast?.("Abriendo canal de WhatsApp", "success");
       customerData.set({
         nombre: name,
-        cedula: cid,
+        cedula: (document.getElementById('cust-id') as HTMLInputElement).value,
         telefono: phone,
-        metodoEntrega: delivery as any,
-        direccion: address,
-        metodoPago: (document.getElementById('cust-payment') as HTMLSelectElement).value
+        metodoEntrega: deliverySelect.value as any,
+        direccion: addressInput.value,
+        metodoPago: (document.getElementById('cust-payment') as HTMLSelectElement).value as any
       });
-      setTimeout(() => sendOrderToWhatsApp(), 1000);
-    });
 
-    document.querySelectorAll('input, textarea').forEach(el => {
-      el.addEventListener('input', () => el.classList.remove('border-red-500/50'));
+      sendOrderToWhatsApp();
     });
   };
 
-  // Inicialización para Astro
   document.addEventListener('astro:page-load', initCart);
   initCart();
 </script>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar { width: 3px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59, 27, 84, 0.1); border-radius: 10px; }
+  
+  @keyframes reveal {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-reveal { animation: reveal 0.4s ease-out forwards; }
+</style>

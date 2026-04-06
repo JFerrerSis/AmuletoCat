@@ -1,66 +1,74 @@
 @import "tailwindcss";
 
 @theme {
-  --color-neon-green: #00f5d4;
-  --color-neon-pink: #ff007f;
-  --color-neon-purple: #9d00ff;
-  --color-cyber-blue: #00d4ff;
-  /* Nuevo color de fondo menos profundo */
-  --color-midnight-base: #0a0b10; 
+  --color-brand-purple: #3b1b54;
+  --color-brand-gold: #cdc27b;
+  --color-brand-muted: #ccc0ce;
+  --color-brand-pink: #eaa7ad;
+  --color-brand-cream: #f9e8e7;
+  --color-white: #ffffff;
 }
 
 :root {
-  /* Un gris azulado extremadamente oscuro para que respire el diseño */
-  --bg-dark: #08090d;
+  /* Usamos crema como base para evitar el gris frío */
+  --bg-warm: #f9e8e7;
+  --text-main: #3b1b54;
 }
 
 body {
-  /* Fondo con degradado sutil para que no sea plano */
+  /* Helvetica Neue UltraLight */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 200; 
+  
+  /* Gradiente que va de Blanco a Crema, eliminando tonos grises */
   background: radial-gradient(
     circle at center, 
-    #0f111a 0%, 
-    #07080c 100%
+    #ffffff 0%, 
+    #f9e8e7 100%
   );
   background-attachment: fixed;
-  color: white;
+  color: var(--text-main);
   margin: 0;
   overflow-x: hidden;
 }
 
-/* Efecto de "Velo" de medianoche para dar textura */
+/* Textura orgánica suave: Reemplazamos la fibra de carbono por un grano sutil */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
-  opacity: 0.03; /* Muy sutil, casi imperceptible */
+  background-image: url("https://www.transparenttextures.com/patterns/p6-mini.png");
+  opacity: 0.15; /* Un poco más visible para dar sensación de papel/tela */
+  filter: sepia(0.2) brightness(1.1); /* Tinte cálido para que se funda con el crema */
   pointer-events: none;
   z-index: 0;
 }
 
-#particles-canvas, #tsparticles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-  /* Brillo suave detrás de las partículas */
-  background: radial-gradient(
-    circle at 50% -20%, 
-    rgba(0, 245, 212, 0.05) 0%, 
-    transparent 50%
-  );
-}
-
-/* Bloquea el rebote elástico en móviles y asegura el fondo negro */
+/* Forzado de fondo cálido y prevención de rebote */
 :global(html), :global(body) {
-  background-color: #08090d !important;
-  overscroll-behavior-y: none; /* Evita el efecto de "tiron" blanco arriba/abajo */
+  background-color: var(--bg-warm) !important;
+  overscroll-behavior-y: none;
 }
 
+/* El carrito ahora se siente como parte de la marca, no gris */
 #cart-drawer {
-  /* Usar dvh (dynamic viewport height) para evitar el espacio blanco de la barra de direcciones */
   height: 100dvh; 
+  background-color: #ffffff;
+  /* Sombra en tono púrpura/oro, muy suave */
+  box-shadow: -8px 0 30px rgba(59, 27, 84, 0.04);
+  border-left: 1px solid rgba(205, 194, 123, 0.2);
+}
+
+/* Tipografías UltraLight */
+h1, h2, h3 {
+  font-weight: 100;
+  letter-spacing: 0.15em;
+  color: var(--color-brand-purple);
+  text-transform: uppercase;
+}
+
+/* Personalización de la selección de texto para que sea Oro */
+::selection {
+  background-color: #cdc27b;
+  color: #ffffff;
 }

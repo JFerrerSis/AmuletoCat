@@ -16,9 +16,22 @@ export async function getStaticPaths() {
 const { product } = Astro.props;
 
 const allProducts = (productosData as Product[]);
+
+// Lógica mejorada: Priorizamos misma subcategoría para productos relacionados
 const relacionados = allProducts
-  .filter(p => p.categoria === product.categoria && p.id !== product.id)
+  .filter(p => 
+    (p.subcategoria === product.subcategoria || p.categoria === product.categoria) && 
+    p.id !== product.id
+  )
+  .sort((a, b) => a.subcategoria === product.subcategoria ? -1 : 1) // Prioriza subcat
   .slice(0, 4);
+
+// Formateador para Pesos Argentinos
+const formattedPrice = new Intl.NumberFormat('es-AR', {
+  style: 'currency',
+  currency: 'ARS',
+  minimumFractionDigits: 0,
+}).format(product.precio);
 
 const productString = JSON.stringify(product);
 ---
@@ -46,8 +59,15 @@ const productString = JSON.stringify(product);
           class="w-full h-full object-cover"
           style={`view-transition-name: card-${product.id};`} 
         />
-        <div class="absolute top-6 left-6 bg-white/90 backdrop-blur-md border border-brand-gold/20 px-4 py-1.5 rounded-full shadow-sm">
-          <p class="text-[9px] font-bold text-brand-gold tracking-[0.2em] uppercase">{product.categoria}</p>
+        <div class="absolute top-6 left-6 flex flex-col gap-2">
+          <div class="bg-white/90 backdrop-blur-md border border-brand-gold/20 px-4 py-1.5 rounded-full shadow-sm">
+            <p class="text-[9px] font-bold text-brand-gold tracking-[0.2em] uppercase">{product.categoria}</p>
+          </div>
+          {product.subcategoria && (
+            <div class="bg-brand-purple/80 backdrop-blur-md px-3 py-1 rounded-full shadow-sm w-fit">
+              <p class="text-[8px] font-medium text-white tracking-[0.15em] uppercase">{product.subcategoria}</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -71,10 +91,9 @@ const productString = JSON.stringify(product);
           <div class="flex items-center gap-8 pt-6 border-t border-brand-purple/5">
             <div class="flex flex-col">
               <span class="text-[10px] font-bold text-brand-purple/30 uppercase tracking-widest mb-1">Precio</span>
-              <span class="text-4xl md:text-5xl font-bold text-brand-purple tracking-tighter">${product.precio.toFixed(3)}</span>
+              <span class="text-4xl md:text-5xl font-bold text-brand-purple tracking-tighter">{formattedPrice}</span>
             </div>
             <div class="h-14 w-px bg-brand-purple/10"></div>
-            
           </div>
           
           <div class="pt-4">
@@ -94,6 +113,7 @@ const productString = JSON.stringify(product);
       <section class="mt-32 pt-16 border-t border-brand-purple/5 animate-fade-in" style="animation-delay: 450ms;">
         <div class="mb-12 flex flex-col items-center text-center">
             <h2 class="text-[10px] font-bold uppercase tracking-[0.6em] text-brand-purple/30 mb-4">Completa tu Look</h2>
+            <p class="text-[9px] text-brand-gold tracking-[0.2em] mb-4 uppercase">Más de la colección {product.subcategoria}</p>
             <div class="h-1 w-12 bg-brand-gold/30"></div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">

@@ -1,5 +1,5 @@
 ---
-import { ShoppingCart } from 'lucide-astro'; // ShoppingBag suele verse más elegante para joyería
+import { ShoppingCart, Search } from 'lucide-astro';
 ---
 
 <nav 
@@ -8,10 +8,9 @@ import { ShoppingCart } from 'lucide-astro'; // ShoppingBag suele verse más ele
 >
   <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center transition-all duration-500" id="nav-content">
     
-    <a href="/" class="group flex items-center gap-4 transition-transform duration-500 hover:scale-105">
+    <a href="/" class="group flex items-center gap-4 transition-transform duration-500 hover:scale-105 shrink-0">
       <div class="relative w-20 h-20 flex items-center justify-center transition-all duration-500" id="logo-container">
         <div class="absolute inset-0 bg-brand-gold/15 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-        
         <img 
           src="/images/LogoCatalogo.png" 
           alt="Amuleto" 
@@ -20,16 +19,27 @@ import { ShoppingCart } from 'lucide-astro'; // ShoppingBag suele verse más ele
       </div>
     </a>
 
+    <div class="flex-1 max-w-md mx-8 hidden sm:block">
+      <div class="relative group">
+        <Search size={16} class="absolute left-0 top-1/2 -translate-y-1/2 text-brand-purple/30 group-focus-within:text-brand-gold transition-colors" />
+        <input 
+          type="text" 
+          id="nav-search"
+          placeholder="BUSCAR AMULETO..."
+          class="w-full bg-transparent border-b border-brand-purple/10 py-2 pl-7 pr-4 text-[10px] tracking-[0.3em] uppercase text-brand-purple placeholder:text-brand-purple/20 focus:outline-none focus:border-brand-gold transition-all duration-500"
+        />
+      </div>
+    </div>
+
     <button 
       id="cart-trigger" 
-      class="relative p-3 bg-white/30 hover:bg-brand-gold/10 border border-brand-purple/10 transition-all rounded-2xl group backdrop-blur-sm"
+      class="shrink-0 relative p-3 bg-white/30 hover:bg-brand-gold/10 border border-brand-purple/10 transition-all rounded-2xl group backdrop-blur-sm"
     >
       <ShoppingCart 
         size={22}
         strokeWidth={1.5}
         class="text-brand-purple group-hover:text-brand-gold transition-colors duration-300"
       />
-      
       <span 
         id="cart-counter" 
         class="absolute -top-1 -right-1 bg-brand-gold text-white font-bold text-[10px] w-5 h-5 flex items-center justify-center rounded-full scale-0 transition-transform shadow-sm border border-white"
@@ -49,6 +59,7 @@ import { ShoppingCart } from 'lucide-astro'; // ShoppingBag suele verse más ele
     const nav = document.getElementById('main-nav');
     const navContent = document.getElementById('nav-content');
     const logoContainer = document.getElementById('logo-container');
+    const searchInput = document.getElementById('nav-search');
 
     const handleScroll = () => {
       const isScrolled = window.scrollY > 30;
@@ -58,15 +69,21 @@ import { ShoppingCart } from 'lucide-astro'; // ShoppingBag suele verse más ele
         logoContainer?.classList.replace('w-20', 'w-14');
         logoContainer?.classList.replace('h-20', 'h-14');
         nav?.classList.add('border-brand-purple/5', 'shadow-sm');
-        nav?.classList.replace('bg-brand-pink/70', 'bg-brand-pink/85');
+        // Cambiamos de 0.5 (50%) a 0.85 (85%) al hacer scroll para que sea legible
+        nav?.classList.replace('bg-brand-pink/50', 'bg-brand-pink/85');
       } else {
         navContent?.classList.replace('h-16', 'h-24');
         logoContainer?.classList.replace('w-14', 'w-20');
         logoContainer?.classList.replace('h-14', 'h-20');
         nav?.classList.remove('border-brand-purple/5', 'shadow-sm');
-        nav?.classList.replace('bg-brand-pink/85', 'bg-brand-pink/70');
+        nav?.classList.replace('bg-brand-pink/85', 'bg-brand-pink/50');
       }
     };
+
+    searchInput?.addEventListener('input', (e) => {
+      const term = (e.target as HTMLInputElement).value.toUpperCase();
+      window.dispatchEvent(new CustomEvent('catalog:search', { detail: term }));
+    });
 
     window.addEventListener('scroll', handleScroll);
     handleScroll();
@@ -92,12 +109,19 @@ import { ShoppingCart } from 'lucide-astro'; // ShoppingBag suele verse más ele
 </script>
 
 <style>
-  .bg-brand-pink\/70 { background-color: rgba(214, 158, 158, 0.7); }
-  .bg-brand-pink\/85 { background-color: rgba(214, 158, 158, 0.85); }
+  /* Clases manuales para asegurar que los colores RGBA funcionen si Tailwind no los detecta */
+
 
   #main-nav, #nav-content, #logo-container {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   img { image-rendering: -webkit-optimize-contrast; }
+
+  input::placeholder {
+    transition: opacity 0.3s ease;
+  }
+  input:focus::placeholder {
+    opacity: 0;
+  }
 </style>

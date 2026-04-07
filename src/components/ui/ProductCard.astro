@@ -1,12 +1,23 @@
 ---
 // src/components/ui/ProductCard.astro
 import type { Product } from '../../types/product'; 
-import { ShoppingCart } from 'lucide-astro'; // ShoppingBag suele verse más elegante para joyería
+import { ShoppingCart } from 'lucide-astro'; 
 
 interface Props extends Product {}
 const { id, nombre, precio, imagen, categoria } = Astro.props;
 
+// Preparamos los datos para el carrito
 const productData = JSON.stringify({ id, nombre, precio, imagen, categoria });
+
+// Formateador de moneda para Argentina (Ej: 12.000)
+const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+};
 ---
 
 <div class="group relative bg-white backdrop-blur-sm border border-brand-purple/5 p-4 md:p-6 rounded-4xl transition-all duration-700 ease-out flex flex-col h-full hover:shadow-[0_20px_50px_rgba(59,27,84,0.06)] hover:-translate-y-1.5 hover:bg-white/90">
@@ -40,21 +51,21 @@ const productData = JSON.stringify({ id, nombre, precio, imagen, categoria });
     <div class="flex items-center justify-between mt-auto gap-2">
       <div class="flex flex-col">
         <span class="text-lg md:text-xl font-bold text-brand-purple tracking-tight">
-          ${precio.toFixed(3)}
+          {formatCurrency(precio)}
         </span>
       </div>
       
       <button 
         type="button"
-        class="add-to-cart-btn relative z-30 bg-brand-purple text-white p-3.5 hover:bg-brand-muted transition-all duration-500 active:scale-90 shadow-lg shadow-brand-purple/10 flex items-center justify-center rounded-2xl group/btn"
+        class="add-to-cart-btn relative z-30 bg-brand-purple text-white p-3.5 hover:bg-brand-gold transition-all duration-500 active:scale-90 shadow-lg shadow-brand-purple/10 flex items-center justify-center rounded-2xl group/btn"
         data-product={productData}
         aria-label="Añadir al carrito"
       >
         <ShoppingCart 
-        size={22}
-        strokeWidth={1.5}
-        class="text-brand-white group-hover:text-brand-purple transition-colors duration-300"
-      />
+          size={22}
+          strokeWidth={1.5}
+          class="text-white group-hover:scale-110 transition-transform duration-300"
+        />
       </button>
     </div>
   </div>

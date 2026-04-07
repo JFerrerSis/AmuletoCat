@@ -1,10 +1,20 @@
 <header class="text-center relative px-4 pt-4 md:pt-10 z-20">
-  <div class="relative inline-block">
+  <div class="relative inline-block group">
+    
+    <div class="absolute -inset-4 rounded-full bg-brand-pink opacity-60 blur-xl group-hover:opacity-90 group-hover:blur-2xl transition-all duration-700 animate-neon-pulse pointer-events-none"></div>
+    
+    <div class="absolute -inset-6 rounded-full bg-[#ff1493] opacity-30 blur-2xl animate-flicker pointer-events-none"></div>
+
     <div class="animate-entrance relative 
                 w-40 h-40 
                 md:w-56 md:h-56 
                 flex items-center justify-center mx-auto">
-      <div class="w-full h-full rounded-full overflow-hidden bg-white/50 backdrop-blur-sm">
+      
+      <div class="absolute -inset-1.5 rounded-full overflow-hidden animate-neon-flow pointer-events-none">
+        <div class="w-full h-full bg-[conic-gradient(from_0deg,#ff69b4,#ff1493,#ffffff,#ff1493,#ff69b4)]"></div>
+      </div>
+
+      <div class="relative w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center z-10 shadow-sm border border-brand-purple/5">
         <img 
           src="/images/logo.jpeg" 
           alt="Amuleto Logo" 
@@ -16,6 +26,49 @@
 </header>
 
 <style is:global>
+  /* --- Animaciones de Neón Animado --- */
+
+  /* 1. Flujo de luz y Giro (Midnight/Conic) */
+  @keyframes neon-flow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* 2. Pulso de Intensidad (Glow) */
+  @keyframes neon-pulse {
+    0%, 100% { 
+      opacity: 0.6; 
+      filter: blur(12px) brightness(1.1); 
+    }
+    50% { 
+      opacity: 0.9; 
+      filter: blur(18px) brightness(1.3); 
+    }
+  }
+
+  /* 3. Parpadeo Eléctrico (Flicker) */
+  @keyframes flicker {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+      opacity: 0.3; filter: blur(24px);
+    }
+    20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+      opacity: 0.1; filter: blur(8px);
+    }
+  }
+
+  .animate-neon-flow { 
+    animation: neon-flow 5s linear infinite; 
+  }
+
+  .animate-neon-pulse {
+    animation: neon-pulse 3s ease-in-out infinite;
+  }
+
+  .animate-flicker {
+    animation: flicker 4s linear infinite;
+  }
+
+  /* --- Animación de Entrada del Logo --- */
   @keyframes entrance {
     0% { 
       opacity: 0; 
@@ -31,11 +84,11 @@
     animation: entrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
   }
 
-  /* Ajuste para pantallas muy bajitas (iPhone SE o móviles en horizontal) */
+  /* Ajuste para pantallas pequeñas */
   @media (max-height: 670px) {
     header { padding-top: 1rem; }
     .animate-entrance {
-      width: 8rem; /* w-32 */
+      width: 8rem; 
       height: 8rem;
     }
   }

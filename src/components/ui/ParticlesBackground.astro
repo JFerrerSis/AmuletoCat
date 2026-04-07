@@ -5,7 +5,6 @@
   import { loadSlim } from "tsparticles-slim";
 
   async function initParticles() {
-    // Evitamos duplicados en las transiciones
     const container = document.getElementById("tsparticles");
     if (!container || container.hasChildNodes()) return;
 
@@ -14,63 +13,36 @@
     await tsParticles.load("tsparticles", {
       fullScreen: { enable: false },
       fpsLimit: 60,
-      interactivity: {
-        events: {
-          onHover: {
-            enable: true,
-            mode: "grab",
-          },
-          onClick: {
-            enable: false,
-          },
-        },
-        modes: {
-          grab: {
-            distance: 180,
-            links: { 
-              opacity: 0.3, 
-              color: "#00f5d4" 
-            },
-          },
-        },
-      },
       particles: {
-        // Mezcla de colores: Cian neón y Azul profundo de medianoche
+        // MEZCLA DE ESTRELLAS: Oro y Rosa Oscuro Intenso
         color: { 
-          value: ["#00f5d4", "#1e1b4b", "#312e81", "#ffffff"] 
-        },
-        links: {
-          color: "#00f5d4",
-          distance: 150,
-          enable: true,
-          opacity: 0.1, // Líneas muy tenues para que no ensucien la "noche"
-          width: 0.5,
+          // Eliminamos el blanco. Usamos Oro Amuleto y un Rosa Fucsia/Magenta oscuro
+          value: ["#d4af37", "#a01050", "#c71585"] 
         },
         move: {
           enable: true,
-          speed: 0.5, // Movimiento lento, casi estático como el cielo
+          speed: 0.25, // Un pelín más rápido para que se note la mezcla
+          direction: "none",
           random: true,
           straight: false,
           outModes: { default: "out" },
         },
         number: {
-          value: 100, // Un poco más para simular densidad estelar
+          value: 90, 
           density: { enable: true, area: 800 },
         },
         opacity: { 
-          value: { min: 0.1, max: 0.6 },
-          random: true,
+          // Aumentamos la opacidad mínima para que los colores oscuros no se pierdan
+          value: { min: 0.3, max: 0.8 }, 
           anim: {
             enable: true,
             speed: 1,
-            opacity_min: 0.1,
             sync: false
           }
         },
         shape: { type: "star" },
         size: { 
-          value: { min: 1, max: 4 }, // Tamaños variados para profundidad
-          random: true 
+          value: { min: 1, max: 2 }, // Ligeramente más grandes para apreciar el color
         },
       },
       detectRetina: true,
@@ -88,8 +60,8 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* Degradado de fondo para reforzar la sensación de medianoche */
-    background: radial-gradient(circle at center, #0a0a0f 0%, #000000 100%);
+    /* MANTENEMOS EL FONDO ROSADO ACTUAL */
+    background: transparent;
     pointer-events: none; 
   }
 </style>

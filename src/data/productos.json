@@ -1,26 +1,170 @@
 [
   {
     "id": "00001",
-    "nombre": "Pulsera cruz turquesa tejida menta",
-    "precio": 12.000,
-    "imagen": "/images/products/tejidamenta.jpeg",
+    "nombre": "Pulsera Cruz Tejida Arena",
+    "precio": 5.50,
+    "imagen": "/images/products/PULSERAS/CRUZ TURQUESA/cruztejidaarena.jpeg",
     "categoria": "Pulseras",
-    "descripcion": "Pulceras tejidas a mano color menta con cruz turuquesa."
+    "descripcion": "Pulsera con dije de cruz turquesa y tejido artesanal color arena."
   },
   {
     "id": "00002",
-    "nombre": "Pulsera cruz turquesa tejida bordo",
-    "precio": 12.000,
-    "imagen": "/images/products/tejidabordo.jpeg",
+    "nombre": "Pulsera Cruz Tejida Bordo",
+    "precio": 5.50,
+    "imagen": "/images/products/PULSERAS/CRUZ TURQUESA/cruztejidabordo.jpeg",
     "categoria": "Pulseras",
-    "descripcion": "Pulceras tejidas a mano color bordo con cruz turuquesa."
+    "descripcion": "Pulsera con dije de cruz turquesa y tejido artesanal color bordo."
   },
   {
     "id": "00003",
-    "nombre": "Pulsera cruz turquesa tejida arena",
-    "precio": 12.000,
-    "imagen": "/images/products/tejidaarena.jpeg",
+    "nombre": "Pulsera Cruz Tejida Menta",
+    "precio": 5.50,
+    "imagen": "/images/products/PULSERAS/CRUZ TURQUESA/cruztejidamenta.jpeg",
     "categoria": "Pulseras",
-    "descripcion": "Pulceras tejidas a mano color arena con cruz turuquesa."
+    "descripcion": "Pulsera con dije de cruz turquesa y tejido artesanal color menta."
+  },
+  {
+    "id": "00004",
+    "nombre": "Pulsera Ojito Balín Hilo Rojo",
+    "precio": 7.50,
+    "imagen": "/images/products/PULSERAS/OJITO HILO ROJO/ojobalinhilo.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Clásica pulsera de protección con ojito y balines dorados."
+  },
+  {
+    "id": "00005",
+    "nombre": "Pulsera Ojito Cristal Azul Hilo Rojo",
+    "precio": 7.50,
+    "imagen": "/images/products/PULSERAS/OJITO HILO ROJO/ojocristalazulhilo.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Protección con estilo: ojito de cristal azul y tejido rojo."
+  },
+  {
+    "id": "00006",
+    "nombre": "Pulsera Ojito Tejido Arena",
+    "precio": 9.00,
+    "imagen": "/images/products/PULSERAS/OJITO TEJIDO/ojitoarena.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Pulsera artesanal con ojito central y tejido color arena."
+  },
+  {
+    "id": "00007",
+    "nombre": "Pulsera Ojito Tejido Chocolate",
+    "precio": 9.00,
+    "imagen": "/images/products/PULSERAS/OJITO TEJIDO/ojitochocolate.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Pulsera artesanal con ojito central y tejido color chocolate."
+  },
+  {
+    "id": "00008",
+    "nombre": "Pulsera Flor Plata Hilo Rojo",
+    "precio": 5.50,
+    "imagen": "/images/products/PULSERAS/florplatahilorojo.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Dije de flor en plata con hilo rojo ajustable."
+  },
+  {
+    "id": "00009",
+    "nombre": "Pulsera Ojito Cristales Azules",
+    "precio": 7.50,
+    "imagen": "/images/products/PULSERAS/ojitocristalesazules.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Combinación de cristales azules y protección de ojito."
+  },
+  {
+    "id": "00010",
+    "nombre": "Pulsera Madera Violeta y Plateado",
+    "precio": 12.00,
+    "imagen": "/images/products/PULSERAS/maderavioletaplateado.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Cuentas de madera en tono violeta con detalles plateados."
+  },
+  {
+    "id": "00011",
+    "nombre": "Pulsera Perla con Piedras Colores",
+    "precio": 9.00,
+    "imagen": "/images/products/PULSERAS/perlapiedracolores.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Diseño vibrante con perla central y piedras multicolor."
+  },
+  {
+    "id": "00012",
+    "nombre": "Pulsera Cruz Turquesa Piedras Tierra",
+    "precio": 9.00,
+    "imagen": "/images/products/PULSERAS/cruzturquesapiedrastierra.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Piedras en tonos tierra complementadas con cruz turquesa."
+  },
+  {
+    "id": "00013",
+    "nombre": "Pulsera Perla Tejido Coral",
+    "precio": 12.00,
+    "imagen": "/images/products/PULSERAS/perlatejidocoral.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Elegante perla con tejido artesanal en color coral."
+  },
+  {
+    "id": "00014",
+    "nombre": "Pulsera Turquesas Corazón Plata",
+    "precio": 12.00,
+    "imagen": "/images/products/PULSERAS/turquesascorazonplata.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Cuentas de turquesa con un delicado corazón de plata."
+  },
+  {
+    "id": "00015",
+    "nombre": "Pulsera Perla Tejido Azul",
+    "precio": 9.00,
+    "imagen": "/images/products/PULSERAS/perlatejidoazul.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Perla central resaltada por un tejido azul profundo."
+  },
+  {
+    "id": "00016",
+    "nombre": "Pulsera Buzio Azul y Naranja",
+    "precio": 7.50,
+    "imagen": "/images/products/PULSERAS/buzioazulynaranja.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Estilo playero con caracol buzio y hilos contrastantes."
+  },
+  {
+    "id": "00017",
+    "nombre": "Pulsera Ojito Rojo Flor Cristales",
+    "precio": 9.00,
+    "imagen": "/images/products/PULSERAS/ojitorojoflorcristalesmenta.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Composición de ojito rojo, dije de flor y cristales menta."
+  },
+  {
+    "id": "00018",
+    "nombre": "Pulsera Perla Madera Hueso Suerte",
+    "precio": 12.00,
+    "imagen": "/images/products/PULSERAS/perlamaderahuesosuerte.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Mezcla de materiales naturales con amuleto de la suerte."
+  },
+  {
+    "id": "00019",
+    "nombre": "Pulsera Corazón Nácar Rojo",
+    "precio": 6.00,
+    "imagen": "/images/products/PULSERAS/corazonnacarrojoyperlas.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Dije de corazón en nácar rojo acompañado de perlas."
+  },
+  {
+    "id": "00020",
+    "nombre": "Pulsera Corazón Plata Hilo Azul",
+    "precio": 5.50,
+    "imagen": "/images/products/PULSERAS/corazonplatahiloazul.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Minimalismo puro: corazón de plata en hilo azul."
+  },
+  {
+    "id": "00021",
+    "nombre": "Pulsera Denario Venezuela",
+    "precio": 5.50,
+    "imagen": "/images/products/PULSERAS/denariovzla.jpeg",
+    "categoria": "Pulseras",
+    "descripcion": "Denario conmemorativo con los colores de Venezuela."
   }
 ]

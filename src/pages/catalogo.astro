@@ -6,7 +6,7 @@ import productosData from '../data/productos.json';
 import type { Product } from '../types/product';
 
 const products = (productosData as Product[]);
-const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCase())), "MUESTRA"];
+const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCase())), "LIFESTYLE"];
 const subcategories = [...new Set(products.map(p => p.subcategoria?.toUpperCase()).filter(Boolean))];
 const muestras = products.filter((p) => (p.subcategoria || '').toUpperCase() === 'ESENCIALES');
 ---
@@ -151,7 +151,7 @@ const muestras = products.filter((p) => (p.subcategoria || '').toUpperCase() ===
     };
 
     const applyFilters = () => {
-      const isMuestra = currentMainCat === 'MUESTRA';
+      const isMuestra = currentMainCat === 'LIFESTYLE';
 
       if (isMuestra) {
         productGrid?.classList.add('hidden-instant');

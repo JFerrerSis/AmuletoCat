@@ -3,7 +3,7 @@
   {
     "id": "00001",
     "nombre": "Corazón Nácar Hilo Rojo",
-    "precio": 6000,
+    "precio": 5500,
     "imagen": "/images/products/PULSERAS/AMOR/corazonnacarhilorojo.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "AMOR",
@@ -12,7 +12,7 @@
   {
     "id": "00002",
     "nombre": "Corazón Nácar Rojo y Perlas",
-    "precio": 6500,
+    "precio": 6000,
     "imagen": "/images/products/PULSERAS/AMOR/corazonnacarrojoyperlas.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "AMOR",
@@ -58,7 +58,7 @@
   {
     "id": "00007",
     "nombre": "3 Perlas Jaspe Negra",
-    "precio": 8500,
+    "precio": 9000,
     "imagen": "/images/products/PULSERAS/ESENCIALES/3perlasseparadordoradojaspenegra.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "ESENCIALES",
@@ -76,7 +76,7 @@
   {
     "id": "00009",
     "nombre": "Perla Tejido Azul",
-    "precio": 12000,
+    "precio": 9000,
     "imagen": "/images/products/PULSERAS/ESENCIALES/perlatejidoazul.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "ESENCIALES",
@@ -91,20 +91,12 @@
     "subcategoria": "ESENCIALES",
     "descripcion": "Perla clásica con tejido artesanal en tono coral."
   },
-  {
-    "id": "00011",
-    "nombre": "Perla Tejido Coral 2",
-    "precio": 12000,
-    "imagen": "/images/products/PULSERAS/ESENCIALES/perlatejidocoral2.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "ESENCIALES",
-    "descripcion": "Variante de diseño con perla y tejido coral."
-  },
+  
 
   {
     "id": "00012",
     "nombre": "Cruz Tejida Arena",
-    "precio": 5500,
+    "precio": 12000,
     "imagen": "/images/products/PULSERAS/Fe/cruztejidaarena.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "Fe",
@@ -112,8 +104,8 @@
   },
   {
     "id": "00013",
-    "nombre": "Cruz Tejida Bordo",
-    "precio": 5500,
+    "nombre": "Cruz Tejida Malbec",
+    "precio": 12000,
     "imagen": "/images/products/PULSERAS/Fe/cruztejidabordo.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "Fe",
@@ -122,7 +114,7 @@
   {
     "id": "00014",
     "nombre": "Cruz Tejida Menta",
-    "precio": 5500,
+    "precio": 12000,
     "imagen": "/images/products/PULSERAS/Fe/cruztejidamenta.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "Fe",
@@ -150,7 +142,7 @@
   {
     "id": "00017",
     "nombre": "Madera Violeta Plateado",
-    "precio": 8500,
+    "precio": 12000,
     "imagen": "/images/products/PULSERAS/PROTECCION/maderavioletaplateado.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "PROTECCION",
@@ -195,7 +187,7 @@
   {
     "id": "00022",
     "nombre": "Ojito Huesito Hilo Rojo",
-    "precio": 8000,
+    "precio": 9000,
     "imagen": "/images/products/PULSERAS/PROTECCION/ojitohuesitohilorojotejida.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "PROTECCION",
@@ -213,7 +205,7 @@
   {
     "id": "00024",
     "nombre": "Ojito Rojo Corazón Perla",
-    "precio": 9500,
+    "precio": 9000,
     "imagen": "/images/products/PULSERAS/PROTECCION/ojitorojocorazonperla.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "PROTECCION",
@@ -249,7 +241,7 @@
   {
     "id": "00028",
     "nombre": "Ojo Balín Hilo",
-    "precio": 7000,
+    "precio": 550,
     "imagen": "/images/products/PULSERAS/PROTECCION/ojobalinhilo.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "PROTECCION",
@@ -267,7 +259,7 @@
   {
     "id": "00030",
     "nombre": "Ojo Cristal Azul Hilo",
-    "precio": 7500,
+    "precio": 5500,
     "imagen": "/images/products/PULSERAS/PROTECCION/ojocristalazulhilo.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "PROTECCION",
@@ -276,7 +268,7 @@
   {
     "id": "00031",
     "nombre": "Ojo Cristal Blanco Hilo",
-    "precio": 7500,
+    "precio": 5500,
     "imagen": "/images/products/PULSERAS/PROTECCION/ojocristalblancohilo.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "PROTECCION",
@@ -285,7 +277,7 @@
   {
     "id": "00032",
     "nombre": "Ojo Cristal Celeste Hilo",
-    "precio": 7500,
+    "precio": 5500,
     "imagen": "/images/products/PULSERAS/PROTECCION/ojocristalcelestehilo.jpeg",
     "categoria": "PULSERAS",
     "subcategoria": "PROTECCION",

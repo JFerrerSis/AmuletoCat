@@ -1,6 +1,6 @@
 ---
-interface Props { title: string; }
-const { title } = Astro.props;
+interface Props { title: string; noGrid?: boolean; }
+const { title, noGrid = false } = Astro.props;
 import { ClientRouter } from 'astro:transitions';
 
 import '../styles/global.css'; 
@@ -13,7 +13,7 @@ import Footer from '../components/ui/Footer.astro';
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
-    <link rel="icon" type="image/svg+xml" href="/images/logo.jpeg" />
+    <link rel="icon" type="image/svg+xml" href="/images/logocircular.png" />
     <title>{title}</title>
     <ClientRouter />
 </head>
@@ -24,7 +24,9 @@ import Footer from '../components/ui/Footer.astro';
       
       <div class="absolute inset-0 bg-linear-to-b from-[#fff5f5] via-[#fdf2f2] to-[#fce8e8]"></div>
       
-      <div class="absolute inset-0 bg-[linear-gradient(rgba(59,27,84,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,27,84,0.03)_1px,transparent_1px)] bg-size-[35px_35px] opacity-40"></div>
+      {!noGrid && (
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(59,27,84,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,27,84,0.03)_1px,transparent_1px)] bg-size-[35px_35px] opacity-40"></div>
+      )}
       
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-brand-pink/10 rounded-full blur-[120px]"></div>
 

@@ -63,8 +63,12 @@ import Footer from '../components/ui/Footer.astro';
         setTimeout(() => petal.remove(), (parseFloat(duration) + parseFloat(delay)) * 1000);
       };
 
-      // Intervalo más espaciado para que no sature visualmente
-      setInterval(createPetal, 400);
+      // Evita crear múltiples intervalos al navegar entre páginas.
+      const win = window as Window & { __amuletoPetalsIntervalId?: number };
+      if (win.__amuletoPetalsIntervalId) {
+        window.clearInterval(win.__amuletoPetalsIntervalId);
+      }
+      win.__amuletoPetalsIntervalId = window.setInterval(createPetal, 400);
     </script>
 
     <style is:global>

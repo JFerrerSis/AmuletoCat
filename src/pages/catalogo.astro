@@ -61,11 +61,11 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
         <div id="muestra-viewport" class="overflow-hidden rounded-3xl border border-brand-purple/10 bg-white/60 shadow-sm backdrop-blur-sm">
           <div id="muestra-track" class="flex transition-transform duration-500 ease-out will-change-transform">
             {muestras.map((muestra) => (
-              <div class="muestra-slide w-full shrink-0 aspect-square sm:aspect-3/4 bg-[#fdf2f2]">
+              <div class="muestra-slide w-full shrink-0 bg-[#fdf2f2] flex items-center justify-center p-2 sm:p-3">
                 <img
                   src={muestra.imagen}
                   alt={muestra.alt || 'Muestra Amuleto'}
-                  class="w-full h-full object-contain sm:object-cover"
+                  class="muestra-image w-full h-auto max-h-[60vh] sm:max-h-[68vh] object-contain"
                   loading="lazy"
                 />
               </div>
@@ -112,6 +112,11 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
 
 <script>
   const initFilters = () => {
+    const win = window as Window & { __amuletoCatalogCleanup?: () => void };
+    win.__amuletoCatalogCleanup?.();
+
+    const controller = new AbortController();
+    const { signal } = controller;
     const buttons = document.querySelectorAll('.filter-btn');
     const subButtons = document.querySelectorAll('.sub-filter-btn');
     const subContainer = document.getElementById('sub-filter-container');
@@ -180,7 +185,7 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
     window.addEventListener('catalog:search', (e: any) => {
       currentSearch = e.detail || '';
       applyFilters();
-    });
+    }, { signal });
 
     buttons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -207,7 +212,7 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
         subButtons.forEach(sb => sb.classList.remove('active-sub'));
         subButtons[0]?.classList.add('active-sub');
         applyFilters();
-      });
+      }, { signal });
     });
 
     subButtons.forEach(sb => {
@@ -216,20 +221,20 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
         subButtons.forEach(b => b.classList.remove('active-sub'));
         sb.classList.add('active-sub');
         applyFilters();
-      });
+      }, { signal });
     });
 
     prevBtn?.addEventListener('click', () => {
       if (!totalSlides) return;
       currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
       updateCarousel();
-    });
+    }, { signal });
 
     nextBtn?.addEventListener('click', () => {
       if (!totalSlides) return;
       currentSlide = (currentSlide + 1) % totalSlides;
       updateCarousel();
-    });
+    }, { signal });
 
     dots.forEach((dot) => {
       dot.addEventListener('click', () => {
@@ -238,12 +243,12 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
         if (Number.isNaN(target)) return;
         currentSlide = target;
         updateCarousel();
-      });
+      }, { signal });
     });
 
     viewport?.addEventListener('touchstart', (e: TouchEvent) => {
       touchStartX = e.changedTouches[0]?.clientX || 0;
-    }, { passive: true });
+    }, { passive: true, signal });
 
     viewport?.addEventListener('touchend', (e: TouchEvent) => {
       touchEndX = e.changedTouches[0]?.clientX || 0;
@@ -257,10 +262,11 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
         currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
       }
       updateCarousel();
-    }, { passive: true });
+    }, { passive: true, signal });
 
     buttons[0]?.classList.add('active');
     updateCarousel();
+    win.__amuletoCatalogCleanup = () => controller.abort();
   };
 
   document.addEventListener('astro:page-load', initFilters);
@@ -355,6 +361,11 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
     opacity: 0.72;
     transform: scale(0.985);
     transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .muestra-image {
+    display: block;
+    image-rendering: auto;
   }
 
   .muestra-slide.is-active {

@@ -54,12 +54,17 @@ import { ShoppingCart, Search } from 'lucide-astro';
   import { cartItems, isCartOpen } from '../../store/cartStore';
 
   const initHeader = () => {
+    const win = window as Window & { __amuletoHeaderCleanup?: () => void };
+    win.__amuletoHeaderCleanup?.();
+
     const counter = document.getElementById('cart-counter');
     const trigger = document.getElementById('cart-trigger');
     const nav = document.getElementById('main-nav');
     const navContent = document.getElementById('nav-content');
     const logoContainer = document.getElementById('logo-container');
     const searchInput = document.getElementById('nav-search');
+    const controller = new AbortController();
+    const { signal } = controller;
 
     const handleScroll = () => {
       const isScrolled = window.scrollY > 30;
@@ -83,12 +88,12 @@ import { ShoppingCart, Search } from 'lucide-astro';
     searchInput?.addEventListener('input', (e) => {
       const term = (e.target as HTMLInputElement).value.toUpperCase();
       window.dispatchEvent(new CustomEvent('catalog:search', { detail: term }));
-    });
+    }, { signal });
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { signal, passive: true });
     handleScroll();
 
-    cartItems.subscribe(items => {
+    const unsubscribe = cartItems.subscribe(items => {
       const total = items.reduce((acc, item) => acc + (item.cantidad || 0), 0);
       if (counter) {
         counter.textContent = total.toString();
@@ -102,6 +107,12 @@ import { ShoppingCart, Search } from 'lucide-astro';
         isCartOpen.set(true);
       };
     }
+
+    win.__amuletoHeaderCleanup = () => {
+      controller.abort();
+      unsubscribe();
+      if (trigger) trigger.onclick = null;
+    };
   };
 
   document.addEventListener('astro:page-load', initHeader);

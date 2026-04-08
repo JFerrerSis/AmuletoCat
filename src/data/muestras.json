@@ -1,0 +1,27 @@
+[
+  {
+    "id": "m-001",
+    "imagen": "/images/products/PULSERAS/AMOR/corazonnacarhilorojo.jpeg",
+    "alt": "Muestra corazón nácar hilo rojo"
+  },
+  {
+    "id": "m-002",
+    "imagen": "/images/products/PULSERAS/ESENCIALES/perlapiedracolores.jpeg",
+    "alt": "Muestra perla y piedras colores"
+  },
+  {
+    "id": "m-003",
+    "imagen": "/images/products/PULSERAS/Fe/cruztejidamenta.jpeg",
+    "alt": "Muestra cruz tejida menta"
+  },
+  {
+    "id": "m-004",
+    "imagen": "/images/products/PULSERAS/PROTECCION/ojitoarena.jpeg",
+    "alt": "Muestra ojito protector arena"
+  },
+  {
+    "id": "m-005",
+    "imagen": "/images/products/PULSERAS/VENEZUELA/denariovzla.jpeg",
+    "alt": "Muestra denario Venezuela"
+  }
+]

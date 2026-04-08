@@ -80,7 +80,7 @@ import Footer from "../components/ui/Footer.astro";
         try {
           const product = JSON.parse(productData);
           addToCart(product);
-          showAmuletoToast(`${product.nombre} añadido a tu bolsa`, "success");
+          showAmuletoToast(`${product.nombre} añadido a tu carrito`, "success");
         } catch (err) {
           console.error("Error:", err);
         }

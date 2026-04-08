@@ -3,12 +3,13 @@ import CatalogLayout from '../layouts/CatalogoLayout.astro';
 import ProductCard from '../components/ui/ProductCard.astro';
 import ProductSkeleton from '../components/ui/ProductSkeleton.astro'; 
 import productosData from '../data/productos.json'; 
+import muestrasData from '../data/muestras.json';
 import type { Product } from '../types/product';
 
 const products = (productosData as Product[]);
 const categories = ["TODOS", ...new Set(products.map(p => p.categoria.toUpperCase())), "LIFESTYLE"];
 const subcategories = [...new Set(products.map(p => p.subcategoria?.toUpperCase()).filter(Boolean))];
-const muestras = products.filter((p) => (p.subcategoria || '').toUpperCase() === 'ESENCIALES');
+const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
 ---
 
 <CatalogLayout title="Catálogo | Amuleto">
@@ -61,18 +62,12 @@ const muestras = products.filter((p) => (p.subcategoria || '').toUpperCase() ===
           <div id="muestra-track" class="flex transition-transform duration-500 ease-out will-change-transform">
             {muestras.map((muestra) => (
               <div class="muestra-slide w-full shrink-0 aspect-square sm:aspect-3/4 bg-[#fdf2f2]">
-                <a
-                  href={`/catalogo/producto/${muestra.id}`}
-                  class="block w-full h-full"
-                  aria-label={`Ver detalle de ${muestra.nombre}`}
-                >
-                  <img
-                    src={muestra.imagen}
-                    alt={muestra.nombre || 'Muestra Amuleto'}
-                    class="w-full h-full object-contain sm:object-cover"
-                    loading="lazy"
-                  />
-                </a>
+                <img
+                  src={muestra.imagen}
+                  alt={muestra.alt || 'Muestra Amuleto'}
+                  class="w-full h-full object-contain sm:object-cover"
+                  loading="lazy"
+                />
               </div>
             ))}
           </div>

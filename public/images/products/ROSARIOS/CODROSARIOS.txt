@@ -1,0 +1,74 @@
+[
+  {
+    "id": "00035",
+    "nombre": "ROSARIO VENEZUELA",
+    "precio": 12.000,
+    "imagen": "/images/products/florplatahilorojo.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "00036",
+    "nombre": "ROSARIO AZUL",
+    "precio": 14.000,
+    "imagen": "/images/products/rosarioazul.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "000037",
+    "nombre": "ROSARIO LAVANDA",
+    "precio": 14.000,
+    "imagen": "/images/products/rosariolavanda.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "000038",
+    "nombre": "ROSARIO MALBEC",
+    "precio": 14.000,
+    "imagen": "/images/products/rosariomalbec.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "000039",
+    "nombre": "ROSARIO MENTA",
+    "precio": 14.000,
+    "imagen": "/images/products/rosariomenta.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "000040",
+    "nombre": "ROSARIO NEGRO",
+    "precio": 14.000,
+    "imagen": "/images/products/rosarionegro.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "000041",
+    "nombre": "ROSARIO ROJO",
+    "precio": 14.000,
+    "imagen": "/images/products/rosariorojo.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "000042",
+    "nombre": "ROSARIO ROSADO",
+    "precio": 14.000,
+    "imagen": "/images/products/rosariorosado.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "000043",
+    "nombre": "ROSARIO VIOLETA PROFUNDO",
+    "precio": 14.000,
+    "imagen": "/images/products/rosariovioletaprofundo.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+]

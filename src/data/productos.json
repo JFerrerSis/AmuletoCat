@@ -91,17 +91,30 @@
   },
   {
     "id": "00012",
-    "nombre": "Cruz Tejida (Varios Colores)",
+    "nombre": "Cruz Tejida Arena",
     "precio": 12000,
     "imagen": "/images/products/PULSERAS/Fe/cruztejidaarena.jpeg",
-    "imagenes": [
-      "/images/products/PULSERAS/Fe/cruztejidaarena.jpeg",
-      "/images/products/PULSERAS/Fe/cruztejidabordo.jpeg",
-      "/images/products/PULSERAS/Fe/cruztejidamenta.jpeg"
-    ],
     "categoria": "PULSERAS",
-    "subcategoria": "FE",
-    "descripcion": "Cruz turquesa disponible con tejido artesanal en colores Arena, Bordo y Menta."
+    "subcategoria": "Fe",
+    "descripcion": "Cruz turquesa con tejido artesanal color arena."
+  },
+  {
+    "id": "00013",
+    "nombre": "Cruz Tejida Malbec",
+    "precio": 12000,
+    "imagen": "/images/products/PULSERAS/Fe/cruztejidabordo.jpeg",
+    "categoria": "PULSERAS",
+    "subcategoria": "Fe",
+    "descripcion": "Cruz turquesa con tejido artesanal color Malbec."
+  },
+  {
+    "id": "00014",
+    "nombre": "Cruz Tejida Menta",
+    "precio": 12000,
+    "imagen": "/images/products/PULSERAS/Fe/cruztejidamenta.jpeg",
+    "categoria": "PULSERAS",
+    "subcategoria": "Fe",
+    "descripcion": "Cruz turquesa con tejido artesanal color menta."
   },
   {
     "id": "00015",
@@ -278,29 +291,90 @@
     "id": "00034",
     "nombre": "Denario Venezuela",
     "precio": 5500,
-    "imagen": "/images/products/PULSERAS/VENEZUELA/denariovzla.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "VENEZUELA",
+    "imagen": "/images/products/VENEZUELA/denariovzla.jpeg",
+    "categoria": "VENEZUELA",
+    "subcategoria": "GENERAL",
     "descripcion": "Denario conmemorativo con los colores de Venezuela."
   },
   {
     "id": "00035",
-    "nombre": "Rosarios Artesanales",
-    "precio": 14000,
-    "imagen": "/images/products/ROSARIOS/rosariovzla.jpeg",
-    "imagenes": [
-      "/images/products/ROSARIOS/rosariovzla.jpeg",
-      "/images/products/ROSARIOS/rosarioazul.jpeg",
-      "/images/products/ROSARIOS/rosariolavanda.jpeg",
-      "/images/products/ROSARIOS/rosariomalbec.jpeg",
-      "/images/products/ROSARIOS/rosariomenta.jpeg",
-      "/images/products/ROSARIOS/rosarionegro.jpeg",
-      "/images/products/ROSARIOS/rosariorojo.jpeg",
-      "/images/products/ROSARIOS/rosariorosa.jpeg",
-      "/images/products/ROSARIOS/rosariovioletaprofundo.jpeg"
-    ],
-    "categoria": "Rosarios",
+    "nombre": "ROSARIO VENEZUELA",
+    "precio": 12000,
+    "imagen": "/images/products/VENEZUELA/rosariovzla.jpeg",
+    "categoria": "VENEZUELA",
     "subcategoria": "GENERAL",
-    "descripcion": "Colección de rosarios artesanales en variados colores. Disponibles en tonos: Venezuela, Azul, Lavanda, Malbec, Menta, Negro, Rojo, Rosa y Violeta."
+    "descripcion": "Rosario artesanal inspirado en los colores de Venezuela."
+  },
+  {
+    "id": "00036",
+    "nombre": "ROSARIO AZUL",
+    "precio": 14000,
+    "imagen": "/images/products/ROSARIOS/rosarioazul.jpeg",
+    "categoria": "ROSARIOS",
+    "subcategoria": "GENERAL",
+    "descripcion": "Rosario tejido en tono azul profundo con acabados premium."
+  },
+  {
+    "id": "00037",
+    "nombre": "ROSARIO LAVANDA",
+    "precio": 14000,
+    "imagen": "/images/products/ROSARIOS/rosariolavanda.jpeg",
+    "categoria": "ROSARIOS",
+    "subcategoria": "GENERAL",
+    "descripcion": "Elegante rosario en tono lavanda, diseño minimalista."
+  },
+  {
+    "id": "00038",
+    "nombre": "ROSARIO MALBEC",
+    "precio": 14000,
+    "imagen": "/images/products/ROSARIOS/rosariomalbec.jpeg",
+    "categoria": "ROSARIOS",
+    "subcategoria": "GENERAL",
+    "descripcion": "Rosario en color Malbec intenso, ideal para un estilo sobrio."
+  },
+  {
+    "id": "00039",
+    "nombre": "ROSARIO MENTA",
+    "precio": 14000,
+    "imagen": "/images/products/ROSARIOS/rosariomenta.jpeg",
+    "categoria": "ROSARIOS",
+    "subcategoria": "GENERAL",
+    "descripcion": "Frescura y diseño en tono menta suave."
+  },
+  {
+    "id": "00040",
+    "nombre": "ROSARIO NEGRO",
+    "precio": 14000,
+    "imagen": "/images/products/ROSARIOS/rosarionegro.jpeg",
+    "categoria": "ROSARIOS",
+    "subcategoria": "GENERAL",
+    "descripcion": "Un clásico atemporal en color negro con detalles artesanales."
+  },
+  {
+    "id": "00041",
+    "nombre": "ROSARIO ROJO",
+    "precio": 14000,
+    "imagen": "/images/products/ROSARIOS/rosariorojo.jpeg",
+    "categoria": "ROSARIOS",
+    "subcategoria": "GENERAL",
+    "descripcion": "Rosario vibrante en tono rojo, símbolo de fe y pasión."
+  },
+  {
+    "id": "00042",
+    "nombre": "ROSARIO ROSA",
+    "precio": 14000,
+    "imagen": "/images/products/ROSARIOS/rosariorosa.jpeg",
+    "categoria": "ROSARIOS",
+    "subcategoria": "GENERAL",
+    "descripcion": "Diseño delicado en color rosa pastel."
+  },
+  {
+    "id": "00043",
+    "nombre": "ROSARIO VIOLETA PROFUNDO",
+    "precio": 14000,
+    "imagen": "/images/products/ROSARIOS/rosariovioletaprofundo.jpeg",
+    "categoria": "ROSARIOS",
+    "subcategoria": "GENERAL",
+    "descripcion": "Rosario en tono violeta místico y profundo."
   }
 ]

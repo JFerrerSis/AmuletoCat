@@ -46,11 +46,11 @@ const productString = JSON.stringify(product);
     </a>
 
     <div class="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
-      <div class="relative aspect-[4/5] w-full overflow-hidden bg-brand-pink/5 border border-brand-purple/5 rounded-3xl shadow-xl animate-fast-up group/carousel">
+      <div class="relative aspect-4/5 w-full overflow-hidden bg-brand-pink/5 border border-brand-purple/5 rounded-3xl shadow-xl animate-fast-up group/carousel">
         
         <div id="carousel-track" class="flex h-full w-full transition-transform duration-500 ease-in-out">
           {listaImagenes.map((img: string, index: number) => (
-            <div class="w-full h-full flex-shrink-0">
+            <div class="w-full h-full shrink-0">
               <img 
                 src={img} 
                 alt={`${product.nombre} - vista ${index + 1}`} 
@@ -72,7 +72,7 @@ const productString = JSON.stringify(product);
 
             <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
               {listaImagenes.map((_, i) => (
-                <div class={`dot w-2 h-2 rounded-full bg-white/40 transition-all duration-300 ${i === 0 ? "bg-white !w-6" : ""}`} data-index={i} />
+                <div class={`dot w-2 h-2 rounded-full bg-white/40 transition-all duration-300 ${i === 0 ? "bg-white w-6!" : ""}`} data-index={i} />
               ))}
             </div>
           </>

@@ -9,7 +9,6 @@ import type { Product } from "../../types/product";
 export async function getStaticPaths() {
   const products = productosData as Product[];
   return products.map((product) => ({
-    // Forzamos que el ID sea string y quitamos espacios por si acaso
     params: { id: product.id.toString().trim() },
     props: { product },
   }));
@@ -17,26 +16,23 @@ export async function getStaticPaths() {
 
 const { product } = Astro.props;
 
-// SI EL PRODUCTO NO EXISTE, REDIRIGIR O MOSTRAR ERROR (Evita el 404 genérico feo)
 if (!product) {
-  return Astro.redirect('/catalogo');
+  return Astro.redirect("/catalogo");
 }
 
 const allProducts = productosData as Product[];
 
 // --- LÓGICA DE IMÁGENES NORMALIZADA ---
-const listaImagenes: string[] = Array.isArray(product.imagen) 
-  ? product.imagen 
+const listaImagenes: string[] = Array.isArray(product.imagen)
+  ? product.imagen
   : [product.imagen];
 
 const tieneVariasImagenes = listaImagenes.length > 1;
 
-// Productos relacionados: Misma categoría, excluyendo el actual
 const relacionados = allProducts
-  .filter(p => p.categoria === product.categoria && p.id !== product.id)
+  .filter((p) => p.categoria === product.categoria && p.id !== product.id)
   .slice(0, 4);
 
-// Formato de Precio
 const formattedPrice = new Intl.NumberFormat("es-AR", {
   style: "currency",
   currency: "ARS",
@@ -48,8 +44,8 @@ const productString = JSON.stringify(product);
 
 <CatalogLayout title={`${product.nombre} | Amuleto`}>
   <main class="max-w-6xl mx-auto px-6 pt-32 md:pt-40 pb-24 relative overflow-hidden">
-    <a 
-      href={`/catalogo?categoria=${encodeURIComponent(product.categoria)}`} 
+    <a
+      href={`/catalogo?categoria=${encodeURIComponent(product.categoria)}`}
       class="inline-flex items-center gap-3 text-brand-purple/40 hover:text-brand-gold transition-all text-[10px] uppercase tracking-[0.3em] mb-12 group"
     >
       <span class="bg-white shadow-sm rounded-full w-8 h-8 flex items-center justify-center group-hover:-translate-x-1 transition-transform border border-brand-purple/5">
@@ -61,39 +57,55 @@ const productString = JSON.stringify(product);
     <div class="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
       <div class="relative aspect-[4/5] w-full overflow-hidden bg-brand-pink/5 border border-brand-purple/5 rounded-3xl shadow-xl animate-fast-up group/carousel">
         
-        <div id="carousel-track" class="flex h-full w-full transition-transform duration-500 ease-in-out">
-          {listaImagenes.map((img, index) => (
-            <div class="w-full h-full shrink-0">
-              <img 
-                src={img} 
-                alt={`${product.nombre} - vista ${index + 1}`} 
-                class="w-full h-full object-cover"
-                style={index === 0 ? `view-transition-name: product-img-${product.id};` : ''} 
-              />
-            </div>
-          ))}
-        </div>
+      <div
+  id="carousel-track"
+  class="flex h-full transition-transform duration-500 ease-in-out"
+  style={`width: ${listaImagenes.length * 100}%;`}
+>
+  {
+    listaImagenes.map((img, index) => (
+      <div
+        class="h-full" 
+        style={`width: ${100 / listaImagenes.length}%;`}
+      >
+        <img
+          src={img}
+          alt={`${product.nombre} - vista ${index + 1}`}
+
+          class="w-full h-full object-cover object-center" 
+          style={
+            index === 0
+              ? `view-transition-name: product-img-${product.id};`
+              : ""
+          }
+        />
+      </div>
+    ))
+  }
+</div>
 
         {tieneVariasImagenes && (
           <>
-            <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-brand-purple transition-all shadow-md hover:bg-brand-gold hover:text-white active:scale-90 md:opacity-0 md:group-hover/carousel:opacity-100">
+            <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-brand-purple shadow-md hover:bg-brand-gold hover:text-white transition-all active:scale-90 md:opacity-0 md:group-hover/carousel:opacity-100">
               <ChevronLeft size={20} />
             </button>
-            <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-brand-purple transition-all shadow-md hover:bg-brand-gold hover:text-white active:scale-90 md:opacity-0 md:group-hover/carousel:opacity-100">
+            <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-brand-purple shadow-md hover:bg-brand-gold hover:text-white transition-all active:scale-90 md:opacity-0 md:group-hover/carousel:opacity-100">
               <ChevronRight size={20} />
             </button>
 
-            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2.5">
               {listaImagenes.map((_, i) => (
-                <div class={`dot w-2 h-2 rounded-full bg-white/40 transition-all duration-300 ${i === 0 ? "bg-white !w-6" : ""}`} data-index={i} />
+                <div class={`dot w-2 h-2 rounded-full bg-brand-purple/20 transition-all duration-300 ${i === 0 ? "bg-brand-gold !w-6" : ""}`} />
               ))}
             </div>
           </>
         )}
 
-        <div class="absolute top-6 left-6 z-10">
+        <div class="absolute top-6 left-6 z-20">
           <div class="bg-white/90 backdrop-blur-md border border-brand-gold/20 px-4 py-1.5 rounded-full shadow-sm">
-            <p class="text-[9px] font-bold text-brand-gold tracking-[0.2em] uppercase">{product.subcategoria || product.categoria}</p>
+            <p class="text-[9px] font-bold text-brand-gold tracking-[0.2em] uppercase">
+              {product.subcategoria || product.categoria}
+            </p>
           </div>
         </div>
       </div>
@@ -145,35 +157,39 @@ const productString = JSON.stringify(product);
   import { addToCart } from "../../store/cartStore";
 
   function initProductDetail() {
-    const track = document.getElementById("carousel-track") as HTMLElement;
+    const track = document.getElementById("carousel-track");
     const nextBtn = document.getElementById("next-btn");
     const prevBtn = document.getElementById("prev-btn");
     const dots = document.querySelectorAll(".dot");
     const addBtn = document.getElementById("add-to-cart-detail");
 
-    if (track && nextBtn && prevBtn) {
+    if (track) {
       let currentIndex = 0;
-      const maxSlides = track.children.length;
+      const slides = track.children;
+      const maxSlides = slides.length;
 
       const updateCarousel = () => {
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        // Cálculo de offset basado en el ancho total del track
+        const offset = (currentIndex * 100) / maxSlides;
+        track.style.transform = `translateX(-${offset}%)`;
+        
         dots.forEach((dot, i) => {
           if (i === currentIndex) {
-            dot.classList.add("bg-white", "!w-6");
-            dot.classList.remove("bg-white/40");
+            dot.classList.add("bg-brand-gold", "!w-6");
+            dot.classList.remove("bg-brand-purple/20");
           } else {
-            dot.classList.remove("bg-white", "!w-6");
-            dot.classList.add("bg-white/40");
+            dot.classList.remove("bg-brand-gold", "!w-6");
+            dot.classList.add("bg-brand-purple/20");
           }
         });
       };
 
-      nextBtn.onclick = () => {
+      if (nextBtn) nextBtn.onclick = () => {
         currentIndex = (currentIndex + 1) % maxSlides;
         updateCarousel();
       };
 
-      prevBtn.onclick = () => {
+      if (prevBtn) prevBtn.onclick = () => {
         currentIndex = (currentIndex - 1 + maxSlides) % maxSlides;
         updateCarousel();
       };
@@ -181,29 +197,24 @@ const productString = JSON.stringify(product);
 
     if (addBtn) {
       addBtn.onclick = () => {
-        const productData = JSON.parse(addBtn.getAttribute('data-product') || "{}");
+        const productData = JSON.parse(addBtn.getAttribute("data-product") || "{}");
         addToCart(productData);
-        
         const originalText = addBtn.innerHTML;
         addBtn.innerHTML = "¡AÑADIDO!";
-        addBtn.classList.add('!bg-brand-gold');
-        
+        addBtn.classList.add("!bg-brand-gold");
         setTimeout(() => {
           addBtn.innerHTML = originalText;
-          addBtn.classList.remove('!bg-brand-gold');
+          addBtn.classList.remove("!bg-brand-gold");
         }, 1500);
       };
     }
   }
 
+  // Soporte para transiciones de Astro
   document.addEventListener("astro:page-load", initProductDetail);
 </script>
 
 <style>
-  #carousel-track > div {
-    min-width: 100%;
-  }
-
   .animate-fast-up { animation: quickUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
   .animate-fast-left { animation: quickLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
   .animate-fade-in { animation: quickFade 0.8s ease-out both; }

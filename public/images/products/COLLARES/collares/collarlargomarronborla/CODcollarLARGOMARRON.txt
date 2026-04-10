@@ -1,0 +1,17 @@
+[
+  {
+    "id": "00053",
+    "nombre": "COLLAR LARGO TIERRA CON BORLA",
+    "precio": 21.500,
+    "imagen": "/images/products/largotierraborla.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00053",
+    "nombre": "COLLAR LARGO TIERRA CON BORLA",
+    "precio": 21.500,
+    "imagen": "/images/products/largotierraborlamuestra.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  ]

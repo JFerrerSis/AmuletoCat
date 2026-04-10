@@ -1,9 +1,10 @@
 ---
+// src/pages/catalogo/[id].astro
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-astro";
-import CatalogLayout from "../../../layouts/CatalogoLayout.astro";
-import ProductCard from "../../../components/ui/ProductCard.astro";
-import productosData from "../../../data/productos.json";
-import type { Product } from "../../../types/product";
+import CatalogLayout from "../../layouts/CatalogoLayout.astro";
+import ProductCard from "../../components/ui/ProductCard.astro";
+import productosData from "../../data/productos.json";
+import type { Product } from "../../types/product";
 
 export async function getStaticPaths() {
   const products = productosData as Product[];
@@ -16,20 +17,22 @@ export async function getStaticPaths() {
 const { product } = Astro.props;
 const allProducts = productosData as Product[];
 
-const tieneImagenes = product.imagenes && product.imagenes.length > 1;
-const listaImagenes: string[] = (product.imagenes && product.imagenes.length > 0) 
-  ? product.imagenes 
+// --- LÓGICA DE IMÁGENES NORMALIZADA ---
+const listaImagenes: string[] = Array.isArray(product.imagen) 
+  ? product.imagen 
   : [product.imagen];
 
+const tieneVariasImagenes = listaImagenes.length > 1;
+
+// Productos relacionados: Misma categoría, excluyendo el actual
 const relacionados = allProducts
-  .filter(p => (p.subcategoria === product.subcategoria || p.categoria === product.categoria) && p.id !== product.id)
-  .sort((a, b) => (a.subcategoria === product.subcategoria ? -1 : 1))
+  .filter(p => p.categoria === product.categoria && p.id !== product.id)
   .slice(0, 4);
 
-// Formato a Dólares ($)
-const formattedPrice = new Intl.NumberFormat("en-US", {
+// Formato de Precio
+const formattedPrice = new Intl.NumberFormat("es-AR", {
   style: "currency",
-  currency: "USD",
+  currency: "ARS",
   minimumFractionDigits: 0,
 }).format(product.precio);
 
@@ -39,29 +42,29 @@ const productString = JSON.stringify(product);
 <CatalogLayout title={`${product.nombre} | Amuleto`}>
   <main class="max-w-6xl mx-auto px-6 pt-32 md:pt-40 pb-24 relative overflow-hidden">
     <a href="/catalogo" class="inline-flex items-center gap-3 text-brand-purple/40 hover:text-brand-gold transition-all text-[10px] uppercase tracking-[0.3em] mb-12 group">
-      <span class="bg-white shadow-sm rounded-full w-8 h-8 flex items-center justify-center group-hover:-translate-x-1 transition-transform">
+      <span class="bg-white shadow-sm rounded-full w-8 h-8 flex items-center justify-center group-hover:-translate-x-1 transition-transform border border-brand-purple/5">
         <ArrowLeft size={14} strokeWidth={2.5} />
       </span>
       <span>Regresar al Catálogo</span>
     </a>
 
     <div class="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
-      <div class="relative aspect-4/5 w-full overflow-hidden bg-brand-pink/5 border border-brand-purple/5 rounded-3xl shadow-xl animate-fast-up group/carousel">
+      <div class="relative aspect-[4/5] w-full overflow-hidden bg-brand-pink/5 border border-brand-purple/5 rounded-3xl shadow-xl animate-fast-up group/carousel">
         
         <div id="carousel-track" class="flex h-full w-full transition-transform duration-500 ease-in-out">
-          {listaImagenes.map((img: string, index: number) => (
+          {listaImagenes.map((img, index) => (
             <div class="w-full h-full shrink-0">
               <img 
                 src={img} 
                 alt={`${product.nombre} - vista ${index + 1}`} 
                 class="w-full h-full object-cover"
-                style={index === 0 ? `view-transition-name: card-${product.id};` : ''} 
+                style={index === 0 ? `view-transition-name: product-img-${product.id};` : ''} 
               />
             </div>
           ))}
         </div>
 
-        {tieneImagenes && (
+        {tieneVariasImagenes && (
           <>
             <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-brand-purple transition-all shadow-md hover:bg-brand-gold hover:text-white active:scale-90 md:opacity-0 md:group-hover/carousel:opacity-100">
               <ChevronLeft size={20} />
@@ -72,7 +75,7 @@ const productString = JSON.stringify(product);
 
             <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
               {listaImagenes.map((_, i) => (
-                <div class={`dot w-2 h-2 rounded-full bg-white/40 transition-all duration-300 ${i === 0 ? "bg-white w-6!" : ""}`} data-index={i} />
+                <div class={`dot w-2 h-2 rounded-full bg-white/40 transition-all duration-300 ${i === 0 ? "bg-white !w-6" : ""}`} data-index={i} />
               ))}
             </div>
           </>
@@ -80,7 +83,7 @@ const productString = JSON.stringify(product);
 
         <div class="absolute top-6 left-6 z-10">
           <div class="bg-white/90 backdrop-blur-md border border-brand-gold/20 px-4 py-1.5 rounded-full shadow-sm">
-            <p class="text-[9px] font-bold text-brand-gold tracking-[0.2em] uppercase">{product.categoria}</p>
+            <p class="text-[9px] font-bold text-brand-gold tracking-[0.2em] uppercase">{product.subcategoria || product.categoria}</p>
           </div>
         </div>
       </div>
@@ -114,14 +117,25 @@ const productString = JSON.stringify(product);
         </div>
       </div>
     </div>
+
+    {relacionados.length > 0 && (
+      <section class="mt-32">
+        <h3 class="text-[10px] font-bold text-brand-purple/30 uppercase tracking-[0.4em] mb-12 text-center">También te puede gustar</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          {relacionados.map((item) => (
+            <ProductCard product={item} />
+          ))}
+        </div>
+      </section>
+    )}
   </main>
 </CatalogLayout>
 
 <script>
-  import { addToCart } from "../../../store/cartStore";
+  import { addToCart } from "../../store/cartStore";
 
   function initProductDetail() {
-    const track = document.getElementById("carousel-track");
+    const track = document.getElementById("carousel-track") as HTMLElement;
     const nextBtn = document.getElementById("next-btn");
     const prevBtn = document.getElementById("prev-btn");
     const dots = document.querySelectorAll(".dot");
@@ -129,8 +143,7 @@ const productString = JSON.stringify(product);
 
     if (track && nextBtn && prevBtn) {
       let currentIndex = 0;
-      const slides = track.children;
-      const maxSlides = slides.length;
+      const maxSlides = track.children.length;
 
       const updateCarousel = () => {
         track.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -145,21 +158,20 @@ const productString = JSON.stringify(product);
         });
       };
 
-      // Usamos event listeners limpios
-      nextBtn.addEventListener('click', () => {
+      nextBtn.onclick = () => {
         currentIndex = (currentIndex + 1) % maxSlides;
         updateCarousel();
-      });
+      };
 
-      prevBtn.addEventListener('click', () => {
+      prevBtn.onclick = () => {
         currentIndex = (currentIndex - 1 + maxSlides) % maxSlides;
         updateCarousel();
-      });
+      };
     }
 
     if (addBtn) {
-      addBtn.addEventListener('click', () => {
-        const productData = JSON.parse(addBtn.dataset.product || "{}");
+      addBtn.onclick = () => {
+        const productData = JSON.parse(addBtn.getAttribute('data-product') || "{}");
         addToCart(productData);
         
         const originalText = addBtn.innerHTML;
@@ -170,22 +182,18 @@ const productString = JSON.stringify(product);
           addBtn.innerHTML = originalText;
           addBtn.classList.remove('!bg-brand-gold');
         }, 1500);
-      });
+      };
     }
   }
 
-  // Correr al cargar y al navegar con ViewTransitions
   document.addEventListener("astro:page-load", initProductDetail);
 </script>
 
 <style>
-  /* Fix de estructura para responsive */
   #carousel-track > div {
     min-width: 100%;
-    width: 100%;
   }
 
-  /* Animaciones */
   .animate-fast-up { animation: quickUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
   .animate-fast-left { animation: quickLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
   .animate-fade-in { animation: quickFade 0.8s ease-out both; }

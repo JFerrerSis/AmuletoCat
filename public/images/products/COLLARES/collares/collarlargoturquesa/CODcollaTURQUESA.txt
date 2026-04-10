@@ -1,0 +1,17 @@
+[
+  {
+    "id": "00054",
+    "nombre": "COLLAR LARGO TURQUESA",
+    "precio": 21.500,
+    "imagen": "/images/products/largomarronyturquesa.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00054",
+    "nombre": "COLLAR LARGO TURQUESA",
+    "precio": 21.500,
+    "imagen": "/images/products/largomarronyturquesamuestra.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  ]

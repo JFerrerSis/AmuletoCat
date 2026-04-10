@@ -1,21 +1,21 @@
-// src/types/product.ts
-
 export type SubcategoriaPulsera = 
   | "AMOR" 
   | "ESENCIALES" 
   | "Fe" 
   | "PROTECCION" 
   | "VENEZUELA"
-  | "GENERAL"; // Añadí GENERAL para los rosarios
+  | "LARGOS"
+  | "GARGANTILLAS"
+  | "GENERAL";
 
 export interface Product {
   id: string;
   nombre: string;
   precio: number;
-  imagen: string;
-  imagenes?: string[]; // <--- AÑADE ESTA LÍNEA (la '?' indica que es opcional)
+  // Puede ser un string único o un array de strings para carruseles
+  imagen: string | string[]; 
   categoria: string;
-  subcategoria: SubcategoriaPulsera | string;
+  subcategoria?: SubcategoriaPulsera | string;
   descripcion: string;
 }
 

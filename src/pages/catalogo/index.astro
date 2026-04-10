@@ -1,0 +1,268 @@
+---
+import CatalogLayout from "../../layouts/CatalogoLayout.astro";
+import ProductCard from "../../components/ui/ProductCard.astro";
+import ProductSkeleton from "../../components/ui/ProductSkeleton.astro";
+import productosData from "../../data/productos.json";
+import muestrasData from "../../data/muestras.json";
+import type { Product } from "../../types/product";
+
+// Normalizamos los productos para asegurar que 'imagen' se maneje correctamente en el grid
+const products = (productosData as Product[]).map(item => ({
+  ...item,
+  imagen: Array.isArray(item.imagen) ? item.imagen[0] : item.imagen
+}));
+
+const categories = [
+  "TODOS",
+  ...new Set(products.map((p) => p.categoria.toUpperCase())),
+  "LIFESTYLE",
+];
+
+const subcategories = [
+  ...new Set(
+    products.map((p) => p.subcategoria?.toUpperCase()).filter(Boolean),
+  ),
+];
+
+const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
+---
+
+<CatalogLayout title="Catálogo | Amuleto">
+  <main class="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-24 relative">
+    <header class="mb-12 md:mb-20 text-center animate-reveal">
+      <h1 class="text-3xl md:text-5xl font-bold tracking-[0.25em] uppercase text-brand-purple mb-4">
+        Amuletos<br />
+      </h1>
+      <div class="w-12 h-0.5 bg-brand-gold mx-auto opacity-50"></div>
+    </header>
+
+    <nav class="flex flex-wrap justify-center gap-4 md:gap-12 mb-8 animate-reveal" style="animation-delay: 0.1s">
+      {categories.map((cat) => (
+        <button class="filter-btn group relative py-2 transition-all duration-500" data-category={cat}>
+          <span class="relative z-10 font-bold text-[10px] md:text-[11px] text-brand-purple/40 group-hover:text-brand-purple transition-colors uppercase tracking-[0.3em]">
+            {cat}
+          </span>
+          <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-gold transition-all duration-500 group-[.active]:w-full opacity-60" />
+        </button>
+      ))}
+    </nav>
+
+    <div id="sub-filter-container" class="hidden flex-wrap justify-center gap-x-8 gap-y-3 mb-16 border-t border-brand-purple/5 pt-8 transition-all duration-700 overflow-hidden">
+      <button class="sub-filter-btn active-sub text-[9px] tracking-[0.25em] font-bold text-brand-purple/30 uppercase hover:text-brand-gold transition-colors cursor-pointer" data-subcategory="TODAS">
+        Todas las Piezas
+      </button>
+      {subcategories.map((sub) => (
+        <button class="sub-filter-btn text-[9px] tracking-[0.25em] font-bold text-brand-purple/30 uppercase hover:text-brand-gold transition-colors cursor-pointer" data-subcategory={sub}>
+          {sub}
+        </button>
+      ))}
+    </div>
+
+    <section id="muestra-carousel" class="hidden-instant mb-6 sm:mb-8">
+      <div class="relative max-w-[78vw] sm:max-w-105 md:max-w-130 mx-auto">
+        <div id="muestra-viewport" class="overflow-hidden rounded-3xl border border-brand-purple/10 bg-white/60 shadow-sm backdrop-blur-sm">
+          <div id="muestra-track" class="flex transition-transform duration-500 ease-out will-change-transform">
+            {muestras.map((muestra) => (
+              <div class="muestra-slide w-full shrink-0 bg-[#fdf2f2] flex items-center justify-center p-2 sm:p-3">
+                <img src={muestra.imagen} alt={muestra.alt || "Muestra Amuleto"} class="muestra-image w-full h-auto max-h-[60vh] object-contain" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <button id="muestra-prev" class="muestra-nav left-1 sm:left-2">‹</button>
+        <button id="muestra-next" class="muestra-nav right-1 sm:right-2">›</button>
+      </div>
+      <div id="muestra-dots" class="flex justify-center gap-1.5 sm:gap-2 mt-3 sm:mt-4">
+        {muestras.map((_, index) => (
+          <button class={`muestra-dot ${index === 0 ? "active" : ""}`} data-slide={index} />
+        ))}
+      </div>
+    </section>
+
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-x-8 md:gap-y-16">
+      {products.map((item) => (
+        <div class="product-item opacity-0" 
+             data-category={item.categoria.toUpperCase()} 
+             data-subcategory={item.subcategoria?.toUpperCase() || ""} 
+             data-name={item.nombre.toUpperCase()}>
+          <ProductCard product={item} /> 
+        </div>
+      ))}
+    </div>
+  </main>
+</CatalogLayout>
+
+<script>
+  const initFilters = () => {
+    const win = window as any;
+    win.__amuletoCatalogCleanup?.();
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const buttons = document.querySelectorAll(".filter-btn");
+    const subButtons = document.querySelectorAll(".sub-filter-btn");
+    const subContainer = document.getElementById("sub-filter-container");
+    const items = document.querySelectorAll(".product-item");
+    const productGrid = document.getElementById("product-grid");
+    const muestraCarousel = document.getElementById("muestra-carousel");
+    const muestraTrack = document.getElementById("muestra-track");
+    const dots = document.querySelectorAll(".muestra-dot");
+
+    let currentMainCat = "TODOS";
+    let currentSubCat = "TODAS";
+    let currentSlide = 0;
+
+    const subcategoryMap: Record<string, string[]> = {
+      "PULSERAS": ["AMOR", "ESENCIALES", "FE", "PROTECCION", "VENEZUELA"],
+      "COLLARES": ["GARGANTILLAS", "LARGOS"]
+    };
+
+    const updateCarousel = () => {
+      if (!muestraTrack) return;
+      (muestraTrack as HTMLElement).style.transform = `translateX(-${currentSlide * 100}%)`;
+      dots.forEach((dot, idx) => dot.classList.toggle("active", idx === currentSlide));
+    };
+
+    const applyFilters = () => {
+      if (currentMainCat === "LIFESTYLE") {
+        productGrid?.classList.add("hidden-instant");
+        muestraCarousel?.classList.remove("hidden-instant");
+        return;
+      }
+
+      productGrid?.classList.remove("hidden-instant");
+      muestraCarousel?.classList.add("hidden-instant");
+
+      let visibleCount = 0;
+      items.forEach((item) => {
+        const itemCat = item.getAttribute('data-category');
+        const itemSub = item.getAttribute('data-subcategory');
+        
+        const matchesMain = currentMainCat === 'TODOS' || itemCat === currentMainCat;
+        const matchesSub = currentSubCat === 'TODAS' || itemSub === currentSubCat;
+
+        if (matchesMain && matchesSub) {
+          item.classList.remove('hidden-instant');
+          (item as HTMLElement).style.animationDelay = `${visibleCount * 0.03}s`;
+          item.classList.add('animate-reveal');
+          visibleCount++;
+        } else {
+          item.classList.add('hidden-instant');
+          item.classList.remove('animate-reveal');
+        }
+      });
+    };
+
+    const updateSubFilterVisibility = (category: string) => {
+      const allowedSubs = subcategoryMap[category] || [];
+      
+      if (allowedSubs.length > 0) {
+        subContainer?.classList.add("is-visible");
+        subContainer?.classList.remove("hidden");
+        
+        subButtons.forEach(btn => {
+          const sub = btn.getAttribute("data-subcategory");
+          if (sub === "TODAS" || allowedSubs.includes(sub || "")) {
+            btn.classList.remove("hidden-instant");
+          } else {
+            btn.classList.add("hidden-instant");
+          }
+        });
+      } else {
+        subContainer?.classList.remove("is-visible");
+        subContainer?.classList.add("hidden");
+      }
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        currentMainCat = btn.getAttribute("data-category") || "TODOS";
+        currentSubCat = "TODAS";
+        
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        updateSubFilterVisibility(currentMainCat);
+        
+        subButtons.forEach(sb => sb.classList.remove("active-sub"));
+        subButtons[0]?.classList.add("active-sub");
+        applyFilters();
+      }, { signal });
+    });
+
+    subButtons.forEach((sb) => {
+      sb.addEventListener("click", () => {
+        currentSubCat = sb.getAttribute("data-subcategory") || "TODAS";
+        subButtons.forEach(b => b.classList.remove("active-sub"));
+        sb.classList.add("active-sub");
+        applyFilters();
+      }, { signal });
+    });
+
+    document.getElementById("muestra-next")?.addEventListener("click", () => {
+      currentSlide = (currentSlide + 1) % dots.length;
+      updateCarousel();
+    }, { signal });
+
+    document.getElementById("muestra-prev")?.addEventListener("click", () => {
+      currentSlide = (currentSlide - 1 + dots.length) % dots.length;
+      updateCarousel();
+    }, { signal });
+
+    buttons[0]?.classList.add("active");
+    applyFilters();
+    
+    win.__amuletoCatalogCleanup = () => controller.abort();
+  };
+
+  document.addEventListener("astro:page-load", initFilters);
+</script>
+
+<style is:global>
+  .hidden-instant { display: none !important; }
+  .product-item { opacity: 0; will-change: transform, opacity; }
+  .product-item.animate-reveal {
+    animation: reveal 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  #sub-filter-container {
+    max-height: 0; opacity: 0;
+    transition: max-height 0.6s ease, opacity 0.4s ease;
+  }
+  #sub-filter-container.is-visible {
+    max-height: 200px; opacity: 1; display: flex !important;
+  }
+  .muestra-dot.active { width: 1.25rem; background: #d4af37; }
+  .filter-btn.active span { color: #3b1b54 !important; letter-spacing: 0.4em !important; }
+  
+  /* Estilos para las flechas de muestra */
+  .muestra-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 10;
+    font-size: 1.5rem;
+    color: #3b1b54;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .muestra-nav:hover { background: #d4af37; color: white; }
+  .muestra-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #3b1b5420;
+    border-radius: 99px;
+    transition: all 0.3s;
+  }
+</style>

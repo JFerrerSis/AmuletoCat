@@ -1,0 +1,17 @@
+[
+  {
+    "id": "00055",
+    "nombre": "COLLAR LARGO VARIOS DIJES Y PERLA",
+    "precio": 25.000,
+    "imagen": "/images/products/collarlargodijesperla.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00055",
+    "nombre": "COLLAR LARGO VARIOS DIJES Y PERLA",
+    "precio": 25.000,
+    "imagen": "/images/products/collarlargodijesperlamuestra.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  ]

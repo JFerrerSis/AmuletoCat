@@ -1,0 +1,26 @@
+[
+  {
+    "id": "00044",
+    "nombre": "ROSARIO ARENA",
+    "precio": 14.000,
+    "imagen": "/images/products/rosarioarena.jpeg",
+    "categoria": "Rosarios",
+    "descripcion": ""
+  },
+  {
+    "id": "00045",
+    "nombre": "COLLAR LARGO METALIZADO DORADO AMOR",
+    "precio": 14.000,
+    "imagen": "/images/products/largometalizadodoradocorazonperla.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00046",
+    "nombre": "COLLAR LARGO METALIZADO PLATA AMOR",
+    "precio": 14.000,
+    "imagen": "/images/products/largometalizadoplatacorazonperla.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  }
+]

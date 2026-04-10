@@ -1,0 +1,50 @@
+[
+  {
+    "id": "00047",
+    "nombre": "GARGANTILLA AMOR BEIGE",
+    "precio": 7.500,
+    "imagen": "/images/products/gargantillaamorbeige.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00048",
+    "nombre": "GARGANTILLA AMOR CHOCOLATE",
+    "precio": 7.500,
+    "imagen": "/images/products/gargantillaamorchocolate.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00049",
+    "nombre": "GARGANTILLA AMOR NEGRO",
+    "precio": 7.500,
+    "imagen": "/images/products/gargantillaamornegro.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00050",
+    "nombre": "GARGANTILLA FLOR DE LOTO BEIGE SATINADO",
+    "precio": 7.500,
+    "imagen": "/images/products/gargantillabeigedijeflordeloto.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00051",
+    "nombre": "GARGANTILLA HUESO DE LA SUERTE BEIGE SATINADO",
+    "precio": 7.500,
+    "imagen": "/images/products/gargantillabeigedijehuesito.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  },
+  {
+    "id": "00052",
+    "nombre": "GARGANTILLA PLUMA BEIGE SATINADO",
+    "precio": 9.000,
+    "imagen": "/images/products/gargantillaplumacruzcorazonbeige.jpeg",
+    "categoria": "Collares",
+    "descripcion": ""
+  }
+]

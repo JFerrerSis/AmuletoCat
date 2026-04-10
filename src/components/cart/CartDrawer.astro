@@ -26,7 +26,7 @@
       <input type="text" id="cust-name" placeholder="Nombre y Apellido" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-xs focus:border-brand-gold outline-none transition-all" />
       
       <div class="grid grid-cols-2 gap-3">
-        <input type="tel" id="cust-id" placeholder="DNI" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-xs outline-none focus:border-brand-gold" />
+        <input type="tel" id="cust-id" placeholder="DNI / Cédula" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-xs outline-none focus:border-brand-gold" />
         <input type="tel" id="cust-phone" placeholder="WhatsApp (ej: 11...)" class="w-full bg-white/80 border border-brand-purple/10 p-3.5 rounded-xl text-xs outline-none focus:border-brand-gold" />
       </div>
 
@@ -58,6 +58,7 @@
 </div>
 
 <script>
+  // Importaciones ajustadas según tu estructura de carpetas
   import { 
     cartItems, isCartOpen, cartTotal, 
     increaseQuantity, decreaseQuantity, removeFromCart, 
@@ -93,7 +94,7 @@
         itemsContainer.innerHTML = `
           <div class="py-20 text-center flex flex-col items-center gap-4">
             <span class="opacity-20 text-4xl">💎</span>
-            <p class="opacity-40 text-[10px] uppercase tracking-[0.3em] text-brand-purple">Tu carrito está vacía</p>
+            <p class="opacity-40 text-[10px] uppercase tracking-[0.3em] text-brand-purple">Tu carrito está vacío</p>
           </div>`;
         orderForm?.classList.add('hidden');
         return;
@@ -101,28 +102,33 @@
 
       orderForm?.classList.remove('hidden');
       
-      itemsContainer.innerHTML = items.map((item) => `
-        <div class="flex gap-4 bg-brand-pink/5 p-3 rounded-2xl border border-brand-purple/5 animate-reveal">
-          <img src="${item.imagen}" class="w-16 h-16 object-cover rounded-xl shadow-xs" />
-          <div class="flex-1 flex flex-col justify-between py-0.5">
-            <div class="flex justify-between items-start">
-              <h4 class="text-[10px] text-brand-purple font-bold uppercase tracking-tight line-clamp-1">${item.nombre}</h4>
-              <button onclick="window.removeItem('${item.id}')" class="text-brand-purple/20 hover:text-red-400 p-1 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
-              </button>
-            </div>
+      itemsContainer.innerHTML = items.map((item) => {
+        // AJUSTE DE IMAGEN: Si item.imagen es un array, tomamos la primera
+        const imgPath = Array.isArray(item.imagen) ? item.imagen[0] : item.imagen;
 
-            <div class="flex items-center justify-between">
-              <div class="flex items-center bg-white border border-brand-purple/10 rounded-lg scale-90 -ml-2 overflow-hidden">
-                <button onclick="window.changeQty('${item.id}', -1)" class="px-2.5 py-1 text-brand-purple hover:bg-brand-purple/5 text-xs">-</button>
-                <span class="px-1 text-[10px] font-bold text-brand-purple min-w-[20px] text-center">${item.cantidad}</span>
-                <button onclick="window.changeQty('${item.id}', 1)" class="px-2.5 py-1 text-brand-purple hover:bg-brand-purple/5 text-xs">+</button>
+        return `
+          <div class="flex gap-4 bg-brand-pink/5 p-3 rounded-2xl border border-brand-purple/5 animate-reveal">
+            <img src="${imgPath}" class="w-16 h-16 object-cover rounded-xl shadow-xs" alt="${item.nombre}" />
+            <div class="flex-1 flex flex-col justify-between py-0.5">
+              <div class="flex justify-between items-start">
+                <h4 class="text-[10px] text-brand-purple font-bold uppercase tracking-tight line-clamp-1">${item.nombre}</h4>
+                <button onclick="window.removeItem('${item.id}')" class="text-brand-purple/20 hover:text-red-400 p-1 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+                </button>
               </div>
-              <span class="text-brand-purple font-bold text-[11px]">${formatARS(item.precio * item.cantidad)}</span>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center bg-white border border-brand-purple/10 rounded-lg scale-90 -ml-2 overflow-hidden">
+                  <button onclick="window.changeQty('${item.id}', -1)" class="px-2.5 py-1 text-brand-purple hover:bg-brand-purple/5 text-xs">-</button>
+                  <span class="px-1 text-[10px] font-bold text-brand-purple min-w-[20px] text-center">${item.cantidad}</span>
+                  <button onclick="window.changeQty('${item.id}', 1)" class="px-2.5 py-1 text-brand-purple hover:bg-brand-purple/5 text-xs">+</button>
+                </div>
+                <span class="text-brand-purple font-bold text-[11px]">${formatARS(item.precio * item.cantidad)}</span>
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     });
 
     isCartOpen.subscribe(open => {
@@ -169,7 +175,6 @@
   };
 
   document.addEventListener('astro:page-load', initCart);
-  initCart();
 </script>
 
 <style>

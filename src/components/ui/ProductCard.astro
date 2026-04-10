@@ -3,13 +3,19 @@
 import type { Product } from '../../types/product'; 
 import { ShoppingCart } from 'lucide-astro'; 
 
-interface Props extends Product {}
-const { id, nombre, precio, imagen, categoria } = Astro.props;
+interface Props {
+  product: Product;
+}
 
-// Preparamos los datos para el carrito
-const productData = JSON.stringify({ id, nombre, precio, imagen, categoria });
+const { product } = Astro.props;
+const { id, nombre, precio, imagen, categoria } = product;
 
-// Formateador de moneda para Argentina (Ej: 12.000)
+// Usamos la primera imagen si es un array para el catálogo
+const imagenPrincipal = Array.isArray(imagen) ? imagen[0] : imagen;
+
+// Serializamos el objeto para el botón de compra
+const productData = JSON.stringify(product);
+
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('es-AR', {
     style: 'currency',
@@ -20,18 +26,19 @@ const formatCurrency = (value: number) => {
 };
 ---
 
-<div class="group relative bg-white backdrop-blur-sm border border-brand-purple/5 p-4 md:p-6 rounded-4xl transition-all duration-700 ease-out flex flex-col h-full hover:shadow-[0_20px_50px_rgba(59,27,84,0.06)] hover:-translate-y-1.5 hover:bg-white/90">
+<div class="group relative bg-white backdrop-blur-sm border border-brand-purple/5 p-4 md:p-6 rounded-[2.5rem] transition-all duration-700 ease-out flex flex-col h-full hover:shadow-[0_20px_50px_rgba(59,27,84,0.06)] hover:-translate-y-1.5 hover:bg-white/90">
   
-  <a href={`/catalogo/producto/${id}`} class="absolute inset-0 z-10" aria-label={`Ver detalles de ${nombre}`}></a>
+  {/* Enlace ajustado a la nueva ruta /catalogo/[id] */}
+  <a href={`/catalogo/${id}`} class="absolute inset-0 z-10" aria-label={`Ver detalles de ${nombre}`}></a>
 
   <div class="relative aspect-square mb-4 md:mb-6 overflow-hidden bg-[#fdf2f2] rounded-3xl shrink-0">
     <img 
-      src={imagen} 
+      src={imagenPrincipal} 
       alt={nombre} 
       loading="lazy"
       decoding="async"
       class="w-full h-full object-cover transition-transform duration-1000 ease-in-out group-hover:scale-110"
-      style={`view-transition-name: card-${id};`} 
+      style={`view-transition-name: product-img-${id};`} 
     />
     
     <div class="absolute top-3 left-3 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full z-20 shadow-sm border border-brand-purple/5">
@@ -79,3 +86,24 @@ const formatCurrency = (value: number) => {
     overflow: hidden;
   }
 </style>
+
+<script>
+  import { addToCart } from "../../store/cartStore";
+
+  function initCartButtons() {
+    const buttons = document.querySelectorAll('.add-to-cart-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault(); // Evitamos que el clic active el enlace de la card
+        const productData = JSON.parse(btn.getAttribute('data-product') || '{}');
+        addToCart(productData);
+        
+        // Efecto visual rápido
+        btn.classList.add('scale-110', '!bg-brand-gold');
+        setTimeout(() => btn.classList.remove('scale-110', '!bg-brand-gold'), 500);
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", initCartButtons);
+</script>

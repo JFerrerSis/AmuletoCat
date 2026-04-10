@@ -174,6 +174,29 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
       }
     };
 
+    // --- NUEVA FUNCIÓN: CHEQUEAR PARÁMETROS DE URL ---
+    const checkUrlParams = () => {
+      const params = new URLSearchParams(window.location.search);
+      const catFromUrl = params.get('categoria')?.toUpperCase();
+
+      if (catFromUrl) {
+        buttons.forEach((btn) => {
+          if (btn.getAttribute("data-category") === catFromUrl) {
+            // Quitamos el active del primero (TODOS) y se lo damos al correcto
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            
+            currentMainCat = catFromUrl;
+            updateSubFilterVisibility(currentMainCat);
+            applyFilters();
+
+            // Limpiar la URL sin recargar para que no se quede pegado el filtro si navega luego
+            window.history.replaceState({}, '', window.location.pathname);
+          }
+        });
+      }
+    };
+
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         currentMainCat = btn.getAttribute("data-category") || "TODOS";
@@ -209,8 +232,12 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
       updateCarousel();
     }, { signal });
 
+    // Inicialización
     buttons[0]?.classList.add("active");
     applyFilters();
+    
+    // Ejecutamos el chequeo de URL después de la carga inicial
+    checkUrlParams();
     
     win.__amuletoCatalogCleanup = () => controller.abort();
   };

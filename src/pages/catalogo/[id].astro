@@ -9,12 +9,19 @@ import type { Product } from "../../types/product";
 export async function getStaticPaths() {
   const products = productosData as Product[];
   return products.map((product) => ({
-    params: { id: product.id.toString() },
+    // Forzamos que el ID sea string y quitamos espacios por si acaso
+    params: { id: product.id.toString().trim() },
     props: { product },
   }));
 }
 
 const { product } = Astro.props;
+
+// SI EL PRODUCTO NO EXISTE, REDIRIGIR O MOSTRAR ERROR (Evita el 404 genérico feo)
+if (!product) {
+  return Astro.redirect('/catalogo');
+}
+
 const allProducts = productosData as Product[];
 
 // --- LÓGICA DE IMÁGENES NORMALIZADA ---

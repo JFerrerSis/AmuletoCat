@@ -1,308 +1,57 @@
 [
-  {
-    "id": "0001",
-    "nombre": "Corazón Nácar Hilo Rojo",
-    "precio": 5500,
-    "imagen": "/images/products/PULSERAS/AMOR/corazonnacarhilorojo.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "AMOR",
-    "descripcion": "Dije de corazón en nácar con hilo rojo ajustable."
-  },
-  {
-    "id": "0002",
-    "nombre": "Corazón Nácar Rojo y Perlas",
-    "precio": 6500,
-    "imagen": "/images/products/PULSERAS/AMOR/corazonnacarrojoyperlas.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "AMOR",
-    "descripcion": "Combinación de nácar rojo y perlas delicadas."
-  },
-  {
-    "id": "0003",
-    "nombre": "Corazón Plata Hilo Azul",
-    "precio": 5500,
-    "imagen": "/images/products/PULSERAS/AMOR/corazonplatahiloazul.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "AMOR",
-    "descripcion": "Dije de corazón en plata con hilo azul ajustable."
-  },
-  {
-    "id": "0004",
-    "nombre": "Corazón Plata y Perlas Gris",
-    "precio": 6500,
-    "imagen": "/images/products/PULSERAS/AMOR/corazonplatayperlasgris.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "AMOR",
-    "descripcion": "Elegante pulsera de perlas grises con dije de corazón de plata."
-  },
-  {
-    "id": "0005",
-    "nombre": "Flor Plata Hilo Rojo",
-    "precio": 5500,
-    "imagen": "/images/products/PULSERAS/AMOR/florplatahilorojo.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "AMOR",
-    "descripcion": "Dije de flor en plata con hilo rojo."
-  },
-  {
-    "id": "0006",
-    "nombre": "Turquesas Corazón Plata",
-    "precio": 6800,
-    "imagen": "/images/products/PULSERAS/AMOR/turquesascorazonplata.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "AMOR",
-    "descripcion": "Piedras turquesas naturales con dije de corazón."
-  },
-  {
-    "id": "0007",
-    "nombre": "Jaspe Negra 3 Perlas",
-    "precio": 6000,
-    "imagen": "/images/products/PULSERAS/ESENCIALES/3perlasseparadordoradojaspenegra.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "ESENCIALES",
-    "descripcion": "Piedra jaspe negra con tres perlas y separadores dorados."
-  },
-  {
-    "id": "0008",
-    "nombre": "Perla Piedra Colores",
-    "precio": 5500,
-    "imagen": "/images/products/PULSERAS/ESENCIALES/perlapiedracolores.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "ESENCIALES",
-    "descripcion": "Diseño colorido con perla central."
-  },
-  {
-    "id": "0009",
-    "nombre": "Perla Tejido Azul",
-    "precio": 5000,
-    "imagen": "/images/products/PULSERAS/ESENCIALES/perlatejidoazul.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "ESENCIALES",
-    "descripcion": "Tejido artesanal azul con perla."
-  },
-  {
-    "id": "0010",
-    "nombre": "Perla Tejido Coral",
-    "precio": 5000,
-    "imagen": "/images/products/PULSERAS/ESENCIALES/perlatejidocoral.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "ESENCIALES",
-    "descripcion": "Tejido artesanal color coral con perla."
-  },
-  {
-    "id": "0011",
-    "nombre": "Cruz Tejida Arena",
-    "precio": 5500,
-    "imagen": "/images/products/PULSERAS/Fe/cruztejidaarena.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "Fe",
-    "descripcion": "Cruz tejida a mano en hilo color arena."
-  },
-  {
-    "id": "0012",
-    "nombre": "Cruz Tejida Malbec",
-    "precio": 5500,
-    "imagen": "/images/products/PULSERAS/Fe/cruztejidabordo.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "Fe",
-    "descripcion": "Cruz tejida en tono Malbec profundo."
-  },
-  {
-    "id": "0013",
-    "nombre": "Cruz Turquesa Tierra",
-    "precio": 7000,
-    "imagen": "/images/products/PULSERAS/Fe/cruzturquesapiedrastierra.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "Fe",
-    "descripcion": "Piedras en tonos tierra con cruz turquesa."
-  },
-  {
-    "id": "0014",
-    "nombre": "Ojito Arena",
-    "precio": 4500,
-    "imagen": "/images/products/PULSERAS/PROTECCION/ojitoarena.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "PROTECCION",
-    "descripcion": "Amuleto de ojito protector sobre hilo arena."
-  },
-  {
-    "id": "0015",
-    "nombre": "Ojito Cristales Azules",
-    "precio": 5500,
-    "imagen": "/images/products/PULSERAS/PROTECCION/ojitocristalesazules.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "PROTECCION",
-    "descripcion": "Protección con cristales facetados azules."
-  },
-  {
-    "id": "0016",
-    "nombre": "Perla Madera Hueso Suerte",
-    "precio": 6500,
-    "imagen": "/images/products/PULSERAS/PROTECCION/perlamaderahuesosuerte.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "PROTECCION",
-    "descripcion": "Mezcla de texturas naturales para la buena fortuna."
-  },
-  {
-    "id": "0017",
-    "nombre": "Buzio Azul y Naranja",
-    "precio": 5800,
-    "imagen": "/images/products/PULSERAS/PROTECCION/buzioazulynaranja.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "PROTECCION",
-    "descripcion": "Dije de buzio con hilos contrastantes."
-  },
-  {
-    "id": "0018",
-    "nombre": "Denario Venezuela",
-    "precio": 7000,
-    "imagen": "/images/products/PULSERAS/VENEZUELA/denariovzla.jpeg",
-    "categoria": "PULSERAS",
-    "subcategoria": "VENEZUELA",
-    "descripcion": "Denario artesanal con los colores de la bandera."
-  },
-  {
-    "id": "0019",
-    "nombre": "Rosario Arena",
-    "precio": 14000,
-    "imagen": "/images/products/ROSARIOS/rosarioarena.jpeg",
-    "categoria": "ROSARIOS",
-    "subcategoria": "GENERAL",
-    "descripcion": "Rosario artesanal en tono arena natural."
-  },
-  {
-    "id": "0020",
-    "nombre": "Rosario Azul",
-    "precio": 14000,
-    "imagen": "/images/products/ROSARIOS/rosarioazul.jpeg",
-    "categoria": "ROSARIOS",
-    "subcategoria": "GENERAL",
-    "descripcion": "Rosario tejido en tono azul profundo."
-  },
-  {
-    "id": "0021",
-    "nombre": "Rosario Malbec",
-    "precio": 14000,
-    "imagen": "/images/products/ROSARIOS/rosariomalbec.jpeg",
-    "categoria": "ROSARIOS",
-    "subcategoria": "GENERAL",
-    "descripcion": "Tono vino intenso artesanal."
-  },
-  {
-    "id": "0022",
-    "nombre": "Rosario Venezuela tricolor",
-    "precio": 14000,
-    "imagen": "/images/products/ROSARIOS/rosariovzla.jpeg",
-    "categoria": "ROSARIOS",
-    "subcategoria": "GENERAL",
-    "descripcion": "Colores tricolores representativos."
-  },
-  {
-    "id": "0023",
-    "nombre": "Collar Largo Dorado Amor",
-    "precio": 14000,
-    "imagen": "/images/products/COLLARES/collares/largometalizadodoradocorazonperla.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "LARGOS",
-    "descripcion": "Metalizado dorado con dije de corazón y perla."
-  },
-  {
-    "id": "0024",
-    "nombre": "Collar Largo Plata Amor",
-    "precio": 14000,
-    "imagen": "/images/products/COLLARES/collares/largometalizadoplatacorazonperla.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "LARGOS",
-    "descripcion": "Metalizado plata con dije de corazón y perla."
-  },
-  {
-    "id": "0025",
-    "nombre": "Collar Largo Turquesa",
-    "precio": 21500,
-    "imagen": [
-      "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturquesa.jpeg",
-      "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturquesamuestra.jpeg"
-    ],
-    "categoria": "COLLARES",
-    "subcategoria": "LARGOS",
-    "descripcion": "Combinación de tonos tierra y turquesa."
-  },
-  {
-    "id": "0026",
-    "nombre": "Collar Largo Marrón Borla",
-    "precio": 21500,
-    "imagen": [
-      "/images/products/COLLARES/collares/collarlargomarronborla/largotierraborla.jpeg",
-      "/images/products/COLLARES/collares/collarlargomarronborla/largotierraborlamuestra.jpeg"
-    ],
-    "categoria": "COLLARES",
-    "subcategoria": "LARGOS",
-    "descripcion": "Diseño rústico con borla artesanal."
-  },
-  {
-    "id": "0027",
-    "nombre": "Collar Largo Varios Dijes",
-    "precio": 16500,
-    "imagen": [
-      "/images/products/COLLARES/collares/collarlargovariosdijes/collarlargodijesperla.jpeg",
-      "/images/products/COLLARES/collares/collarlargovariosdijes/collarlargodijesperlamuestra.jpeg"
-    ],
-    "categoria": "COLLARES",
-    "subcategoria": "LARGOS",
-    "descripcion": "Collar largo con mix de dijes y detalles en perla."
-  },
-  {
-    "id": "0028",
-    "nombre": "Gargantilla Amor Beige",
-    "precio": 7500,
-    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamorbeige.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "GARGANTILLAS",
-    "descripcion": "Gargantilla delicada tono beige con dije de corazón."
-  },
-  {
-    "id": "0029",
-    "nombre": "Gargantilla Amor Chocolate",
-    "precio": 7500,
-    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamorchocolate.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "GARGANTILLAS",
-    "descripcion": "Gargantilla ajustable tono chocolate."
-  },
-  {
-    "id": "0030",
-    "nombre": "Gargantilla Amor Negro",
-    "precio": 7500,
-    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamornegro.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "GARGANTILLAS",
-    "descripcion": "Gargantilla clásica negra con dije de corazón."
-  },
-  {
-    "id": "0031",
-    "nombre": "Gargantilla Flor de Loto",
-    "precio": 7500,
-    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillabeigedijeflordeloto.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "GARGANTILLAS",
-    "descripcion": "Dije de loto satinado sobre cordón beige."
-  },
-  {
-    "id": "0032",
-    "nombre": "Gargantilla Huesito Suerte",
-    "precio": 7500,
-    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillabeigedijehuesito.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "GARGANTILLAS",
-    "descripcion": "Dije huesito de la suerte en beige satinado."
-  },
-  {
-    "id": "0033",
-    "nombre": "Gargantilla Pluma & Cruz",
-    "precio": 9000,
-    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaplumacruzcorazonbeige.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "GARGANTILLAS",
-    "descripcion": "Mix de pluma y cruz sobre base beige satinada."
-  }
+  { "id": "0001", "nombre": "Corazón Nácar Hilo Rojo", "precio": 5500, "imagen": "/images/products/PULSERAS/AMOR/corazonnacarhilorojo.jpeg", "categoria": "PULSERAS", "subcategoria": "AMOR", "descripcion": "Dije de corazón en nácar con hilo rojo ajustable." },
+  { "id": "0002", "nombre": "Corazón Nácar Rojo y Perlas", "precio": 6500, "imagen": "/images/products/PULSERAS/AMOR/corazonnacarrojoyperlas.jpeg", "categoria": "PULSERAS", "subcategoria": "AMOR", "descripcion": "Combinación de nácar rojo y perlas delicadas." },
+  { "id": "0003", "nombre": "Corazón Plata Hilo Azul", "precio": 5500, "imagen": "/images/products/PULSERAS/AMOR/corazonplatahiloazul.jpeg", "categoria": "PULSERAS", "subcategoria": "AMOR", "descripcion": "Dije de corazón en plata con hilo azul ajustable." },
+  { "id": "0004", "nombre": "Corazón Plata y Perlas Gris", "precio": 6500, "imagen": "/images/products/PULSERAS/AMOR/corazonplatayperlasgris.jpeg", "categoria": "PULSERAS", "subcategoria": "AMOR", "descripcion": "Elegante pulsera de perlas grises con dije de corazón de plata." },
+  { "id": "0005", "nombre": "Flor Plata Hilo Rojo", "precio": 5500, "imagen": "/images/products/PULSERAS/AMOR/florplatahilorojo.jpeg", "categoria": "PULSERAS", "subcategoria": "AMOR", "descripcion": "Dije de flor en plata con hilo rojo." },
+  { "id": "0006", "nombre": "Turquesas Corazón Plata", "precio": 6800, "imagen": "/images/products/PULSERAS/AMOR/turquesascorazonplata.jpeg", "categoria": "PULSERAS", "subcategoria": "AMOR", "descripcion": "Piedras turquesas naturales con dije de corazón." },
+  { "id": "0007", "nombre": "Jaspe Negra 3 Perlas", "precio": 6000, "imagen": "/images/products/PULSERAS/ESENCIALES/3perlasseparadordoradojaspenegra.jpeg", "categoria": "PULSERAS", "subcategoria": "ESENCIALES", "descripcion": "Piedra jaspe negra con tres perlas y separadores dorados." },
+  { "id": "0008", "nombre": "Perla Piedra Colores", "precio": 5500, "imagen": "/images/products/PULSERAS/ESENCIALES/perlapiedracolores.jpeg", "categoria": "PULSERAS", "subcategoria": "ESENCIALES", "descripcion": "Diseño colorido con perla central." },
+  { "id": "0009", "nombre": "Perla Tejido Azul", "precio": 5000, "imagen": "/images/products/PULSERAS/ESENCIALES/perlatejidoazul.jpeg", "categoria": "PULSERAS", "subcategoria": "ESENCIALES", "descripcion": "Tejido artesanal azul con perla." },
+  { "id": "0010", "nombre": "Perla Tejido Coral", "precio": 5000, "imagen": "/images/products/PULSERAS/ESENCIALES/perlatejidocoral.jpeg", "categoria": "PULSERAS", "subcategoria": "ESENCIALES", "descripcion": "Tejido artesanal color coral con perla." },
+  { "id": "0011", "nombre": "Perla Tejido Coral 2", "precio": 5000, "imagen": "/images/products/PULSERAS/ESENCIALES/perlatejidocoral2.jpeg", "categoria": "PULSERAS", "subcategoria": "ESENCIALES", "descripcion": "Variante de tejido coral artesanal." },
+  { "id": "0012", "nombre": "Cruz Tejida Arena", "precio": 5500, "imagen": "/images/products/PULSERAS/Fe/cruztejidaarena.jpeg", "categoria": "PULSERAS", "subcategoria": "FE", "descripcion": "Cruz tejida a mano en hilo color arena." },
+  { "id": "0013", "nombre": "Cruz Tejida Malbec", "precio": 5500, "imagen": "/images/products/PULSERAS/Fe/cruztejidabordo.jpeg", "categoria": "PULSERAS", "subcategoria": "FE", "descripcion": "Cruz tejida en tono Malbec profundo." },
+  { "id": "0014", "nombre": "Cruz Tejida Menta", "precio": 5500, "imagen": "/images/products/PULSERAS/Fe/cruztejidamenta.jpeg", "categoria": "PULSERAS", "subcategoria": "FE", "descripcion": "Cruz tejida en tono menta suave." },
+  { "id": "0015", "nombre": "Cruz Turquesa Tierra", "precio": 7000, "imagen": "/images/products/PULSERAS/Fe/cruzturquesapiedrastierra.jpeg", "categoria": "PULSERAS", "subcategoria": "FE", "descripcion": "Piedras en tonos tierra con cruz turquesa." },
+  { "id": "0016", "nombre": "Ojito Arena", "precio": 4500, "imagen": "/images/products/PULSERAS/PROTECCION/ojitoarena.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Amuleto de ojito protector sobre hilo arena." },
+  { "id": "0017", "nombre": "Ojito Chocolate", "precio": 4500, "imagen": "/images/products/PULSERAS/PROTECCION/ojitochocolate.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Ojito protector con hilo chocolate." },
+  { "id": "0018", "nombre": "Ojito Cristales Azules", "precio": 5500, "imagen": "/images/products/PULSERAS/PROTECCION/ojitocristalesazules.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Protección con cristales facetados azules." },
+  { "id": "0019", "nombre": "Ojito Estrella Cruz Roja", "precio": 5500, "imagen": "/images/products/PULSERAS/PROTECCION/ojitoestrellacruzroja.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Amuleto con estrella y cruz roja." },
+  { "id": "0020", "nombre": "Ojito Huesito Rojo", "precio": 5500, "imagen": "/images/products/PULSERAS/PROTECCION/ojitohuesitohilorojotejida.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Dije de huesito y ojito con tejido rojo." },
+  { "id": "0021", "nombre": "Ojito Menta", "precio": 4500, "imagen": "/images/products/PULSERAS/PROTECCION/ojitomenta.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Ojito con hilo color menta." },
+  { "id": "0022", "nombre": "Ojito Rojo Corazón", "precio": 5500, "imagen": "/images/products/PULSERAS/PROTECCION/ojitorojocorazonperla.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Ojito rojo con corazón y perla." },
+  { "id": "0023", "nombre": "Ojito Rojo Flor Cristales", "precio": 5800, "imagen": "/images/products/PULSERAS/PROTECCION/ojitorojoflorcristalesmenta.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Flor de cristales menta con ojito rojo." },
+  { "id": "0024", "nombre": "Ojito Violeta", "precio": 4500, "imagen": "/images/products/PULSERAS/PROTECCION/ojitovioleta.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Ojito con hilo color violeta." },
+  { "id": "0025", "nombre": "Ojito Tejido Turquesa", "precio": 5000, "imagen": "/images/products/PULSERAS/PROTECCION/ojitoytejidoturquesa.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Tejido artesanal turquesa con ojito." },
+  { "id": "0026", "nombre": "Ojo Balín Hilo", "precio": 4000, "imagen": "/images/products/PULSERAS/PROTECCION/ojobalinhilo.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Ojo protector minimalista con balín." },
+  { "id": "0027", "nombre": "Ojo Balín Dúo", "precio": 4500, "imagen": "/images/products/PULSERAS/PROTECCION/ojobalinhilobalin.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Diseño con doble balín y ojito central." },
+  { "id": "0028", "nombre": "Ojo Cristal Azul", "precio": 4500, "imagen": "/images/products/PULSERAS/PROTECCION/ojocristalazulhilo.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Dije de cristal azul profundo." },
+  { "id": "0029", "nombre": "Ojo Cristal Blanco", "precio": 4500, "imagen": "/images/products/PULSERAS/PROTECCION/ojocristalblancohilo.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Dije de cristal blanco puro." },
+  { "id": "0030", "nombre": "Ojo Cristal Celeste", "precio": 4500, "imagen": "/images/products/PULSERAS/PROTECCION/ojocristalcelestehilo.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Dije de cristal celeste suave." },
+  { "id": "0031", "nombre": "Madera Violeta Plata", "precio": 6000, "imagen": "/images/products/PULSERAS/PROTECCION/maderavioletaplateado.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Cuentas de madera violeta con detalles plata." },
+  { "id": "0032", "nombre": "Buzio Azul y Naranja", "precio": 5800, "imagen": "/images/products/PULSERAS/PROTECCION/buzioazulynaranja.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Dije de buzio con hilos contrastantes." },
+  { "id": "0033", "nombre": "Perla Madera Hueso", "precio": 6500, "imagen": "/images/products/PULSERAS/PROTECCION/perlamaderahuesosuerte.jpeg", "categoria": "PULSERAS", "subcategoria": "PROTECCION", "descripcion": "Mezcla de texturas naturales para la buena fortuna." },
+  { "id": "0034", "nombre": "Denario Venezuela", "precio": 7000, "imagen": "/images/products/PULSERAS/VENEZUELA/denariovzla.jpeg", "categoria": "PULSERAS", "subcategoria": "VENEZUELA", "descripcion": "Denario artesanal tricolor representativo." },
+  { "id": "0035", "nombre": "Rosario Arena", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosarioarena.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Rosario artesanal en tono arena natural." },
+  { "id": "0036", "nombre": "Rosario Azul", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosarioazul.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Rosario tejido en tono azul profundo." },
+  { "id": "0037", "nombre": "Rosario Lavanda", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosariolavanda.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Color lavanda suave tejido a mano." },
+  { "id": "0038", "nombre": "Rosario Malbec", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosariomalbec.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Tono vino intenso artesanal." },
+  { "id": "0039", "nombre": "Rosario Menta", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosariomenta.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Tono menta fresco tejido." },
+  { "id": "0040", "nombre": "Rosario Negro", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosarionegro.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Rosario negro clásico elegante." },
+  { "id": "0041", "nombre": "Rosario Rojo", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosariorojo.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Rosario rojo vibrante artesanal." },
+  { "id": "0042", "nombre": "Rosario Rosa", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosariorosa.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Rosario rosa pastel delicado." },
+  { "id": "0043", "nombre": "Rosario Violeta", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosariovioletaprofundo.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Violeta profundo tejido artesanal." },
+  { "id": "0044", "nombre": "Rosario Venezuela", "precio": 14000, "imagen": "/images/products/ROSARIOS/rosariovzla.jpeg", "categoria": "ROSARIOS", "subcategoria": "GENERAL", "descripcion": "Colores tricolores representativos." },
+  { "id": "0045", "nombre": "Collar Largo Dorado", "precio": 14000, "imagen": "/images/products/COLLARES/collares/largometalizadodoradocorazonperla.jpeg", "categoria": "COLLARES", "subcategoria": "LARGOS", "descripcion": "Metalizado dorado con dije de corazón y perla." },
+  { "id": "0046", "nombre": "Collar Largo Plata", "precio": 14000, "imagen": "/images/products/COLLARES/collares/largometalizadoplatacorazonperla.jpeg", "categoria": "COLLARES", "subcategoria": "LARGOS", "descripcion": "Metalizado plata con dije de corazón y perla." },
+  { "id": "0047", "nombre": "Collar Largo Marrón Borla", "precio": 21000, "imagen": ["/images/products/COLLARES/collares/collarlargomarronborla/largotierraborla.jpeg", "/images/products/COLLARES/collares/collarlargomarronborla/largotierraborlamuestra.jpeg"], "categoria": "COLLARES", "subcategoria": "LARGOS", "descripcion": "Diseño rústico con borla artesanal." },
+  { "id": "0048", "nombre": "Collar Largo Turquesa", "precio": 21000, "imagen": ["/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturquesa.jpeg", "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturquesamuestra.jpeg"], "categoria": "COLLARES", "subcategoria": "LARGOS", "descripcion": "Combinación de tonos tierra y turquesa." },
+  { "id": "0049", "nombre": "Collar Largo Varios Dijes", "precio": 25000, "imagen": ["/images/products/COLLARES/collares/collarlargovariosdijes/collarlargodijesperla.jpeg", "/images/products/COLLARES/collares/collarlargovariosdijes/collarlargodijesperlamuestra.jpeg"], "categoria": "COLLARES", "subcategoria": "LARGOS", "descripcion": "Collar largo con mix de dijes y detalles en perla." },
+  { "id": "0050", "nombre": "Gargantilla Amor Beige", "precio": 7500, "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamorbeige.jpeg", "categoria": "COLLARES", "subcategoria": "GARGANTILLAS", "descripcion": "Gargantilla delicada tono beige con dije de corazón." },
+  { "id": "0051", "nombre": "Gargantilla Amor Chocolate", "precio": 7500, "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamorchocolate.jpeg", "categoria": "COLLARES", "subcategoria": "GARGANTILLAS", "descripcion": "Gargantilla ajustable tono chocolate." },
+  { "id": "0052", "nombre": "Gargantilla Amor Negro", "precio": 7500, "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamornegro.jpeg", "categoria": "COLLARES", "subcategoria": "GARGANTILLAS", "descripcion": "Gargantilla clásica negra con dije de corazón." },
+  { "id": "0053", "nombre": "Gargantilla Flor de Loto", "precio": 7500, "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillabeigedijeflordeloto.jpeg", "categoria": "COLLARES", "subcategoria": "GARGANTILLAS", "descripcion": "Dije de loto satinado sobre cordón beige." },
+  { "id": "0054", "nombre": "Gargantilla Huesito Suerte", "precio": 7500, "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillabeigedijehuesito.jpeg", "categoria": "COLLARES", "subcategoria": "GARGANTILLAS", "descripcion": "Dije huesito de la suerte en beige satinado." },
+  { "id": "0055", "nombre": "Gargantilla Pluma & Cruz", "precio": 9000, "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaplumacruzcorazonbeige.jpeg", "categoria": "COLLARES", "subcategoria": "GARGANTILLAS", "descripcion": "Mix de pluma y cruz sobre base beige satinada." }
 ]

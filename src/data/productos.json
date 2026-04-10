@@ -199,24 +199,6 @@
   },
   {
     "id": "0023",
-    "nombre": "Gargantilla Amor Beige",
-    "precio": 7500,
-    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamorbeige.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "GARGANTILLAS",
-    "descripcion": "Gargantilla delicada tono beige."
-  },
-  {
-    "id": "0024",
-    "nombre": "Gargantilla Flor de Loto",
-    "precio": 7500,
-    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillabeigedijeflordeloto.jpeg",
-    "categoria": "COLLARES",
-    "subcategoria": "GARGANTILLAS",
-    "descripcion": "Dije de loto satinado sobre cordón beige."
-  },
-  {
-    "id": "0025",
     "nombre": "Collar Largo Dorado Amor",
     "precio": 14000,
     "imagen": "/images/products/COLLARES/collares/largometalizadodoradocorazonperla.jpeg",
@@ -225,7 +207,16 @@
     "descripcion": "Metalizado dorado con dije de corazón y perla."
   },
   {
-    "id": "0026",
+    "id": "0024",
+    "nombre": "Collar Largo Plata Amor",
+    "precio": 14000,
+    "imagen": "/images/products/COLLARES/collares/largometalizadoplatacorazonperla.jpeg",
+    "categoria": "COLLARES",
+    "subcategoria": "LARGOS",
+    "descripcion": "Metalizado plata con dije de corazón y perla."
+  },
+  {
+    "id": "0025",
     "nombre": "Collar Largo Turquesa",
     "precio": 21500,
     "imagen": [
@@ -237,7 +228,7 @@
     "descripcion": "Combinación de tonos tierra y turquesa."
   },
   {
-    "id": "0027",
+    "id": "0026",
     "nombre": "Collar Largo Marrón Borla",
     "precio": 21500,
     "imagen": [
@@ -247,5 +238,71 @@
     "categoria": "COLLARES",
     "subcategoria": "LARGOS",
     "descripcion": "Diseño rústico con borla artesanal."
+  },
+  {
+    "id": "0027",
+    "nombre": "Collar Largo Varios Dijes",
+    "precio": 16500,
+    "imagen": [
+      "/images/products/COLLARES/collares/collarlargovariosdijes/collarlargodijesperla.jpeg",
+      "/images/products/COLLARES/collares/collarlargovariosdijes/collarlargodijesperlamuestra.jpeg"
+    ],
+    "categoria": "COLLARES",
+    "subcategoria": "LARGOS",
+    "descripcion": "Collar largo con mix de dijes y detalles en perla."
+  },
+  {
+    "id": "0028",
+    "nombre": "Gargantilla Amor Beige",
+    "precio": 7500,
+    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamorbeige.jpeg",
+    "categoria": "COLLARES",
+    "subcategoria": "GARGANTILLAS",
+    "descripcion": "Gargantilla delicada tono beige con dije de corazón."
+  },
+  {
+    "id": "0029",
+    "nombre": "Gargantilla Amor Chocolate",
+    "precio": 7500,
+    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamorchocolate.jpeg",
+    "categoria": "COLLARES",
+    "subcategoria": "GARGANTILLAS",
+    "descripcion": "Gargantilla ajustable tono chocolate."
+  },
+  {
+    "id": "0030",
+    "nombre": "Gargantilla Amor Negro",
+    "precio": 7500,
+    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaamornegro.jpeg",
+    "categoria": "COLLARES",
+    "subcategoria": "GARGANTILLAS",
+    "descripcion": "Gargantilla clásica negra con dije de corazón."
+  },
+  {
+    "id": "0031",
+    "nombre": "Gargantilla Flor de Loto",
+    "precio": 7500,
+    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillabeigedijeflordeloto.jpeg",
+    "categoria": "COLLARES",
+    "subcategoria": "GARGANTILLAS",
+    "descripcion": "Dije de loto satinado sobre cordón beige."
+  },
+  {
+    "id": "0032",
+    "nombre": "Gargantilla Huesito Suerte",
+    "precio": 7500,
+    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillabeigedijehuesito.jpeg",
+    "categoria": "COLLARES",
+    "subcategoria": "GARGANTILLAS",
+    "descripcion": "Dije huesito de la suerte en beige satinado."
+  },
+  {
+    "id": "0033",
+    "nombre": "Gargantilla Pluma & Cruz",
+    "precio": 9000,
+    "imagen": "/images/products/COLLARES/collares/gargantillas/gargantillaplumacruzcorazonbeige.jpeg",
+    "categoria": "COLLARES",
+    "subcategoria": "GARGANTILLAS",
+    "descripcion": "Mix de pluma y cruz sobre base beige satinada."
   }
 ]

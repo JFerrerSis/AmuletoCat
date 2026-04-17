@@ -6,7 +6,9 @@ export type SubcategoriaPulsera =
   | "VENEZUELA"
   | "LARGOS"
   | "GARGANTILLAS"
+  | "MULTICOLOR"
   | "GENERAL";
+
 
 export interface Product {
   id: string;

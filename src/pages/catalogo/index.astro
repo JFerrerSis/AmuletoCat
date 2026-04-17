@@ -1,12 +1,12 @@
 ---
 import CatalogLayout from "../../layouts/CatalogoLayout.astro";
 import ProductCard from "../../components/ui/ProductCard.astro";
-import ProductSkeleton from "../../components/ui/ProductSkeleton.astro";
 import productosData from "../../data/productos.json";
 import muestrasData from "../../data/muestras.json";
 import type { Product } from "../../types/product";
 
-// Normalizamos los productos para asegurar que 'imagen' se maneje correctamente en el grid
+// Normalizamos los productos basándonos en tu nuevo Type: 
+// Si es array, tomamos la primera. Si es string, se queda igual.
 const products = (productosData as Product[]).map(item => ({
   ...item,
   imagen: Array.isArray(item.imagen) ? item.imagen[0] : item.imagen
@@ -18,6 +18,7 @@ const categories = [
   "LIFESTYLE",
 ];
 
+// Extracción dinámica de todas las subcategorías (incluye MULTICOLOR, GENERAL, etc.)
 const subcategories = [
   ...new Set(
     products.map((p) => p.subcategoria?.toUpperCase()).filter(Boolean),
@@ -112,9 +113,11 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
     let currentSubCat = "TODAS";
     let currentSlide = 0;
 
+    // ACTUALIZADO: Incluye MULTICOLOR y las nuevas relaciones
     const subcategoryMap: Record<string, string[]> = {
-      "PULSERAS": ["AMOR", "ESENCIALES", "FE", "PROTECCION", "VENEZUELA"],
-      "COLLARES": ["GARGANTILLAS", "LARGOS"]
+      "PULSERAS": ["AMOR", "ESENCIALES", "FE", "PROTECCION", "VENEZUELA", "MULTICOLOR"],
+      "COLLARES": ["GARGANTILLAS", "LARGOS"],
+      "ROSARIOS": ["GENERAL"]
     };
 
     const updateCarousel = () => {
@@ -174,7 +177,6 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
       }
     };
 
-    // --- NUEVA FUNCIÓN: CHEQUEAR PARÁMETROS DE URL ---
     const checkUrlParams = () => {
       const params = new URLSearchParams(window.location.search);
       const catFromUrl = params.get('categoria')?.toUpperCase();
@@ -182,15 +184,11 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
       if (catFromUrl) {
         buttons.forEach((btn) => {
           if (btn.getAttribute("data-category") === catFromUrl) {
-            // Quitamos el active del primero (TODOS) y se lo damos al correcto
             buttons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            
             currentMainCat = catFromUrl;
             updateSubFilterVisibility(currentMainCat);
             applyFilters();
-
-            // Limpiar la URL sin recargar para que no se quede pegado el filtro si navega luego
             window.history.replaceState({}, '', window.location.pathname);
           }
         });
@@ -201,12 +199,9 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
       btn.addEventListener("click", () => {
         currentMainCat = btn.getAttribute("data-category") || "TODOS";
         currentSubCat = "TODAS";
-        
         buttons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-
         updateSubFilterVisibility(currentMainCat);
-        
         subButtons.forEach(sb => sb.classList.remove("active-sub"));
         subButtons[0]?.classList.add("active-sub");
         applyFilters();
@@ -235,8 +230,6 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
     // Inicialización
     buttons[0]?.classList.add("active");
     applyFilters();
-    
-    // Ejecutamos el chequeo de URL después de la carga inicial
     checkUrlParams();
     
     win.__amuletoCatalogCleanup = () => controller.abort();

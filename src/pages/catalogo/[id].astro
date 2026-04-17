@@ -22,20 +22,25 @@ if (!product) {
 
 const allProducts = productosData as Product[];
 
-// --- LÓGICA DE IMÁGENES NORMALIZADA ---
+// --- LÓGICA DE IMÁGENES NORMALIZADA (Compatible con string | string[]) ---
 const listaImagenes: string[] = Array.isArray(product.imagen)
   ? product.imagen
   : [product.imagen];
 
 const tieneVariasImagenes = listaImagenes.length > 1;
 
+// Relacionados filtrando por categoría (insensible a mayúsculas)
 const relacionados = allProducts
-  .filter((p) => p.categoria === product.categoria && p.id !== product.id)
+  .filter((p) => 
+    p.categoria.toUpperCase() === product.categoria.toUpperCase() && 
+    p.id !== product.id
+  )
   .slice(0, 4);
 
-const formattedPrice = new Intl.NumberFormat("es-AR", {
+// Formateo de precio (Ajustado a VES por el contexto, cambiar a es-AR si es necesario)
+const formattedPrice = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "ARS",
+  currency: "VES",
   minimumFractionDigits: 0,
 }).format(product.precio);
 
@@ -57,32 +62,31 @@ const productString = JSON.stringify(product);
     <div class="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
       <div class="relative aspect-[4/5] w-full overflow-hidden bg-brand-pink/5 border border-brand-purple/5 rounded-3xl shadow-xl animate-fast-up group/carousel">
         
-      <div
-  id="carousel-track"
-  class="flex h-full transition-transform duration-500 ease-in-out"
-  style={`width: ${listaImagenes.length * 100}%;`}
->
-  {
-    listaImagenes.map((img, index) => (
-      <div
-        class="h-full" 
-        style={`width: ${100 / listaImagenes.length}%;`}
-      >
-        <img
-          src={img}
-          alt={`${product.nombre} - vista ${index + 1}`}
-
-          class="w-full h-full object-cover object-center" 
-          style={
-            index === 0
-              ? `view-transition-name: product-img-${product.id};`
-              : ""
+        <div
+          id="carousel-track"
+          class="flex h-full transition-transform duration-500 ease-in-out"
+          style={`width: ${listaImagenes.length * 100}%;`}
+        >
+          {
+            listaImagenes.map((img, index) => (
+              <div
+                class="h-full" 
+                style={`width: ${100 / listaImagenes.length}%;`}
+              >
+                <img
+                  src={img}
+                  alt={`${product.nombre} - vista ${index + 1}`}
+                  class="w-full h-full object-cover object-center" 
+                  style={
+                    index === 0
+                      ? `view-transition-name: product-img-${product.id};`
+                      : ""
+                  }
+                />
+              </div>
+            ))
           }
-        />
-      </div>
-    ))
-  }
-</div>
+        </div>
 
         {tieneVariasImagenes && (
           <>
@@ -157,7 +161,7 @@ const productString = JSON.stringify(product);
   import { addToCart } from "../../store/cartStore";
 
   function initProductDetail() {
-    const track = document.getElementById("carousel-track");
+    const track = document.getElementById("carousel-track") as HTMLElement;
     const nextBtn = document.getElementById("next-btn");
     const prevBtn = document.getElementById("prev-btn");
     const dots = document.querySelectorAll(".dot");
@@ -169,7 +173,6 @@ const productString = JSON.stringify(product);
       const maxSlides = slides.length;
 
       const updateCarousel = () => {
-        // Cálculo de offset basado en el ancho total del track
         const offset = (currentIndex * 100) / maxSlides;
         track.style.transform = `translateX(-${offset}%)`;
         
@@ -210,7 +213,6 @@ const productString = JSON.stringify(product);
     }
   }
 
-  // Soporte para transiciones de Astro
   document.addEventListener("astro:page-load", initProductDetail);
 </script>
 

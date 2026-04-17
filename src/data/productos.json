@@ -424,7 +424,7 @@
     "nombre": "Collar Largo Turquesa",
     "precio": 21000,
     "imagen": [
-      "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturquesa.jpeg",
+      "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturques.jpeg",
       "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturquesamuestra.jpeg"
     ],
     "categoria": "COLLARES",
@@ -499,11 +499,85 @@
   },
   {
     "id": "0056",
-    "nombre": "ROSARIO CHOCOLATE",
+    "nombre": "Rosario Chocolate",
     "precio": 14000,
     "imagen": ["/images/products/ROSARIOS/rosariochocolate.jpeg"],
     "categoria": "ROSARIOS",
     "subcategoria": "GENERAL",
     "descripcion": "Rosario Chocolate clásico elegante."
+  },
+  {
+    "id": "0057",
+    "nombre": "Pulsera multicolor corazón cerámica rojo",
+    "precio": 12000,
+    "imagen": ["/images/products/PULSERAS/MULTICOLOR/multicolorcorazonrojo.jpeg"],
+    "categoria": "PULSERAS",
+    "subcategoria": "MULTICOLOR",
+    "descripcion": "Elásticas multicolor corazón rojo."
+  },
+  {
+    "id": "0058",
+    "nombre": "Pulsera multicolor corazón cerámica menta",
+    "precio": 12000,
+    "imagen": ["/multicolorcorazonmenta.jpeg"],
+    "categoria": "PULSERAS",
+    "subcategoria": "MULTICOLOR",
+    "descripcion": "Elásticas multicolor corazón menta."
+  },
+  {
+    "id": "0059",
+    "nombre": "Pulsera multicolor corazón cerámica turquesa",
+    "precio": 12000,
+    "imagen": ["/images/products/PULSERAS/MULTICOLOR/multicolorcorazonturquesa.jpeg"],
+    "categoria": "PULSERAS",
+    "subcategoria": "MULTICOLOR",
+    "descripcion": "Elásticas multicolor corazón turquesa."
+  },
+  {
+    "id": "0060",
+    "nombre": "Pulsera multicolor corazón cerámica amarillo",
+    "precio": 12000,
+    "imagen": ["/images/products/PULSERAS/MULTICOLOR/multicolorcorazonamarillo.jpeg"],
+    "categoria": "PULSERAS",
+    "subcategoria": "MULTICOLOR",
+    "descripcion": "Elásticas multicolor corazón amarillo."
+  },
+  {
+    "id": "0061",
+    "nombre": "Pulsera aqua corazón nácar rojo",
+    "precio": 12000,
+    "imagen": ["/images/products/PULSERAS/AMOR/corazonnacarrojocristal.jpeg"],
+    "categoria": "PULSERAS",
+    "subcategoria": "AMOR",
+    "descripcion": "Elásticas aqua corazón nácar rojo."
+  },
+  {
+    "id": "0062",
+    "nombre": "Pulsera aqua estrella ojo turco",
+    "precio": 12000,
+    "imagen": ["/images/products/PULSERAS/PROTECCION/estrellanacarojoturcocristal.jpeg"],
+    "categoria": "PULSERAS",
+    "subcategoria": "PROTECCION",
+    "descripcion": "Elásticas aqua estrella ojo turco."
+  },
+  {
+    "id": "0063",
+    "nombre": "Pulsera tejida pez azul ojo turco",
+    "precio": 12000,
+    "imagen": ["/images/products/PULSERAS/PROTECCION/pezazulojoturcotejida.jpeg"],
+    "categoria": "PULSERAS",
+    "subcategoria": "PROTECCION",
+    "descripcion": "Tejida pez ojo turco."
+  },
+  {
+    "id": "0064",
+    "nombre": "Collar amazonita, amor y protección",
+    "precio": 25000,
+    "imagen": 
+    ["/images/products/COLLARES/collares/gargantillas/collaramazonitaamoryproteccionaqua.jpeg",
+      "/images/products/COLLARES/collares/gargantillas/collaramazonitaamoryproteccionaqua2.jpeg"],
+    "categoria": "COLLARES",
+    "subcategoria": "GARGANTILLAS",
+    "descripcion": "Escalla amazonita con dije esmaltado mano/ojo/corazón."
   }
 ]

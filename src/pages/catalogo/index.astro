@@ -94,12 +94,15 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
 </CatalogLayout>
 
 <script>
-  const initFilters = () => {
+  import { gsap } from "gsap";
+
+  const initCatalog = () => {
     const win = window as any;
     win.__amuletoCatalogCleanup?.();
     const controller = new AbortController();
     const { signal } = controller;
 
+    // --- ELEMENTOS ---
     const buttons = document.querySelectorAll(".filter-btn");
     const subButtons = document.querySelectorAll(".sub-filter-btn");
     const subContainer = document.getElementById("sub-filter-container");
@@ -113,13 +116,13 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
     let currentSubCat = "TODAS";
     let currentSlide = 0;
 
-    // ACTUALIZADO: Incluye MULTICOLOR y las nuevas relaciones
     const subcategoryMap: Record<string, string[]> = {
       "PULSERAS": ["AMOR", "ESENCIALES", "FE", "PROTECCION", "VENEZUELA", "MULTICOLOR"],
       "COLLARES": ["GARGANTILLAS", "LARGOS"],
       "ROSARIOS": ["GENERAL"]
     };
 
+    // --- LÓGICA DE FILTROS ---
     const updateCarousel = () => {
       if (!muestraTrack) return;
       (muestraTrack as HTMLElement).style.transform = `translateX(-${currentSlide * 100}%)`;
@@ -140,7 +143,6 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
       items.forEach((item) => {
         const itemCat = item.getAttribute('data-category');
         const itemSub = item.getAttribute('data-subcategory');
-        
         const matchesMain = currentMainCat === 'TODOS' || itemCat === currentMainCat;
         const matchesSub = currentSubCat === 'TODAS' || itemSub === currentSubCat;
 
@@ -158,43 +160,38 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
 
     const updateSubFilterVisibility = (category: string) => {
       const allowedSubs = subcategoryMap[category] || [];
-      
       if (allowedSubs.length > 0) {
         subContainer?.classList.add("is-visible");
-        subContainer?.classList.remove("hidden");
-        
         subButtons.forEach(btn => {
           const sub = btn.getAttribute("data-subcategory");
-          if (sub === "TODAS" || allowedSubs.includes(sub || "")) {
-            btn.classList.remove("hidden-instant");
-          } else {
-            btn.classList.add("hidden-instant");
-          }
+          btn.classList.toggle("hidden-instant", sub !== "TODAS" && !allowedSubs.includes(sub || ""));
         });
       } else {
         subContainer?.classList.remove("is-visible");
-        subContainer?.classList.add("hidden");
       }
     };
 
+    // --- NUEVO: DETECTAR CATEGORÍA DESDE URL (Para el botón "Regresar") ---
     const checkUrlParams = () => {
       const params = new URLSearchParams(window.location.search);
       const catFromUrl = params.get('categoria')?.toUpperCase();
 
       if (catFromUrl) {
-        buttons.forEach((btn) => {
-          if (btn.getAttribute("data-category") === catFromUrl) {
-            buttons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            currentMainCat = catFromUrl;
-            updateSubFilterVisibility(currentMainCat);
-            applyFilters();
-            window.history.replaceState({}, '', window.location.pathname);
-          }
-        });
+        const targetBtn = Array.from(buttons).find(
+          btn => btn.getAttribute("data-category") === catFromUrl
+        );
+
+        if (targetBtn) {
+          currentMainCat = catFromUrl;
+          buttons.forEach(b => b.classList.remove("active"));
+          targetBtn.classList.add("active");
+          updateSubFilterVisibility(currentMainCat);
+          applyFilters();
+        }
       }
     };
 
+    // --- EVENTOS DE INTERFAZ ---
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         currentMainCat = btn.getAttribute("data-category") || "TODOS";
@@ -202,9 +199,17 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
         buttons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         updateSubFilterVisibility(currentMainCat);
+        
+        // Resetear subfiltros al cambiar categoría principal
         subButtons.forEach(sb => sb.classList.remove("active-sub"));
         subButtons[0]?.classList.add("active-sub");
+        
         applyFilters();
+        
+        // Actualizar URL sin recargar para que el usuario pueda copiar el link
+        const url = new URL(window.location.href);
+        url.searchParams.set('categoria', currentMainCat);
+        window.history.replaceState({}, '', url);
       }, { signal });
     });
 
@@ -218,24 +223,24 @@ const muestras = muestrasData as { id: string; imagen: string; alt?: string }[];
     });
 
     document.getElementById("muestra-next")?.addEventListener("click", () => {
-      currentSlide = (currentSlide + 1) % dots.length;
+      currentSlide = (currentSlide + 1) % (dots.length || 1);
       updateCarousel();
     }, { signal });
 
     document.getElementById("muestra-prev")?.addEventListener("click", () => {
-      currentSlide = (currentSlide - 1 + dots.length) % dots.length;
+      currentSlide = (currentSlide - 1 + dots.length) % (dots.length || 1);
       updateCarousel();
     }, { signal });
 
-    // Inicialización
-    buttons[0]?.classList.add("active");
+    // --- EJECUCIÓN INICIAL ---
     applyFilters();
-    checkUrlParams();
+    checkUrlParams(); // Leemos la URL al cargar
     
     win.__amuletoCatalogCleanup = () => controller.abort();
   };
 
-  document.addEventListener("astro:page-load", initFilters);
+  // Importante: Usamos astro:page-load para que funcione con el ClientRouter del Layout
+  document.addEventListener("astro:page-load", initCatalog);
 </script>
 
 <style is:global>

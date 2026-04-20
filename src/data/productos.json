@@ -383,7 +383,7 @@
   {
     "id": "0044",
     "nombre": "Rosario Venezuela",
-    "precio": 14000,
+    "precio": 12000,
     "imagen": ["/images/products/ROSARIOS/rosariovzla.jpeg"],
     "categoria": "ROSARIOS",
     "subcategoria": "GENERAL",
@@ -424,7 +424,7 @@
     "nombre": "Collar Largo Turquesa",
     "precio": 21000,
     "imagen": [
-      "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturques.jpeg",
+      "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturquesa.jpeg",
       "/images/products/COLLARES/collares/collarlargoturquesa/largomarronyturquesamuestra.jpeg"
     ],
     "categoria": "COLLARES",
@@ -512,7 +512,7 @@
     "precio": 12000,
     "imagen": ["/images/products/PULSERAS/MULTICOLOR/multicolorcorazonrojo.jpeg"],
     "categoria": "PULSERAS",
-    "subcategoria": "MULTICOLOR",
+    "subcategoria": "AMOR",
     "descripcion": "Elásticas multicolor corazón rojo."
   },
   {
@@ -521,7 +521,7 @@
     "precio": 12000,
     "imagen": ["/multicolorcorazonmenta.jpeg"],
     "categoria": "PULSERAS",
-    "subcategoria": "MULTICOLOR",
+    "subcategoria": "AMOR",
     "descripcion": "Elásticas multicolor corazón menta."
   },
   {
@@ -530,7 +530,7 @@
     "precio": 12000,
     "imagen": ["/images/products/PULSERAS/MULTICOLOR/multicolorcorazonturquesa.jpeg"],
     "categoria": "PULSERAS",
-    "subcategoria": "MULTICOLOR",
+    "subcategoria": "AMOR",
     "descripcion": "Elásticas multicolor corazón turquesa."
   },
   {
@@ -539,7 +539,7 @@
     "precio": 12000,
     "imagen": ["/images/products/PULSERAS/MULTICOLOR/multicolorcorazonamarillo.jpeg"],
     "categoria": "PULSERAS",
-    "subcategoria": "MULTICOLOR",
+    "subcategoria": "AMOR",
     "descripcion": "Elásticas multicolor corazón amarillo."
   },
   {

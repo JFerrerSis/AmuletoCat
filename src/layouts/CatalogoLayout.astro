@@ -41,17 +41,15 @@ import Footer from "../components/ui/Footer.astro";
   import Toastify from "toastify-js";
   import { addToCart } from "../store/cartStore";
 
-  // --- SOLUCIÓN ERROR TS: Declaración global de la función ---
   declare global {
     interface Window {
       amuletoToast: (message: string, type?: "success" | "error" | "warning") => void;
+      __amuletoListenerActive?: boolean; // Bandera para evitar registros dobles
     }
   }
 
-  // 1. Sistema de Notificaciones Estilo Boutique
   function showAmuletoToast(message: string, type: "success" | "error" | "warning" = "success") {
     const colors = { success: "#d4af37", error: "#d69e9e", warning: "#3b1b54" };
-    
     document.querySelectorAll(".toastify").forEach(t => t.remove());
 
     Toastify({
@@ -69,18 +67,21 @@ import Footer from "../components/ui/Footer.astro";
     }).showToast();
   }
 
-  // 2. Manejador de Compras
+  // Mantenemos esta función fuera para que la referencia sea estática
   const handlePurchase = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
     const btn = target.closest('.add-to-cart-btn');
 
     if (btn) {
+      e.preventDefault();
+      e.stopImmediatePropagation(); // Detiene otros scripts en seco
+
       const productData = btn.getAttribute('data-product');
       if (productData) {
         try {
           const product = JSON.parse(productData);
           addToCart(product);
-          showAmuletoToast(`${product.nombre} añadido a tu carrito`, "success");
+          showAmuletoToast(`${product.nombre} añadido`, "success");
         } catch (err) {
           console.error("Error:", err);
         }
@@ -89,18 +90,19 @@ import Footer from "../components/ui/Footer.astro";
   };
 
   const initSystem = () => {
-    // Ahora TS reconoce amuletoToast gracias al declare global de arriba
     window.amuletoToast = showAmuletoToast;
     
-    document.removeEventListener('click', handlePurchase, true);
-    document.addEventListener('click', handlePurchase, true);
+    // Solo registramos el evento una vez en la vida de la ventana
+    if (!window.__amuletoListenerActive) {
+      document.addEventListener('click', handlePurchase, { capture: true });
+      window.__amuletoListenerActive = true;
+    }
     
     document.dispatchEvent(new CustomEvent('amuleto:refresh-ui'));
   };
 
+  // Astro Page Load es suficiente
   document.addEventListener("astro:page-load", initSystem);
-  document.addEventListener("astro:after-swap", initSystem);
-  initSystem();
 </script>
 
     <style is:global>

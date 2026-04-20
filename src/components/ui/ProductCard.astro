@@ -89,21 +89,51 @@ const formatCurrency = (value: number) => {
 
 <script>
   import { addToCart } from "../../store/cartStore";
+  import { gsap } from "gsap";
 
-  function initCartButtons() {
-    const buttons = document.querySelectorAll('.add-to-cart-btn');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault(); // Evitamos que el clic active el enlace de la card
-        const productData = JSON.parse(btn.getAttribute('data-product') || '{}');
-        addToCart(productData);
+  // Esta función manejará TODOS los clics del carrito en la página
+  function handleCartClick(e: Event) {
+    const target = e.target as HTMLElement;
+    // Buscamos si el clic fue en el botón o algo dentro de él (como el icono)
+    const btn = target.closest('.add-to-cart-btn') as HTMLButtonElement;
+
+    if (btn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const productDataRaw = btn.getAttribute('data-product');
+      if (!productDataRaw) return;
+
+      try {
+        const productData = JSON.parse(productDataRaw);
         
-        // Efecto visual rápido
-        btn.classList.add('scale-110', '!bg-brand-gold');
-        setTimeout(() => btn.classList.remove('scale-110', '!bg-brand-gold'), 500);
-      });
-    });
+        // Ejecutar la lógica del store una sola vez
+
+        // Animación GSAP
+        gsap.fromTo(btn, 
+          { scale: 1 }, 
+          { 
+            scale: 0.8, 
+            duration: 0.1, 
+            yoyo: true, 
+            repeat: 1, 
+            ease: "power2.inOut",
+            onComplete: () => gsap.set(btn, { clearProps: "all" })
+          }
+        );
+      } catch (error) {
+        console.error("Error en el carrito:", error);
+      }
+    }
   }
 
-  document.addEventListener("astro:page-load", initCartButtons);
+  function setup() {
+    // Escuchamos en el document o en el grid directamente
+    // Al ser un solo listener global, es imposible que se duplique el llamado
+    document.removeEventListener('click', handleCartClick);
+    document.addEventListener('click', handleCartClick);
+  }
+
+  // Inicializamos
+  setup();
 </script>
